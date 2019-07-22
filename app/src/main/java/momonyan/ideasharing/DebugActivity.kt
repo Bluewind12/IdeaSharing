@@ -3,6 +3,8 @@ package momonyan.ideasharing
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.debug_layout.*
 
@@ -29,6 +31,18 @@ class DebugActivity : AppCompatActivity() {
                 }
 
         }
+
+        val item = ArrayList<HashMap<String, Any>>()
+        for (i in 0..10) {
+            val map = HashMap<String, Any>()
+            map["Title"] = "$i タイトル"
+            map["Content"] = "$i 内容"
+            item.add(map)
+        }
+        Log.d("DEBUGTAGA", item.toString())
+        val adapter = RecyclerAdapter(this, item)
+        debugRecyclerView.adapter = adapter
+        debugRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
     }
 }
