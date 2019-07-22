@@ -10,9 +10,7 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
     RecyclerView.Adapter<RecyclerHolder>() {
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         holder.let {
-            Log.d("TESTTAG",(itemList[position])["Title"].toString())
             it.titleText.text = (itemList[position])["Title"].toString()
-            Log.d("TESTTAG",(itemList[position])["Content"].toString())
             it.contentsText.text = (itemList[position])["Content"].toString()
         }
     }

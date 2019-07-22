@@ -33,16 +33,22 @@ class DebugActivity : AppCompatActivity() {
         }
 
         val item = ArrayList<HashMap<String, Any>>()
-        for (i in 0..10) {
-            val map = HashMap<String, Any>()
-            map["Title"] = "$i タイトル"
-            map["Content"] = "$i 内容"
-            item.add(map)
-        }
-        Log.d("DEBUGTAGA", item.toString())
-        val adapter = RecyclerAdapter(this, item)
-        debugRecyclerView.adapter = adapter
-        debugRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        db.collection("Data")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(tag, "${document.id} => ${document.data}")
+                    item.add(document.data as HashMap<String, Any>)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(tag, "Error getting documents.", exception)
+            }
+            .addOnCompleteListener {
+                val adapter = RecyclerAdapter(this, item)
+                debugRecyclerView.adapter = adapter
+                debugRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+            }
 
     }
 }
