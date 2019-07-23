@@ -13,25 +13,23 @@ class DebugActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.debug_layout)
-
         val db = FirebaseFirestore.getInstance()
-
         debugAddButton.setOnClickListener {
-            Log.d(tag,"TESTE")
             val dbMap = HashMap<String, Any>()
             dbMap["Title"] = titleEditText.text.toString()
             dbMap["Contents"] = contentsEditText.text.toString()
             db.collection("Data")
                 .add(dbMap)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(tag, "DocumentSnapshot added with ID: ${documentReference.id}")
+                .addOnCompleteListener {
+                    loadDatabase()
                 }
-                .addOnFailureListener { e ->
-                    Log.w(tag, "Error adding document", e)
-                }
-
         }
+        loadDatabase()
 
+    }
+
+    private fun loadDatabase() {
+        val db = FirebaseFirestore.getInstance()
         val item = ArrayList<HashMap<String, Any>>()
         db.collection("Data")
             .get()
@@ -49,6 +47,5 @@ class DebugActivity : AppCompatActivity() {
                 debugRecyclerView.adapter = adapter
                 debugRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             }
-
     }
 }
