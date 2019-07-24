@@ -25,7 +25,6 @@ class DebugActivity : AppCompatActivity() {
                 }
         }
         loadDatabase()
-
     }
 
     private fun loadDatabase() {
