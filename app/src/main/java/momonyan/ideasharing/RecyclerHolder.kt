@@ -8,4 +8,5 @@ import kotlinx.android.synthetic.main.debug_row_layout.view.*
 class RecyclerHolder(view: View) : RecyclerView.ViewHolder(view) {
     val titleText: TextView = view.titleRowTextView
     val contentsText: TextView = view.contentsRowTextView
+    val dateText: TextView = view.dateRowTextView
 }

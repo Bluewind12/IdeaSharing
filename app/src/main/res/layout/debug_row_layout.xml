@@ -20,5 +20,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/contentsRowTextView" tools:text="内容"
                 android:textSize="24sp"/>
+        <Space
+                android:layout_width="match_parent"
+                android:layout_height="24dp"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/dateRowTextView" tools:text="日付"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

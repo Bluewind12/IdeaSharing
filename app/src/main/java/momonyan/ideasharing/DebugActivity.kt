@@ -6,7 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.debug_layout.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class DebugActivity : AppCompatActivity() {
     private val tag = "DEBUG_TAAAAG"
@@ -18,6 +23,7 @@ class DebugActivity : AppCompatActivity() {
             val dbMap = HashMap<String, Any>()
             dbMap["Title"] = titleEditText.text.toString()
             dbMap["Contents"] = contentsEditText.text.toString()
+            dbMap["Date"] = getToday()
             db.collection("Data")
                 .add(dbMap)
                 .addOnCompleteListener {
@@ -31,6 +37,7 @@ class DebugActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val item = ArrayList<HashMap<String, Any>>()
         db.collection("Data")
+            .orderBy("Date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -46,5 +53,11 @@ class DebugActivity : AppCompatActivity() {
                 debugRecyclerView.adapter = adapter
                 debugRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             }
+    }
+
+    private fun getToday(): String {
+        val date = Date()
+        val sdf = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss", Locale.getDefault())
+        return sdf.format(date)
     }
 }
