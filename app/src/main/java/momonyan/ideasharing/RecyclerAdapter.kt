@@ -25,7 +25,7 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerHolder {
         val layoutInflater = LayoutInflater.from(context)
-        val mView = layoutInflater.inflate(R.layout.debug_row_layout, parent, false)
+        val mView = layoutInflater.inflate(R.layout.card_row_layout, parent, false)
 
         Log.d("DEBUGTAGA","NYAN")
 

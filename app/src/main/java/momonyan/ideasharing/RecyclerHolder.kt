@@ -3,7 +3,7 @@ package momonyan.ideasharing
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.debug_row_layout.view.*
+import kotlinx.android.synthetic.main.card_row_layout.view.*
 
 class RecyclerHolder(view: View) : RecyclerView.ViewHolder(view) {
     val titleText: TextView = view.titleRowTextView
