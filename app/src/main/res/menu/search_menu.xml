@@ -7,4 +7,17 @@
             android:icon="@drawable/ic_search_black_24dp"
             app:actionViewClass="android.widget.SearchView"
             app:showAsAction="ifRoom"/>
+    <item android:title="新着順"
+          android:id="@+id/sortCheckNew"
+          android:checkable="true"
+          app:showAsAction="never"/>
+    <item android:title="人気順"
+          android:id="@+id/sortCheckPop"
+          android:checkable="true"
+          app:showAsAction="never"/>
+    <item android:title="詳細検索"
+          android:id="@+id/app_ber_details"
+          android:icon="@drawable/ic_search_black_24dp"
+          app:showAsAction="never"/>
+
 </menu>

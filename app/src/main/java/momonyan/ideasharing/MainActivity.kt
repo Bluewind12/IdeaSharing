@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -18,6 +19,10 @@ import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var sortCheckNew: MenuItem
+    private lateinit var sortCheckPop: MenuItem
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,6 +57,10 @@ class MainActivity : AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_menu, menu)
 
+        sortCheckNew = menu.findItem(R.id.sortCheckNew)
+        sortCheckNew.isChecked = true
+        sortCheckPop = menu.findItem(R.id.sortCheckPop)
+
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchMenuItem = menu.findItem(R.id.app_bar_search)
         val searchView = searchMenuItem.actionView as SearchView
@@ -59,6 +68,22 @@ class MainActivity : AppCompatActivity() {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.sortCheckNew -> {
+                sortCheckNew.isChecked = true
+                sortCheckPop.isChecked = false
+
+            }
+            R.id.sortCheckPop -> {
+                sortCheckNew.isChecked = false
+                sortCheckPop.isChecked = true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun loadDatabase() {
