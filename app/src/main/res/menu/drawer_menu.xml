@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="機能">
+        <menu>
+            <item android:title="マイページ"/>
+            <item android:title="投稿アイデア一覧"/>
+        </menu>
+    </item>
+    <item android:title="外部サイト">
+        <menu>
+            <item android:title="レビュー"/>
+            <item android:title="幻想乃桜工房のHP"/>
+        </menu>
+    </item>
+</menu>
