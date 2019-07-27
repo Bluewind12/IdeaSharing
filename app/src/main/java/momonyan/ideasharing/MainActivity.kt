@@ -75,11 +75,8 @@ class MainActivity : AppCompatActivity() {
         when (id) {
             R.id.sortCheckNew -> {
                 sortCheckNew.isChecked = true
-                sortCheckPop.isChecked = false
-
             }
             R.id.sortCheckPop -> {
-                sortCheckNew.isChecked = false
                 sortCheckPop.isChecked = true
             }
         }
