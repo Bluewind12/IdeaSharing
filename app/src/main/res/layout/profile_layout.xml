@@ -55,7 +55,7 @@
                         android:layout_height="24dp" tools:srcCompat="@tools:sample/avatars"
                         android:id="@+id/imageView6" android:layout_gravity="center"/>
                 <TextView
-                        android:text="投稿数"
+                        android:text="@string/post_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/textView3"
                         android:layout_gravity="center"/>
@@ -78,7 +78,7 @@
                         android:layout_height="24dp" tools:srcCompat="@tools:sample/avatars"
                         android:id="@+id/imageView7" android:layout_gravity="center"/>
                 <TextView
-                        android:text="総合評価"
+                        android:text="@string/overall_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/textView5"
                         android:layout_gravity="center"/>
@@ -102,7 +102,7 @@
                         android:layout_height="24dp" tools:srcCompat="@tools:sample/avatars"
                         android:id="@+id/imageView8" android:layout_gravity="center"/>
                 <TextView
-                        android:text="コメント数"
+                        android:text="@string/comment_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/textView7"
                         android:layout_gravity="center"/>

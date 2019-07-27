@@ -16,7 +16,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="タイトル" android:id="@+id/inputTitleEditText"/>
+                android:hint="@string/title_string" android:id="@+id/inputTitleEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -30,7 +30,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="内容" android:id="@+id/inputContentEditText"/>
+                android:hint="@string/content_string" android:id="@+id/inputContentEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -43,7 +43,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="TAG" android:id="@+id/inoputTagEditText"/>
+                android:hint="@string/tag" android:id="@+id/inoputTagEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
@@ -53,14 +53,14 @@
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/inputAddButton"
             android:id="@+id/recyclerView"/>
     <Button
-            android:text="決定"
+            android:text="@string/ok_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/inputAddButton" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"/>
     <Button
-            android:text="キャンセル"
+            android:text="@string/cancel_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/inputCancelButton" android:layout_marginStart="8dp"

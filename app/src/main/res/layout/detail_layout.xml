@@ -68,8 +68,9 @@
                         android:layout_height="24dp" tools:srcCompat="@tools:sample/avatars"
                         android:id="@+id/imageView3" android:layout_weight="2" android:layout_gravity="center"/>
                 <TextView
+                        android:text="@string/nice_string"
                         android:layout_width="0dip"
-                        android:layout_height="wrap_content" android:id="@+id/likeTextView" tools:text="いいね"
+                        android:layout_height="wrap_content" android:id="@+id/likeTextView"
                         android:layout_weight="5" android:layout_gravity="center"/>
                 <TextView
                         android:text="999"
@@ -95,7 +96,7 @@
                         android:layout_height="24dp" tools:srcCompat="@tools:sample/avatars"
                         android:id="@+id/imageView4" android:layout_weight="2" android:layout_gravity="center"/>
                 <TextView
-                        android:text="悪いね"
+                        android:text="@string/dis_nice_string"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content" android:id="@+id/disLikeTextView" android:layout_weight="5"
                         android:layout_gravity="center"/>
@@ -118,7 +119,7 @@
                 android:id="@+id/commentTitleText" android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/outputLikeCard"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp" tools:text="コメント"
-                android:text="コメント一覧" android:textStyle="bold"/>
+                android:text="@string/comment_view_list" android:textStyle="bold"/>
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_marginTop="8dp"
@@ -128,7 +129,7 @@
                 android:layout_marginEnd="8dp"
                 android:id="@+id/recyclerView2"/>
         <Button
-                android:text="コメント"
+                android:text="@string/comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/button"
@@ -137,7 +138,7 @@
                 android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         <TextView
-                android:text="コメント投稿"
+                android:text="@string/comment_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView9" android:layout_marginTop="16dp"
@@ -160,7 +161,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/outputContentTextView"
                 app:layout_constraintStart_toEndOf="@+id/tagTitleText" android:layout_marginStart="8dp"/>
         <TextView
-                android:text="Tags"
+                android:text="@string/tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tagTitleText" app:layout_constraintStart_toStartOf="@+id/outputContentTextView"

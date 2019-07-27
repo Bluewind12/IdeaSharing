@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="機能">
+    <item android:title="@string/function">
         <menu>
-            <item android:title="マイページ"/>
-            <item android:title="投稿アイデア一覧"/>
+            <item android:title="@string/mypage"/>
         </menu>
     </item>
-    <item android:title="外部サイト">
+    <item android:title="@string/out_site">
         <menu>
-            <item android:title="レビュー"/>
-            <item android:title="幻想乃桜工房のHP"/>
+            <item android:title="@string/review"/>
+            <item android:title="@string/sakura_hp"/>
         </menu>
     </item>
 </menu>
