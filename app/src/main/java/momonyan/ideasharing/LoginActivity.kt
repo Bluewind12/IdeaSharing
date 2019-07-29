@@ -46,7 +46,12 @@ class LoginActivity : AppCompatActivity() {
             // Successfully signed in
             if (resultCode == Activity.RESULT_OK) {
                 Toast.makeText(this, "サインイン成功", Toast.LENGTH_LONG).show()
-                startActivity(Intent(this, MainActivity::class.java))
+                val i = Intent(
+                    this,
+                    MainActivity::class.java
+                ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+                startActivity(i)
             } else {
                 // Sign in failed
                 if (response == null) {
