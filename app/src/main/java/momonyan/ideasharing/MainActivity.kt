@@ -3,17 +3,22 @@ package momonyan.ideasharing
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.input_layout.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -49,6 +54,10 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+
+        floatingActionButton.setOnClickListener {
+            createInputDialog()
+        }
 
         loadDatabase()
     }
@@ -99,5 +108,61 @@ class MainActivity : AppCompatActivity() {
                 mainRecyclerView.adapter = adapter
                 mainRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             }
+    }
+
+    fun createInputDialog() {
+        val view = layoutInflater.inflate(R.layout.input_layout, null)
+
+        val mDialog = AlertDialog.Builder(this)
+            .setView(view)
+            .create()
+
+        val titleEdit = view.inputTitleEditText
+        val contentEdit = view.inputContentEditText
+        val tagEdit = view.inputTagEditText
+        val tagEditAdd = view.inputTagAddButton
+        val tagList = view.inputTagRecyclerView
+        val addButton = view.inputAddButton
+        val cancelButton = view.inputCancelButton
+
+        val recyclerList = arrayListOf<String>()
+
+        tagEditAdd.setOnClickListener {
+            recyclerList.add(tagEdit.text.toString())
+            tagEdit.setText("", TextView.BufferType.NORMAL)
+            //TODO ここでRecyclerリスナーをいじる
+        }
+
+        addButton.setOnClickListener {
+            val dbMap = HashMap<String, Any>()
+            dbMap["Title"] = titleEdit.text.toString()
+            dbMap["Content"] = contentEdit.text.toString()
+            dbMap["Tag"] = recyclerList
+
+            val auth = FirebaseAuth.getInstance()
+            val user = auth.currentUser
+
+            if (user != null) {
+                val uid = user.uid
+                dbMap["Contributor"] = uid
+            } else {
+                dbMap["Contributor"] = "???"
+            }
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection("PostData")
+                .add(dbMap)
+                .addOnCompleteListener {
+                    loadDatabase()
+                    mDialog.dismiss()
+                }
+                .addOnFailureListener {
+                    Log.e("Error", "ERRORRRRRRRRRRR")
+                }
+        }
+        cancelButton.setOnClickListener {
+            mDialog.dismiss()
+        }
+        mDialog.show()
     }
 }

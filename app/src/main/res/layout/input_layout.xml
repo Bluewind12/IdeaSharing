@@ -36,14 +36,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/textInputLayout2" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp">
+            app:layout_constraintBottom_toTopOf="@+id/inputTagRecyclerView" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/inputTagAddButton">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/tag" android:id="@+id/inoputTagEditText"/>
+                android:hint="@string/tag" android:id="@+id/inputTagEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
@@ -51,7 +51,7 @@
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.498"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/inputAddButton"
-            android:id="@+id/recyclerView"/>
+            android:id="@+id/inputTagRecyclerView"/>
     <Button
             android:text="@string/ok_string"
             android:layout_width="wrap_content"
@@ -66,4 +66,13 @@
             android:id="@+id/inputCancelButton" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+    <Button
+            android:text="ADD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/inputTagAddButton"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout2"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout2" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+    />
 </androidx.constraintlayout.widget.ConstraintLayout>
