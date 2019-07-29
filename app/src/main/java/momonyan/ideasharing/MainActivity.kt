@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun createInputDialog() {
+    private fun createInputDialog() {
         val view = layoutInflater.inflate(R.layout.input_layout, null)
 
         val mDialog = AlertDialog.Builder(this)
@@ -131,6 +131,8 @@ class MainActivity : AppCompatActivity() {
             recyclerList.add(tagEdit.text.toString())
             tagEdit.setText("", TextView.BufferType.NORMAL)
             //TODO ここでRecyclerリスナーをいじる
+            tagList.adapter = InputTagListRecyclerAdapter(this, recyclerList)
+            tagList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         }
 
         addButton.setOnClickListener {
