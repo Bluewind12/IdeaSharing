@@ -35,7 +35,7 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-core:17.0.1'
-    implementation 'com.google.firebase:firebase-firestore:20.1.0'
+    implementation 'com.google.firebase:firebase-firestore:20.2.0'
 
 
     implementation 'com.firebaseui:firebase-ui-database:5.0.0'
