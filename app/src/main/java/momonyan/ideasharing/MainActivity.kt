@@ -143,7 +143,6 @@ class MainActivity : AppCompatActivity() {
 
             val auth = FirebaseAuth.getInstance()
             val user = auth.currentUser
-
             if (user != null) {
                 val uid = user.uid
                 dbMap["Contributor"] = uid

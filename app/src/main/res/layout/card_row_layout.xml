@@ -18,13 +18,27 @@
                 android:textSize="36sp"/>
         <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/contentsRowTextView" tools:text="内容"
-                android:textSize="24sp"/>
+                android:layout_height="wrap_content" android:id="@+id/postNameTextView"
+                tools:text="投稿者名"/>
         <Space
                 android:layout_width="match_parent"
-                android:layout_height="24dp"/>
-        <TextView
+                android:layout_height="12dp"/>
+        <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/dateRowTextView" tools:text="日付"/>
+                android:layout_height="match_parent">
+            <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content" android:id="@+id/dateRowTextView" tools:text="日付"
+                    android:layout_weight="2"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/likeCountTextView" android:layout_weight="1"
+                    tools:text="いいね数:123"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/disLiseCountTextView"
+                    android:layout_weight="1" tools:text="悪い数:12"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

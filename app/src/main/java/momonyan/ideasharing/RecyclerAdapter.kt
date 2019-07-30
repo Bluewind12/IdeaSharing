@@ -11,11 +11,10 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         holder.let {
             it.titleText.text = (itemList[position])["Title"].toString()
-            it.contentsText.text = (itemList[position])["Contents"].toString()
             it.dateText.text = (itemList[position])["Date"].toString()
-            Log.d("DataTest",(itemList[position])["Title"].toString())
-            Log.d("DataTest",(itemList[position])["Contents"].toString())
-            Log.d("DataTest",(itemList[position])["Date"].toString())
+//            it.dateText.text = (itemList[position])["Post"].toString()
+//            it.dateText.text = (itemList[position])["Like"].toString()
+//            it.dateText.text = (itemList[position])["DisLike"].toString()
         }
     }
 

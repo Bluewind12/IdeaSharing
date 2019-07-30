@@ -1,6 +1,7 @@
 package momonyan.ideasharing
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import kotlinx.android.synthetic.main.login_layout.*
+
 
 class LoginActivity : AppCompatActivity() {
     private val RC_SIGN_IN = 123
@@ -31,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
                         "https://",
                         "https://")
                     .setLogo(R.drawable.icon_book)
-                    .setIsSmartLockEnabled(false)
+                    .setIsSmartLockEnabled(true)
                     .build(),
                 RC_SIGN_IN
             )
@@ -40,18 +42,23 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {//Intentの?ないとクラッシュするので注意
         super.onActivityResult(requestCode, resultCode, data)
-        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
         if (requestCode == RC_SIGN_IN) {
             val response = IdpResponse.fromResultIntent(data)
             // Successfully signed in
             if (resultCode == Activity.RESULT_OK) {
+                val shared = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
+                val profile = shared.getBoolean("ProfileEdit", false)
                 Toast.makeText(this, "サインイン成功", Toast.LENGTH_LONG).show()
-                val i = Intent(
-                    this,
-                    MainActivity::class.java
-                ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
-                startActivity(i)
+                if (profile) {
+                    val i = Intent(this, MainActivity::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(i)
+                } else {
+                    //TODO プロフィール編集画面へ移動する
+                    val i = Intent(this, MainActivity::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(i)
+                }
             } else {
                 // Sign in failed
                 if (response == null) {
