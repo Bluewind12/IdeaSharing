@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(i)
                 } else {
                     //TODO プロフィール編集画面へ移動する
-                    val i = Intent(this, MainActivity::class.java)
+                    val i = Intent(this, ProfileEditActivity::class.java)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(i)
                 }

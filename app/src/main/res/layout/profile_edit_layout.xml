@@ -10,7 +10,7 @@
     <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp" app:srcCompat="@android:drawable/star_big_off"
-            android:id="@+id/imageButton" android:layout_marginTop="8dp"
+            android:id="@+id/profileEditImageButton" android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintTop_toBottomOf="@+id/textView10" app:layout_constraintStart_toEndOf="@+id/textView11"
             android:layout_marginStart="8dp"/>
@@ -22,12 +22,12 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton">
+            app:layout_constraintTop_toBottomOf="@+id/profileEditImageButton">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="ニックネーム"/>
+                android:hint="ニックネーム(必須)" android:id="@+id/profileNameEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -40,7 +40,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="コメント"/>
+                android:hint="コメント" android:id="@+id/profileCommentEditButton"/>
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
             android:text="Webページ"
@@ -59,8 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView11" android:textSize="30sp"
-            android:text="プロフィール画像" app:layout_constraintTop_toTopOf="@+id/imageButton"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton" app:layout_constraintStart_toStartOf="parent"
+            android:text="プロフィール画像" app:layout_constraintTop_toTopOf="@+id/profileEditImageButton"
+            app:layout_constraintBottom_toBottomOf="@+id/profileEditImageButton" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"/>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="395dp"
@@ -73,7 +73,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="HP"/>
+                android:hint="HP" android:id="@+id/profileHpEditButton"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -92,7 +92,7 @@
             android:text="@string/ok_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button2" android:layout_marginBottom="8dp"
+            android:id="@+id/profileAddButton" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
