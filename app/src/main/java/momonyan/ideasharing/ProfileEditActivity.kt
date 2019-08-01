@@ -38,8 +38,7 @@ class ProfileEditActivity : AppCompatActivity() {
         dbMap["UserId"] = uid
 
         val bmp = BitmapFactory.decodeResource(resources, R.drawable.icon_defalt)
-        outImg = Bitmap.createScaledBitmap(bmp, 100, 100, false)
-        profileEditImageButton.setImageBitmap(outImg)
+        profileEditImageButton.setImageBitmap(bmp)
 
         profileEditImageButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -94,8 +93,7 @@ class ProfileEditActivity : AppCompatActivity() {
                 uri = resultData.data
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                    outImg = Bitmap.createScaledBitmap(bitmap, 100, 100, false)
-                    profileEditImageButton.setImageBitmap(outImg)
+                    profileEditImageButton.setImageBitmap(bitmap)
 
                 } catch (e: IOException) {
                     e.printStackTrace()

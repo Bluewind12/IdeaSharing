@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.profile_layout.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,6 +30,13 @@ class ProfileDetailActivity : AppCompatActivity() {
                     profileNameTextView.text = profileMap["UserName"].toString()
                     profileCommentCountTextView.text = profileMap["Comment"].toString()
                     prodileUrlTextView
+
+                    //アイコンの表示
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val imageRef = storageRef.child(profileMap["UserId"].toString() + "ProfileImage")
+                    GlideApp.with(this)
+                        .load(imageRef)
+                        .into(profileImageView)
                 }
             val item = ArrayList<HashMap<String, Any>>()
             db.collection("PostData")
@@ -41,6 +49,7 @@ class ProfileDetailActivity : AppCompatActivity() {
                         item.add(documentMap)
                     }
                     profilePostCountTextView.text = item.count().toString()
+
                 }
                 .addOnCompleteListener {
                     val adapter = RecyclerAdapter(this, item)

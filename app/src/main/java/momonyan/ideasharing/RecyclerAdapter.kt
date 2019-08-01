@@ -30,7 +30,8 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
             it.recycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             it.cardView.setOnClickListener {
                 val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra("Title", (itemList[position])["DocumentId"].toString())
+                intent.putExtra("DocumentId", (itemList[position])["DocumentId"].toString())
+                Log.d("TAGTAG", (itemList[position])["DocumentId"].toString())
                 context.startActivity(intent)
             }
         }

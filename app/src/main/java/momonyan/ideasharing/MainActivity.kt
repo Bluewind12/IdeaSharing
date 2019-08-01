@@ -2,6 +2,7 @@ package momonyan.ideasharing
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Toolバーへの設定
         setSupportActionBar(toolbar)
         val actionBarDrawerToggle =
             object : ActionBarDrawerToggle(this, mainDrawerLayout, toolbar, R.string.open, R.string.close) {
@@ -46,8 +48,8 @@ class MainActivity : AppCompatActivity() {
             }
         mainDrawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-
         toolbar.inflateMenu(R.menu.search_menu)
+        //検索
         val mSearchView = toolbar.menu.findItem(R.id.app_bar_search).actionView as SearchView
         mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String): Boolean {
@@ -58,7 +60,27 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+        //ドロワーメニュー のクリック動作
+        navigationView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.menuMyPage -> {
+                    val i = Intent(this, ProfileDetailActivity::class.java)
 
+                    val auth = FirebaseAuth.getInstance()
+                    val user = auth.currentUser
+                    var uid = "???"
+                    if (user != null) {
+                        uid = user.uid
+                    }
+                    i.putExtra("UserId", uid)
+                    startActivity(i)
+                }
+            }
+
+            true
+        }
+
+        //FAB
         floatingActionButton.setOnClickListener {
             createInputDialog()
         }
@@ -144,6 +166,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //Inputダイアログの出力
     private fun createInputDialog() {
         val view = layoutInflater.inflate(R.layout.input_layout, null)
 
