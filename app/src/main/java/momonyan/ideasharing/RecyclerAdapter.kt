@@ -5,7 +5,9 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RecyclerAdapter(private val context: Context, private val itemList:ArrayList<HashMap<String, Any>>) :
     RecyclerView.Adapter<RecyclerHolder>() {
@@ -13,9 +15,19 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
         holder.let {
             it.titleText.text = (itemList[position])["Title"].toString()
             it.dateText.text = (itemList[position])["Date"].toString()
-//            it.dateText.text = (itemList[position])["Post"].toString()
-//            it.dateText.text = (itemList[position])["Like"].toString()
-//            it.dateText.text = (itemList[position])["DisLike"].toString()
+            it.likeText.text = (itemList[position])["Like"].toString()
+            it.disLikeText.text = (itemList[position])["DisLike"].toString()
+
+            val db = FirebaseFirestore.getInstance()
+            db.collection("ProfileData")
+                .document((itemList[position])["Contributor"].toString())
+                .get()
+                .addOnSuccessListener { result ->
+                    val documentMap = result.data as java.util.HashMap<String, Any>
+                    it.postText.text = documentMap["UserName"].toString()
+                }
+            it.recycler.adapter = InputTagListRecyclerAdapter(context, (itemList[position])["Tag"] as ArrayList<String>)
+            it.recycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             it.cardView.setOnClickListener {
                 val intent = Intent(context, DetailActivity::class.java)
                 intent.putExtra("Title", (itemList[position])["DocumentId"].toString())

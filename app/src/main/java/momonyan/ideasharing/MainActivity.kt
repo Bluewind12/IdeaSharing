@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
         val item = ArrayList<HashMap<String, Any>>()
         db.collection("PostData")
             .orderBy("Date", Query.Direction.DESCENDING)
-            .orderBy(sort, Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -116,6 +115,7 @@ class MainActivity : AppCompatActivity() {
                 mainRecyclerView.adapter = adapter
                 mainRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             }
+
 
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
@@ -199,6 +199,7 @@ class MainActivity : AppCompatActivity() {
                 }
         }
         cancelButton.setOnClickListener {
+            loadDatabase()
             mDialog.dismiss()
         }
         mDialog.show()

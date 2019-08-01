@@ -13,4 +13,5 @@ class RecyclerHolder(view: View) : RecyclerView.ViewHolder(view) {
     val likeText: TextView = view.likeCountTextView
     val disLikeText: TextView = view.disLiseCountTextView
     val cardView: CardView = view.cardRowCardView
+    val recycler: RecyclerView = view.cardTagRecyclerView
 }
