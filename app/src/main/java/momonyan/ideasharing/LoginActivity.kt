@@ -1,7 +1,6 @@
 package momonyan.ideasharing
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.login_layout.*
 
 
@@ -46,19 +47,25 @@ class LoginActivity : AppCompatActivity() {
             val response = IdpResponse.fromResultIntent(data)
             // Successfully signed in
             if (resultCode == Activity.RESULT_OK) {
-                val shared = getSharedPreferences("DataSave", Context.MODE_PRIVATE)
-                val profile = shared.getBoolean("ProfileEdit", false)
-                Toast.makeText(this, "サインイン成功", Toast.LENGTH_LONG).show()
-                if (profile) {
-                    val i = Intent(this, MainActivity::class.java)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(i)
-                } else {
-                    //TODO プロフィール編集画面へ移動する
-                    val i = Intent(this, ProfileEditActivity::class.java)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(i)
-                }
+
+                val db = FirebaseFirestore.getInstance()
+                val auth = FirebaseAuth.getInstance()
+                val user = auth.currentUser
+                db.collection("ProfileData")
+                    .whereEqualTo("UserId", user!!.uid)
+                    .get()
+                    .addOnSuccessListener { result ->
+                        Toast.makeText(this, "サインイン成功", Toast.LENGTH_LONG).show()
+                        if (result.documents.size != 0) {
+                            val i = Intent(this, MainActivity::class.java)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(i)
+                        } else {
+                            val i = Intent(this, ProfileEditActivity::class.java)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(i)
+                        }
+                    }
             } else {
                 // Sign in failed
                 if (response == null) {

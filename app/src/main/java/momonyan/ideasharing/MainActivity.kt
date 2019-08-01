@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.input_layout.view.*
 import java.util.*
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadDatabase() {
         val db = FirebaseFirestore.getInstance()
         val item = ArrayList<HashMap<String, Any>>()
-        db.collection("Data")
+        db.collection("PostData")
             .orderBy("Date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
@@ -118,12 +119,19 @@ class MainActivity : AppCompatActivity() {
                 .document(user.uid)
                 .get()
                 .addOnSuccessListener { profileResult ->
-                    val profileMap = profileResult.data!!
-                    var headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
-                    val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
+                    val profileMap = profileResult.data
+                    if (profileMap != null) {
+                        val headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
+                        val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
 
-                    headerText.text = profileMap["UserName"].toString()
-                    //TODO ヘッダーのイメージの変更
+                        headerText.text = profileMap["UserName"].toString()
+                        //TODO ヘッダーのイメージの変更
+                        val storageRef = FirebaseStorage.getInstance().reference
+                        val imageRef = storageRef.child(user.uid + "ProfileImage")
+                        GlideApp.with(this)
+                            .load(imageRef)
+                            .into(headerImage)
+                    }
                 }
         } else {
             //error()

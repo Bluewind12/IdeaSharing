@@ -2,6 +2,8 @@ package momonyan.ideasharing
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.profile_edit_layout.*
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.*
 
@@ -19,6 +22,8 @@ class ProfileEditActivity : AppCompatActivity() {
     private val READ_REQUEST_CODE = 1202
     private var uri: Uri? = null
     private var uid: String = ""
+    private var outImg: Bitmap? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit_layout)
@@ -31,6 +36,11 @@ class ProfileEditActivity : AppCompatActivity() {
             uid = user.uid
         }
         dbMap["UserId"] = uid
+
+        val bmp = BitmapFactory.decodeResource(resources, R.drawable.icon_defalt)
+        outImg = Bitmap.createScaledBitmap(bmp, 100, 100, false)
+        profileEditImageButton.setImageBitmap(outImg)
+
         profileEditImageButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             intent.type = "image/*"
@@ -48,26 +58,27 @@ class ProfileEditActivity : AppCompatActivity() {
 
                 val storage = FirebaseStorage.getInstance()
                 val storageRef = storage.getReferenceFromUrl("gs://ideasharing-8a024.appspot.com/")
-                val dir = storageRef.child(uid + "ProfileImage")
-                val task = dir.putFile(uri!!)
-                task.addOnSuccessListener {
-                    // 成功したとき
-                    Toast.makeText(this, "OK", Toast.LENGTH_LONG).show()
-                    if (task.isSuccessful) {
-                        val downloadUri = task.result
-                        dbMap["ImageURL"] = downloadUri.toString()
+
+                val baos = ByteArrayOutputStream()
+                outImg!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val data = baos.toByteArray()
+                var uploadTask = storageRef.child(uid + "ProfileImage").putBytes(data)
+                    .addOnSuccessListener {
+                        dbMap["ImageURL"] = uid + "ProfileImage"
                         val db = FirebaseFirestore.getInstance()
                         db.collection("ProfileData")
-                            .add(dbMap)
+                            .document(uid)
+                            .set(dbMap)
                             .addOnCompleteListener {
                                 //TODO Mainへの遷移
+                                val i = Intent(this, MainActivity::class.java)
+                                startActivity(i)
                             }
                             .addOnFailureListener {
 
                             }
                     }
-                }
-                task.addOnFailureListener {
+                    .addOnFailureListener {
                     // 失敗したとき
                     Toast.makeText(this, "NG", Toast.LENGTH_LONG).show()
 
@@ -83,7 +94,8 @@ class ProfileEditActivity : AppCompatActivity() {
                 uri = resultData.data
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                    profileEditImageButton.setImageBitmap(bitmap)
+                    outImg = Bitmap.createScaledBitmap(bitmap, 100, 100, false)
+                    profileEditImageButton.setImageBitmap(outImg)
 
                 } catch (e: IOException) {
                     e.printStackTrace()
