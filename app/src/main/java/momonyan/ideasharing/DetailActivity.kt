@@ -26,6 +26,12 @@ class DetailActivity : AppCompatActivity() {
                     //TODO Tagリサイクラーの追加
                     //TODO コメントリサイクラーの追加
 
+                    detailPostCardView.setOnClickListener {
+                        //プロフィール詳細画面への遷移
+                        val i = Intent(this, ProfileDetailActivity::class.java)
+                        i.putExtra("UserId", dataMap["Contributor"].toString())
+                        startActivity(i)
+                    }
 
                     db.collection("ProfileData")
                         .document(dataMap["Contributor"].toString())
@@ -35,10 +41,6 @@ class DetailActivity : AppCompatActivity() {
                             detailPostNameTextView.text = profileMap["UserName"].toString()
                             //TODO プロフィールイメージ画像の追加
 
-                            //プロフィール詳細画面への遷移
-                            val i = Intent(this, ProfileDetailActivity::class.java)
-                            i.putExtra("UserId", dataMap["Contributor"].toString())
-                            startActivity(i)
 
                         }
                 }
