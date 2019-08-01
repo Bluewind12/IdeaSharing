@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -61,11 +60,9 @@ class ProfileEditActivity : AppCompatActivity() {
                         db.collection("ProfileData")
                             .add(dbMap)
                             .addOnCompleteListener {
-                                Log.e("LOGGGG", "OKOK")
-
+                                //TODO Mainへの遷移
                             }
                             .addOnFailureListener {
-                                Log.e("LOGGG", "NONO")
 
                             }
                     }

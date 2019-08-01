@@ -100,7 +100,9 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    item.add(document.data as HashMap<String, Any>)
+                    val documentMap = document.data as HashMap<String, Any>
+                    documentMap["DocumentId"] = document.id
+                    item.add(documentMap)
                 }
             }
             .addOnCompleteListener {

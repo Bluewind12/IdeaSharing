@@ -1,6 +1,7 @@
 package momonyan.ideasharing
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,6 +16,11 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
 //            it.dateText.text = (itemList[position])["Post"].toString()
 //            it.dateText.text = (itemList[position])["Like"].toString()
 //            it.dateText.text = (itemList[position])["DisLike"].toString()
+            it.cardView.setOnClickListener {
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("Title", (itemList[position])["DocumentId"].toString())
+                context.startActivity(intent)
+            }
         }
     }
 
