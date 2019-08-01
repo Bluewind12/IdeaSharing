@@ -21,6 +21,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.input_layout.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sortCheckNew: MenuItem
     private lateinit var sortCheckPop: MenuItem
 
+    private var sort = "Date"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,9 +87,11 @@ class MainActivity : AppCompatActivity() {
         when (id) {
             R.id.sortCheckNew -> {
                 sortCheckNew.isChecked = true
+                sort = "Date"
             }
             R.id.sortCheckPop -> {
                 sortCheckPop.isChecked = true
+                sort = "Like"
             }
         }
         return super.onOptionsItemSelected(item)
@@ -98,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         val item = ArrayList<HashMap<String, Any>>()
         db.collection("PostData")
             .orderBy("Date", Query.Direction.DESCENDING)
+            .orderBy(sort, Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -178,8 +183,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 dbMap["Contributor"] = "???"
             }
-            val db = FirebaseFirestore.getInstance()
+            dbMap["Like"] = 0
+            dbMap["DisLike"] = 0
+            dbMap["Date"] = getToday()
 
+            val db = FirebaseFirestore.getInstance()
             db.collection("PostData")
                 .add(dbMap)
                 .addOnCompleteListener {
@@ -194,5 +202,12 @@ class MainActivity : AppCompatActivity() {
             mDialog.dismiss()
         }
         mDialog.show()
+    }
+
+
+    private fun getToday(): String {
+        val date = Date()
+        val sdf = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss", Locale.getDefault())
+        return sdf.format(date)
     }
 }
