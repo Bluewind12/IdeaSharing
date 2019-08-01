@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".ProfileEditActivity"/>
         <activity android:name=".DetailActivity"/>
+        <activity android:name=".ProfileDetailActivity"/>
     </application>
 
 </manifest>
