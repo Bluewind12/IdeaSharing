@@ -8,7 +8,7 @@
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" tools:srcCompat="@tools:sample/avatars"
-            android:id="@+id/imageView"
+            android:id="@+id/navImageView"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -16,7 +16,7 @@
             android:text="NAME!!!!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" app:layout_constraintStart_toEndOf="@+id/imageView"
-            android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="@+id/imageView"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView" android:textSize="30sp"/>
+            android:id="@+id/navNameTextView" app:layout_constraintStart_toEndOf="@+id/navImageView"
+            android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="@+id/navImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/navImageView" android:textSize="30sp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

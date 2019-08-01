@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -58,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         floatingActionButton.setOnClickListener {
             createInputDialog()
         }
-
         loadDatabase()
     }
 
@@ -110,6 +110,25 @@ class MainActivity : AppCompatActivity() {
                 mainRecyclerView.adapter = adapter
                 mainRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             }
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        if (user != null) {
+            db.collection("ProfileData")
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener { profileResult ->
+                    val profileMap = profileResult.data!!
+                    var headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
+                    val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
+
+                    headerText.text = profileMap["UserName"].toString()
+                    //TODO ヘッダーのイメージの変更
+                }
+        } else {
+            //error()
+        }
+
     }
 
     private fun createInputDialog() {
