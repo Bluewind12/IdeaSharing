@@ -5,24 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import momonyan.ideasharing.R
-import momonyan.ideasharing.activity.MainActivity
 import momonyan.ideasharing.holder.TagListRecyclerHolder
 
 
-class InputTagListRecyclerAdapter(
-    private val context: Context,
-    private val itemList: ArrayList<String>,
-    private val activity: MainActivity
-) :
+class TagListRecyclerAdapter(private val context: Context, private val itemList: ArrayList<String>) :
     RecyclerView.Adapter<TagListRecyclerHolder>() {
 
     override fun onBindViewHolder(holder: TagListRecyclerHolder, position: Int) {
         holder.let {
             it.tagText.text = itemList[position]
-            it.tagCard.setOnClickListener {
-                itemList.removeAt(position)
-                activity.setList(itemList)
-            }
         }
     }
 

@@ -26,7 +26,7 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
             it.disLikeText.text = (itemList[position])["DisLike"].toString()
             it.postText.text = (itemList[position])["UserNickName"].toString()
 
-            it.recycler.adapter = InputTagListRecyclerAdapter(
+            it.recycler.adapter = TagListRecyclerAdapter(
                 context,
                 (itemList[position])["Tag"] as ArrayList<String>
             )

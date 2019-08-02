@@ -10,7 +10,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.detail_layout.*
 import momonyan.ideasharing.GlideApp
 import momonyan.ideasharing.R
-import momonyan.ideasharing.adapter.InputTagListRecyclerAdapter
+import momonyan.ideasharing.adapter.TagListRecyclerAdapter
 
 class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
 
                     //Tag
                     detailTagRecyclerView.adapter =
-                        InputTagListRecyclerAdapter(
+                        TagListRecyclerAdapter(
                             this,
                             dataMap["Tag"] as ArrayList<String>
                         )

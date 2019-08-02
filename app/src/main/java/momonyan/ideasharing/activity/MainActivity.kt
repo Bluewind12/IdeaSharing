@@ -39,6 +39,10 @@ class MainActivity : AppCompatActivity() {
 
     private var userName = "Unknown"
 
+    private var recyclerList = arrayListOf<String>()
+
+    private lateinit var tagList: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -188,17 +192,19 @@ class MainActivity : AppCompatActivity() {
         val contentEdit = view.inputContentEditText
         val tagEdit = view.inputTagEditText
         val tagEditAdd = view.inputTagAddButton
-        val tagList = view.inputTagRecyclerView
         val addButton = view.inputAddButton
         val cancelButton = view.inputCancelButton
+        recyclerList = arrayListOf()
 
-        val recyclerList = arrayListOf<String>()
 
+        //Tagのリサイクラー
+        tagList = view.inputTagRecyclerView
         tagEditAdd.setOnClickListener {
-            recyclerList.add(tagEdit.text.toString())
+            if (recyclerList.indexOf(tagEdit.text.toString()) == -1) {
+                recyclerList.add(tagEdit.text.toString())
+            }
             tagEdit.setText("", TextView.BufferType.NORMAL)
-            //Tagのリサイクラー
-            tagList.adapter = InputTagListRecyclerAdapter(this, recyclerList)
+            tagList.adapter = InputTagListRecyclerAdapter(this, recyclerList, this)
             tagList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         }
 
@@ -244,5 +250,12 @@ class MainActivity : AppCompatActivity() {
         val date = Date()
         val sdf = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss", Locale.getDefault())
         return sdf.format(date)
+    }
+
+    fun setList(data: ArrayList<String>) {
+        recyclerList = data
+        //Tagのリサイクラー
+        tagList.adapter = InputTagListRecyclerAdapter(this, recyclerList, this)
+        tagList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
     }
 }
