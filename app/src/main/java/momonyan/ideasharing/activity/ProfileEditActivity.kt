@@ -1,4 +1,4 @@
-package momonyan.ideasharing
+package momonyan.ideasharing.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.profile_edit_layout.*
+import momonyan.ideasharing.R
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.*

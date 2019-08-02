@@ -1,4 +1,4 @@
-package momonyan.ideasharing
+package momonyan.ideasharing.holder
 
 import android.view.View
 import android.widget.TextView

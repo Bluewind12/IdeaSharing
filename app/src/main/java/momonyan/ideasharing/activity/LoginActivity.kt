@@ -1,4 +1,4 @@
-package momonyan.ideasharing
+package momonyan.ideasharing.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -12,6 +12,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.login_layout.*
+import momonyan.ideasharing.R
 
 
 class LoginActivity : AppCompatActivity() {

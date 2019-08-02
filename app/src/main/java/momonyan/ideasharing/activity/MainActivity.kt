@@ -1,4 +1,4 @@
-package momonyan.ideasharing
+package momonyan.ideasharing.activity
 
 import android.app.SearchManager
 import android.content.Context
@@ -22,6 +22,10 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.input_layout.view.*
+import momonyan.ideasharing.GlideApp
+import momonyan.ideasharing.R
+import momonyan.ideasharing.adapter.InputTagListRecyclerAdapter
+import momonyan.ideasharing.adapter.RecyclerAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -40,7 +44,10 @@ class MainActivity : AppCompatActivity() {
         //Toolバーへの設定
         setSupportActionBar(toolbar)
         val actionBarDrawerToggle =
-            object : ActionBarDrawerToggle(this, mainDrawerLayout, toolbar, R.string.open, R.string.close) {
+            object : ActionBarDrawerToggle(this, mainDrawerLayout, toolbar,
+                R.string.open,
+                R.string.close
+            ) {
                 override fun onDrawerStateChanged(newState: Int) {
                     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)

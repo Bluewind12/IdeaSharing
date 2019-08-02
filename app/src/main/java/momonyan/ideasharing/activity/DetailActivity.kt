@@ -1,4 +1,4 @@
-package momonyan.ideasharing
+package momonyan.ideasharing.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.detail_layout.*
+import momonyan.ideasharing.GlideApp
+import momonyan.ideasharing.R
+import momonyan.ideasharing.adapter.InputTagListRecyclerAdapter
 
 class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +31,10 @@ class DetailActivity : AppCompatActivity() {
 
                     //Tag
                     detailTagRecyclerView.adapter =
-                        InputTagListRecyclerAdapter(this, dataMap["Tag"] as ArrayList<String>)
+                        InputTagListRecyclerAdapter(
+                            this,
+                            dataMap["Tag"] as ArrayList<String>
+                        )
                     detailTagRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
                     //TODO コメントリサイクラーの追加
 

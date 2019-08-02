@@ -1,9 +1,11 @@
-package momonyan.ideasharing
+package momonyan.ideasharing.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import momonyan.ideasharing.holder.InputTagListRecyclerHolder
+import momonyan.ideasharing.R
 
 
 class InputTagListRecyclerAdapter(private val context: Context, private val itemList: ArrayList<String>) :

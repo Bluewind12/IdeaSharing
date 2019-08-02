@@ -1,4 +1,4 @@
-package momonyan.ideasharing
+package momonyan.ideasharing.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.profile_layout.*
+import momonyan.ideasharing.GlideApp
+import momonyan.ideasharing.R
+import momonyan.ideasharing.adapter.RecyclerAdapter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.set
