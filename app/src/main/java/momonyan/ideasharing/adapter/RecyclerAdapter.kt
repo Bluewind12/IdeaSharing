@@ -7,9 +7,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
-import momonyan.ideasharing.activity.DetailActivity
 import momonyan.ideasharing.R
+import momonyan.ideasharing.activity.DetailActivity
 import momonyan.ideasharing.holder.RecyclerHolder
 
 class RecyclerAdapter(private val context: Context, private val itemList:ArrayList<HashMap<String, Any>>) :
@@ -20,15 +19,8 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
             it.dateText.text = (itemList[position])["Date"].toString()
             it.likeText.text = (itemList[position])["Like"].toString()
             it.disLikeText.text = (itemList[position])["DisLike"].toString()
+            it.postText.text = (itemList[position])["UserNickName"].toString()
 
-            val db = FirebaseFirestore.getInstance()
-            db.collection("ProfileData")
-                .document((itemList[position])["Contributor"].toString())
-                .get()
-                .addOnSuccessListener { result ->
-                    val documentMap = result.data as java.util.HashMap<String, Any>
-                    it.postText.text = documentMap["UserName"].toString()
-                }
             it.recycler.adapter = InputTagListRecyclerAdapter(
                 context,
                 (itemList[position])["Tag"] as ArrayList<String>

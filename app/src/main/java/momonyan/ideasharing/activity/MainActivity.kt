@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
 
     private var sort = "Date"
 
+    private var userName = "Unknown"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -146,6 +148,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
+        //ヘッダーの内容変更
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
         if (user != null) {
@@ -157,9 +160,9 @@ class MainActivity : AppCompatActivity() {
                     if (profileMap != null) {
                         val headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
                         val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
-
+                        userName = profileMap["UserName"].toString()
                         headerText.text = profileMap["UserName"].toString()
-                        //TODO ヘッダーのイメージの変更
+                        //ヘッダーのイメージの変更
                         val storageRef = FirebaseStorage.getInstance().reference
                         val imageRef = storageRef.child(user.uid + "ProfileImage")
                         GlideApp.with(this)
@@ -194,7 +197,7 @@ class MainActivity : AppCompatActivity() {
         tagEditAdd.setOnClickListener {
             recyclerList.add(tagEdit.text.toString())
             tagEdit.setText("", TextView.BufferType.NORMAL)
-            //TODO ここでRecyclerリスナーをいじる
+            //Tagのリサイクラー
             tagList.adapter = InputTagListRecyclerAdapter(this, recyclerList)
             tagList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         }
@@ -216,6 +219,7 @@ class MainActivity : AppCompatActivity() {
             dbMap["Like"] = 0
             dbMap["DisLike"] = 0
             dbMap["Date"] = getToday()
+            dbMap["UserNickName"] = userName
 
             val db = FirebaseFirestore.getInstance()
             db.collection("PostData")
