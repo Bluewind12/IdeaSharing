@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.card_row_layout.view.*
 
 class RecyclerHolder(view: View) : RecyclerView.ViewHolder(view) {
     val titleText: TextView = view.titleRowTextView
+    val contentText: TextView = view.contentRowTextView
     val dateText: TextView = view.dateRowTextView
     val postText: TextView = view.postNameTextView
     val likeText: TextView = view.likeCountTextView
