@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.detail_layout.*
@@ -13,12 +14,14 @@ import momonyan.ideasharing.R
 import momonyan.ideasharing.adapter.TagListRecyclerAdapter
 
 class DetailActivity : AppCompatActivity() {
+
+    private var favStar = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail_layout)
         val documentId = intent.getStringExtra("DocumentId")
+        val db = FirebaseFirestore.getInstance()
         if (documentId != null) {
-            val db = FirebaseFirestore.getInstance()
             db.collection("PostData")
                 .document(documentId)
                 .get()
@@ -63,6 +66,38 @@ class DetailActivity : AppCompatActivity() {
         }
         detailCommentAddButton.setOnClickListener {
             //TODO コメントの追加
+        }
+
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        var uid = "???"
+        if (user != null) {
+            uid = user.uid
+        }
+
+        db.collection("ProfileData")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { result ->
+                val data = result.data!!
+                val favList: ArrayList<String> = data["favorite"] as ArrayList<String>
+                if (favList.contains(documentId)) {
+                    detailFavView.setImageResource(R.drawable.icon_color_star)
+                    favStar = true
+                } else {
+                    detailFavView.setImageResource(R.drawable.icon_mono_star)
+                    favStar = false
+                }
+            }
+
+        detailFavView.setOnClickListener {
+            if (favStar) {
+
+            } else {
+
+            }
+            favStar = !favStar
         }
     }
 }

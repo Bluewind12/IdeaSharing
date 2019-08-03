@@ -170,7 +170,7 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" app:srcCompat="@android:drawable/btn_star_big_off"
-                android:id="@+id/imageView5"
+                android:id="@+id/detailFavView"
                 app:layout_constraintTop_toTopOf="@+id/detailTitleTextView" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="@+id/detailTitleTextView"/>
 
