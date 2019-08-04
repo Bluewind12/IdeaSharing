@@ -87,6 +87,21 @@ class MainActivity : AppCompatActivity() {
                     i.putExtra("UserId", uid)
                     startActivity(i)
                 }
+                R.id.menuFav -> {
+                }
+                R.id.menuLogOut -> {
+                    val auth = FirebaseAuth.getInstance()
+                    auth.signOut()
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                }
+                R.id.menuPrivacy -> {
+                }
+                R.id.menuReviewHp -> {
+                }
+                R.id.menuSakuraHp -> {
+                }
+
             }
 
             true
@@ -257,5 +272,10 @@ class MainActivity : AppCompatActivity() {
         //Tagのリサイクラー
         tagList.adapter = InputTagListRecyclerAdapter(this, recyclerList, this)
         tagList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadDatabase()
     }
 }

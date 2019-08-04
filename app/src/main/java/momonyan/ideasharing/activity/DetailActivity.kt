@@ -22,6 +22,15 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.detail_layout)
         val documentId = intent.getStringExtra("DocumentId")
         val db = FirebaseFirestore.getInstance()
+
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        var uid = "???"
+        var likeCount: Int
+        if (user != null) {
+            uid = user.uid
+        }
+
         if (documentId != null) {
             db.collection("PostData")
                 .document(documentId)
@@ -30,6 +39,7 @@ class DetailActivity : AppCompatActivity() {
                     val dataMap = result.data!!
                     detailTitleTextView.text = dataMap["Title"].toString()
                     detailContentTextView.text = dataMap["Content"].toString()
+                    likeCount = dataMap["Like"].toString().toInt() + 1
                     detailLikeCountTextView.text = dataMap["Like"].toString()
 
                     //Tag
@@ -46,6 +56,19 @@ class DetailActivity : AppCompatActivity() {
                         val i = Intent(this, ProfileDetailActivity::class.java)
                         i.putExtra("UserId", dataMap["Contributor"].toString())
                         startActivity(i)
+                    }
+                    if (uid != dataMap["Contributor"].toString()) {
+                        detailLikeCard.setOnClickListener {
+                            db.collection("PostData").document(documentId)
+                                .update(
+                                    mapOf("Like" to likeCount)
+                                )
+                                .addOnSuccessListener {
+                                    detailLikeCard.setOnClickListener { }
+                                    detailLikeCountTextView.text = likeCount.toString()
+                                    Toast.makeText(this, "いいねしました", Toast.LENGTH_LONG).show()
+                                }
+                        }
                     }
 
                     db.collection("ProfileData")
@@ -66,14 +89,6 @@ class DetailActivity : AppCompatActivity() {
         }
         detailCommentAddButton.setOnClickListener {
             //TODO コメントの追加
-        }
-
-
-        val auth = FirebaseAuth.getInstance()
-        val user = auth.currentUser
-        var uid = "???"
-        if (user != null) {
-            uid = user.uid
         }
 
         var favList: ArrayList<String> = arrayListOf()
@@ -109,7 +124,6 @@ class DetailActivity : AppCompatActivity() {
                 favStar = false
             } else {
                 favList.add(documentId)
-
                 db.collection("ProfileData").document(uid)
                     .update(
                         mapOf(
@@ -121,5 +135,6 @@ class DetailActivity : AppCompatActivity() {
                 favStar = true
             }
         }
+
     }
 }

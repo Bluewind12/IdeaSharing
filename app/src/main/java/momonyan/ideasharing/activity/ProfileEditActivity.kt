@@ -2,7 +2,6 @@ package momonyan.ideasharing.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -23,7 +22,6 @@ class ProfileEditActivity : AppCompatActivity() {
     private val READ_REQUEST_CODE = 1202
     private var uri: Uri? = null
     private var uid: String = ""
-    private var outImg: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +58,8 @@ class ProfileEditActivity : AppCompatActivity() {
                 val storageRef = storage.getReferenceFromUrl("gs://ideasharing-8a024.appspot.com/")
 
                 val baos = ByteArrayOutputStream()
-                outImg!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()
-                var uploadTask = storageRef.child(uid + "ProfileImage").putBytes(data)
+                storageRef.child(uid + "ProfileImage").putBytes(data)
                     .addOnSuccessListener {
                         dbMap["ImageURL"] = uid + "ProfileImage"
                         val db = FirebaseFirestore.getInstance()

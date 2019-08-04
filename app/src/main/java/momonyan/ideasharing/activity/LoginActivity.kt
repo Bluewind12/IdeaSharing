@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
                         "https://",
                         "https://")
                     .setLogo(R.drawable.icon_book)
-                    .setIsSmartLockEnabled(true)
+                    .setIsSmartLockEnabled(false)
                     .build(),
                 RC_SIGN_IN
             )

@@ -5,12 +5,18 @@
         <menu>
             <item android:title="@string/mypage"
                   android:id="@+id/menuMyPage"/>
+            <item android:title="お気に入り"
+                  android:id="@+id/menuFav"/>
+            <item android:title="ログアウト"
+                  android:id="@+id/menuLogOut"/>
         </menu>
     </item>
     <item android:title="@string/out_site">
         <menu>
             <item android:title="@string/review"
                   android:id="@+id/menuReviewHp"/>
+            <item android:title="プライバシーポリシー"
+                  android:id="@+id/menuPrivacy"/>
             <item android:title="@string/sakura_hp"
                   android:id="@+id/menuSakuraHp"/>
         </menu>
