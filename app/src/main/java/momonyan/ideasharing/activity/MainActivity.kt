@@ -78,7 +78,6 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.menuMyPage -> {
                     val i = Intent(this, ProfileDetailActivity::class.java)
-
                     val auth = FirebaseAuth.getInstance()
                     val user = auth.currentUser
                     var uid = "???"
@@ -123,10 +122,12 @@ class MainActivity : AppCompatActivity() {
             R.id.sortCheckNew -> {
                 sortCheckNew.isChecked = true
                 sort = "Date"
+                loadDatabase()
             }
             R.id.sortCheckPop -> {
                 sortCheckPop.isChecked = true
                 sort = "Like"
+                loadDatabase()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val item = ArrayList<HashMap<String, Any>>()
         db.collection("PostData")
-            .orderBy("Date", Query.Direction.DESCENDING)
+            .orderBy(sort, Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
