@@ -104,7 +104,7 @@ class DetailActivity : AppCompatActivity() {
                             "Favorite" to favList
                         )
                     )
-                    .addOnSuccessListener { Toast.makeText(this, "お気に入り登録しました", Toast.LENGTH_LONG).show() }
+                    .addOnSuccessListener { Toast.makeText(this, "お気に入り解除しました", Toast.LENGTH_LONG).show() }
                 detailFavView.setImageResource(R.drawable.icon_mono_star)
                 favStar = false
             } else {
@@ -116,7 +116,7 @@ class DetailActivity : AppCompatActivity() {
                             "Favorite" to favList
                         )
                     )
-                    .addOnSuccessListener { Toast.makeText(this, "お気に入り解除しました", Toast.LENGTH_LONG).show() }
+                    .addOnSuccessListener { Toast.makeText(this, "お気に入り登録しました", Toast.LENGTH_LONG).show() }
                 detailFavView.setImageResource(R.drawable.icon_color_star)
                 favStar = true
             }
