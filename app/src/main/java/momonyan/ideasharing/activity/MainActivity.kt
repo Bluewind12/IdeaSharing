@@ -224,7 +224,6 @@ class MainActivity : AppCompatActivity() {
                 dbMap["Contributor"] = "???"
             }
             dbMap["Like"] = 0
-            dbMap["DisLike"] = 0
             dbMap["Date"] = getToday()
             dbMap["UserNickName"] = userName
 

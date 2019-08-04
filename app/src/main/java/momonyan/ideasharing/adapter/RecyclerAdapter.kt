@@ -23,7 +23,6 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
             }
             it.dateText.text = (itemList[position])["Date"].toString()
             it.likeText.text = (itemList[position])["Like"].toString()
-            it.disLikeText.text = (itemList[position])["DisLike"].toString()
             it.postText.text = (itemList[position])["UserNickName"].toString()
 
             it.recycler.adapter = TagListRecyclerAdapter(

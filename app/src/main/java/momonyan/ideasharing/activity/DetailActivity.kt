@@ -31,7 +31,6 @@ class DetailActivity : AppCompatActivity() {
                     detailTitleTextView.text = dataMap["Title"].toString()
                     detailContentTextView.text = dataMap["Content"].toString()
                     detailLikeCountTextView.text = dataMap["Like"].toString()
-                    detailDisLikeCountTextView.text = dataMap["DisLike"].toString()
 
                     //Tag
                     detailTagRecyclerView.adapter =
