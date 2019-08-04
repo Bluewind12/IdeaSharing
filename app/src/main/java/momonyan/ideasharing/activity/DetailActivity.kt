@@ -2,6 +2,7 @@ package momonyan.ideasharing.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -76,12 +77,16 @@ class DetailActivity : AppCompatActivity() {
             uid = user.uid
         }
 
+        var favList: ArrayList<String> = arrayListOf()
+
         db.collection("ProfileData")
             .document(uid)
             .get()
             .addOnSuccessListener { result ->
                 val data = result.data!!
-                val favList: ArrayList<String> = data["favorite"] as ArrayList<String>
+                if (data["Favorite"] != null) {
+                    favList = data["Favorite"] as ArrayList<String>
+                }
                 if (favList.contains(documentId)) {
                     detailFavView.setImageResource(R.drawable.icon_color_star)
                     favStar = true
@@ -93,11 +98,29 @@ class DetailActivity : AppCompatActivity() {
 
         detailFavView.setOnClickListener {
             if (favStar) {
-
+                favList.remove(documentId)
+                db.collection("ProfileData").document(uid)
+                    .update(
+                        mapOf(
+                            "Favorite" to favList
+                        )
+                    )
+                    .addOnSuccessListener { Toast.makeText(this, "お気に入り登録しました", Toast.LENGTH_LONG).show() }
+                detailFavView.setImageResource(R.drawable.icon_mono_star)
+                favStar = false
             } else {
+                favList.add(documentId)
 
+                db.collection("ProfileData").document(uid)
+                    .update(
+                        mapOf(
+                            "Favorite" to favList
+                        )
+                    )
+                    .addOnSuccessListener { Toast.makeText(this, "お気に入り解除しました", Toast.LENGTH_LONG).show() }
+                detailFavView.setImageResource(R.drawable.icon_color_star)
+                favStar = true
             }
-            favStar = !favStar
         }
     }
 }
