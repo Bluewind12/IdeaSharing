@@ -12,6 +12,7 @@ class RecyclerHolder(view: View) : RecyclerView.ViewHolder(view) {
     val dateText: TextView = view.dateRowTextView
     val postText: TextView = view.postNameTextView
     val likeText: TextView = view.likeCountTextView
+    val commentText: TextView = view.commentCountTextView
     val cardView: CardView = view.cardRowCardView
     val recycler: RecyclerView = view.cardTagRecyclerView
 }

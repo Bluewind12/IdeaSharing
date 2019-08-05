@@ -23,7 +23,8 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
                 it.contentText.text = (itemList[position])["Content"].toString()
             }
             it.dateText.text = (itemList[position])["Date"].toString()
-            it.likeText.text = (itemList[position])["Like"].toString()
+            it.likeText.text = "いいね：" + (itemList[position])["Like"].toString()
+            it.commentText.text = "コメント数：" + (itemList[position])["CommentCount"].toString()
 
             it.postText.text = (itemList[position])["UserNickName"].toString()
 

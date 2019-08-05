@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.menuFav -> {
                 }
                 R.id.menuProfileEdit -> {
-                    startActivity(Intent(this, ProfileEditActivity::class.java))
+                    startActivity(Intent(this, ProfileFirstEditActivity::class.java))
                 }
                 R.id.menuLogOut -> {
                     val auth = FirebaseAuth.getInstance()
@@ -243,6 +243,7 @@ class MainActivity : AppCompatActivity() {
                 dbMap["Contributor"] = "???"
             }
             dbMap["Like"] = 0
+            dbMap["CommentCount"] = 0
             dbMap["Date"] = getToday()
 
             val db = FirebaseFirestore.getInstance()

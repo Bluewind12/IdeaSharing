@@ -31,27 +31,37 @@ class ProfileDetailActivity : AppCompatActivity() {
                     //イメージ
                     profileImageView
                     profileNameTextView.text = profileMap["UserName"].toString()
-                    profileCommentCountTextView.text = profileMap["Comment"].toString()
+                    profileCommentTextView.text = profileMap["Comment"].toString()
                     prodileUrlTextView
+
+                    profileCommentCountTextView.text = profileMap["Comment"].toString()
 
                     //アイコンの表示
                     val storageRef = FirebaseStorage.getInstance().reference
-                    val imageRef = storageRef.child(profileMap["UserId"].toString() + "ProfileImage")
-                    GlideApp.with(this)
-                        .load(imageRef)
-                        .into(profileImageView)
+                    storageRef.child(profileMap["UserId"].toString() + "ProfileImage")
+                        .downloadUrl.addOnSuccessListener {
+                        GlideApp.with(this)
+                            .load(it)
+                            .into(profileImageView)
+                    }
                 }
             val item = ArrayList<HashMap<String, Any>>()
             db.collection("PostData")
                 .whereEqualTo("Contributor", userId)
                 .get()
                 .addOnSuccessListener { result ->
+                    var scoreSum = 0
+                    var commentsum = 0
                     for (document in result) {
                         val documentMap = document.data as HashMap<String, Any>
                         documentMap["DocumentId"] = document.id
+                        scoreSum += documentMap["Like"].toString().toInt()
+                        commentsum += documentMap["CommentCount"].toString().toInt()
                         item.add(documentMap)
                     }
                     profilePostCountTextView.text = item.count().toString()
+                    profileScoreCountTextView.text = "$scoreSum"
+                    profileCommentCountTextView.text = "$scoreSum"
 
                 }
                 .addOnCompleteListener {

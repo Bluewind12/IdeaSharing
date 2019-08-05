@@ -44,7 +44,7 @@
                     tools:text="いいね数:123"/>
             <TextView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" android:id="@+id/disLiseCountTextView"
+                    android:layout_height="wrap_content" android:id="@+id/commentCountTextView"
                     android:layout_weight="1" tools:text="悪い数:12"/>
         </LinearLayout>
     </LinearLayout>

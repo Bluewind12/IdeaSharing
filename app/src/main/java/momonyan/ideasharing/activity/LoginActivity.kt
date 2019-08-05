@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(i)
                         } else {
-                            val i = Intent(this, ProfileEditActivity::class.java)
+                            val i = Intent(this, ProfileFirstEditActivity::class.java)
                                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(i)
                         }
