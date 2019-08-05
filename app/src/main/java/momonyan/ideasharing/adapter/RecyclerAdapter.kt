@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import momonyan.ideasharing.R
 import momonyan.ideasharing.activity.DetailActivity
 import momonyan.ideasharing.holder.RecyclerHolder
@@ -23,7 +24,19 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
             }
             it.dateText.text = (itemList[position])["Date"].toString()
             it.likeText.text = (itemList[position])["Like"].toString()
+
             it.postText.text = (itemList[position])["UserNickName"].toString()
+
+            val db = FirebaseFirestore.getInstance()
+            db.collection("ProfileData")
+                .document((itemList[position])["Contributor"].toString())
+                .get()
+                .addOnSuccessListener { profileResult ->
+                    it.postText.text = profileResult["UserName"].toString()
+                }
+                .addOnFailureListener {
+                    Log.e("Error", "ERRORRRRRRRRRRR")
+                }
 
             it.recycler.adapter = TagListRecyclerAdapter(
                 context,

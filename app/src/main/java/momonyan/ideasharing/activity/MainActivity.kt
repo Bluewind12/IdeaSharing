@@ -243,7 +243,6 @@ class MainActivity : AppCompatActivity() {
             }
             dbMap["Like"] = 0
             dbMap["Date"] = getToday()
-            dbMap["UserNickName"] = userName
 
             val db = FirebaseFirestore.getInstance()
             db.collection("PostData")
