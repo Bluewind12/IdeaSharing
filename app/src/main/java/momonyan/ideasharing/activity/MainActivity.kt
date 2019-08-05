@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(i)
                 }
                 R.id.menuFav -> {
+                    startActivity(Intent(this, FavoriteListActivity::class.java))
                 }
                 R.id.menuProfileEdit -> {
                     startActivity(Intent(this, ProfileEditActivity::class.java))
