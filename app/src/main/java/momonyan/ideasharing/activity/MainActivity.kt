@@ -61,18 +61,6 @@ class MainActivity : AppCompatActivity() {
             }
         mainDrawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-        toolbar.inflateMenu(R.menu.search_menu)
-        //検索
-        val mSearchView = toolbar.menu.findItem(R.id.app_bar_search).actionView as SearchView
-        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(s: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(s: String): Boolean {
-                return false
-            }
-        })
         //ドロワーメニュー のクリック動作
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -115,6 +103,33 @@ class MainActivity : AppCompatActivity() {
             createInputDialog()
         }
         loadDatabase()
+
+
+        //ヘッダーの内容変更
+        val db = FirebaseFirestore.getInstance()
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        if (user != null) {
+            db.collection("ProfileData")
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener { profileResult ->
+                    val profileMap = profileResult.data
+                    if (profileMap != null) {
+                        val headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
+                        val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
+                        userName = profileMap["UserName"].toString()
+                        headerText.text = profileMap["UserName"].toString()
+                        //ヘッダーのイメージの変更
+                        val storageRef = FirebaseStorage.getInstance().reference
+                        storageRef.child(user.uid + "ProfileImage").downloadUrl.addOnSuccessListener {
+                            GlideApp.with(this /* context */)
+                                .load(it)
+                                .into(headerImage)
+                        }
+                    }
+                }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -130,7 +145,38 @@ class MainActivity : AppCompatActivity() {
         val searchView = searchMenuItem.actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        //検索
+        val mSearchView = menu.findItem(R.id.app_bar_search).actionView as SearchView
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String): Boolean {
+                Log.d("StringTag",s)
+                return false
+            }
 
+            override fun onQueryTextChange(s: String): Boolean {
+                Log.e("StringTag-:",s)
+                val db = FirebaseFirestore.getInstance()
+                val item = ArrayList<HashMap<String, Any>>()
+                db.collection("PostData")
+                    .orderBy(sort, Query.Direction.DESCENDING)
+                    .get()
+                    .addOnSuccessListener { result ->
+                        for (document in result) {
+                            val documentMap = document.data as HashMap<String, Any>
+                            if (documentMap["Title"].toString().indexOf(s) != -1) {
+                                documentMap["DocumentId"] = document.id
+                                item.add(documentMap)
+                            }
+                        }
+                    }
+                    .addOnCompleteListener {
+                        val adapter = RecyclerAdapter(this@MainActivity, item)
+                        mainRecyclerView.adapter = adapter
+                        mainRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
+                    }
+                return false
+            }
+        })
         return true
     }
 
@@ -171,32 +217,6 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-        //ヘッダーの内容変更
-        val auth = FirebaseAuth.getInstance()
-        val user = auth.currentUser
-        if (user != null) {
-            db.collection("ProfileData")
-                .document(user.uid)
-                .get()
-                .addOnSuccessListener { profileResult ->
-                    val profileMap = profileResult.data
-                    if (profileMap != null) {
-                        val headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
-                        val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
-                        userName = profileMap["UserName"].toString()
-                        headerText.text = profileMap["UserName"].toString()
-                        //ヘッダーのイメージの変更
-                        val storageRef = FirebaseStorage.getInstance().reference
-                        storageRef.child(user.uid + "ProfileImage").downloadUrl.addOnSuccessListener {
-                            GlideApp.with(this /* context */)
-                                .load(it)
-                                .into(headerImage)
-                        }
-                    }
-                }
-        } else {
-            //error()
-        }
 
     }
 

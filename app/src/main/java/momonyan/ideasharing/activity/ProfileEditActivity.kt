@@ -3,6 +3,7 @@ package momonyan.ideasharing.activity
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -48,7 +49,7 @@ class ProfileEditActivity : AppCompatActivity() {
                 .load(it)
                 .into(profileEditImageButton)
         }
-        db.collection("PostData")
+        db.collection("ProfileData")
             .document(uid)
             .get()
             .addOnSuccessListener { result ->
@@ -84,6 +85,7 @@ class ProfileEditActivity : AppCompatActivity() {
                     .build()
 
                 val baos = ByteArrayOutputStream()
+                bmp = (profileEditImageButton.drawable as BitmapDrawable).bitmap
                 bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()
                 storageRef.child(uid + "ProfileImage").putBytes(data, metadata)
@@ -93,7 +95,6 @@ class ProfileEditActivity : AppCompatActivity() {
                             .document(uid)
                             .set(dbMap)
                             .addOnCompleteListener {
-                                //TODO Mainへの遷移
                                 val i = Intent(this, MainActivity::class.java)
                                 startActivity(i)
                             }
