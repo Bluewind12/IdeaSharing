@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.menuFav -> {
                 }
                 R.id.menuProfileEdit -> {
-                    startActivity(Intent(this, ProfileFirstEditActivity::class.java))
+                    startActivity(Intent(this, ProfileEditActivity::class.java))
                 }
                 R.id.menuLogOut -> {
                     val auth = FirebaseAuth.getInstance()

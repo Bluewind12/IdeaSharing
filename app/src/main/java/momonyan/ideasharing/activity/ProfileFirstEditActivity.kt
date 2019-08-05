@@ -3,10 +3,10 @@ package momonyan.ideasharing.activity
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -14,14 +14,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import kotlinx.android.synthetic.main.profile_edit_layout.*
-import momonyan.ideasharing.GlideApp
 import momonyan.ideasharing.R
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.*
 
 
-class ProfileEditActivity : AppCompatActivity() {
+class ProfileFirstEditActivity : AppCompatActivity() {
     private val READ_REQUEST_CODE = 1202
     private var uri: Uri? = null
     private var uid: String = ""
@@ -32,7 +31,6 @@ class ProfileEditActivity : AppCompatActivity() {
         setContentView(R.layout.profile_edit_layout)
 
         val dbMap = HashMap<String, Any>()
-        val db = FirebaseFirestore.getInstance()
 
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
@@ -41,24 +39,8 @@ class ProfileEditActivity : AppCompatActivity() {
         }
         dbMap["UserId"] = uid
 
-        //プロフ編集のイメージの変更
-        val storageRef = FirebaseStorage.getInstance().reference
-        storageRef.child(user!!.uid + "ProfileImage").downloadUrl.addOnSuccessListener {
-            GlideApp.with(this /* context */)
-                .load(it)
-                .into(profileEditImageButton)
-        }
-        db.collection("PostData")
-            .document(uid)
-            .get()
-            .addOnSuccessListener { result ->
-                val userMap = result.data!!
-                profileNameEditText.setText(userMap["UserName"].toString(), TextView.BufferType.NORMAL)
-                profileCommentEditText.setText(userMap["Comment"].toString(), TextView.BufferType.NORMAL)
-                profileHpEditText.setText(userMap["HP"].toString(), TextView.BufferType.NORMAL)
-                profileOtherEditText.setText(userMap["Other"].toString(), TextView.BufferType.NORMAL)
-
-            }
+        bmp = BitmapFactory.decodeResource(resources, R.drawable.icon_defalt)
+        profileEditImageButton.setImageBitmap(bmp)
 
         profileEditImageButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -72,8 +54,7 @@ class ProfileEditActivity : AppCompatActivity() {
             } else {
                 dbMap["UserName"] = profileNameEditText.text.toString()
                 dbMap["Comment"] = profileCommentEditText.text.toString()
-                dbMap["HP"] = profileHpEditText.text.toString()
-                dbMap["Other"] = profileOtherEditText.text.toString()
+                dbMap["HpData"] = profileHpEditText.text.toString()
                 dbMap["CommentCount"] = 0
 
                 val storage = FirebaseStorage.getInstance()
@@ -89,6 +70,7 @@ class ProfileEditActivity : AppCompatActivity() {
                 storageRef.child(uid + "ProfileImage").putBytes(data, metadata)
                     .addOnSuccessListener {
                         dbMap["ImageURL"] = uid + "ProfileImage"
+                        val db = FirebaseFirestore.getInstance()
                         db.collection("ProfileData")
                             .document(uid)
                             .set(dbMap)

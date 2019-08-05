@@ -41,7 +41,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="コメント" android:id="@+id/profileCommentEditButton"/>
+                android:hint="コメント" android:id="@+id/profileCommentEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
             android:text="Webページ"
@@ -74,7 +74,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="HP" android:id="@+id/profileHpEditButton"/>
+                android:hint="HP" android:id="@+id/profileHpEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -87,7 +87,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Twitter"/>
+                android:hint="その他" android:id="@+id/profileOtherEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
     <Button
             android:text="@string/ok_string"
