@@ -79,10 +79,12 @@ class DetailActivity : AppCompatActivity() {
                             detailPostNameTextView.text = profileMap["UserName"].toString()
                             //プロフィールイメージ画像の追加
                             val storageRef = FirebaseStorage.getInstance().reference
-                            val imageRef = storageRef.child(dataMap["Contributor"].toString() + "ProfileImage")
-                            GlideApp.with(this)
-                                .load(imageRef)
-                                .into(detailPostImageView)
+                            storageRef.child(dataMap["Contributor"].toString() + "ProfileImage")
+                                .downloadUrl.addOnSuccessListener {
+                                GlideApp.with(this)
+                                    .load(it)
+                                    .into(detailPostImageView)
+                            }
                         }
                 }
 

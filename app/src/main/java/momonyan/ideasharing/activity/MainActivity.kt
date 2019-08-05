@@ -187,10 +187,11 @@ class MainActivity : AppCompatActivity() {
                         headerText.text = profileMap["UserName"].toString()
                         //ヘッダーのイメージの変更
                         val storageRef = FirebaseStorage.getInstance().reference
-                        val imageRef = storageRef.child(user.uid + "ProfileImage")
-                        GlideApp.with(this)
-                            .load(imageRef)
-                            .into(headerImage)
+                        storageRef.child(user.uid + "ProfileImage").downloadUrl.addOnSuccessListener {
+                            GlideApp.with(this /* context */)
+                                .load(it)
+                                .into(headerImage)
+                        }
                     }
                 }
         } else {
@@ -280,4 +281,5 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         loadDatabase()
     }
+
 }
