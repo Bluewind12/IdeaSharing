@@ -216,9 +216,6 @@ class MainActivity : AppCompatActivity() {
                 mainRecyclerView.adapter = adapter
                 mainRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             }
-
-
-
     }
 
     //Inputダイアログの出力
@@ -298,4 +295,7 @@ class MainActivity : AppCompatActivity() {
         loadDatabase()
     }
 
+    fun detailedSearchDialog(){
+
+    }
 }
