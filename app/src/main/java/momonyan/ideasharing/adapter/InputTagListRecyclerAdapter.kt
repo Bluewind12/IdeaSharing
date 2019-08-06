@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import momonyan.ideasharing.R
+import momonyan.ideasharing.activity.DetailActivity
 import momonyan.ideasharing.activity.MainActivity
 import momonyan.ideasharing.holder.TagListRecyclerHolder
 
@@ -12,7 +13,7 @@ import momonyan.ideasharing.holder.TagListRecyclerHolder
 class InputTagListRecyclerAdapter(
     private val context: Context,
     private val itemList: ArrayList<String>,
-    private val activity: MainActivity
+    private val activity: Any
 ) :
     RecyclerView.Adapter<TagListRecyclerHolder>() {
 
@@ -21,7 +22,11 @@ class InputTagListRecyclerAdapter(
             it.tagText.text = itemList[position]
             it.tagCard.setOnClickListener {
                 itemList.removeAt(position)
-                activity.setList(itemList)
+                if(activity is MainActivity) {
+                    activity.setList(itemList)
+                }else if(activity is DetailActivity){
+                    activity.setList(itemList)
+                }
             }
         }
     }

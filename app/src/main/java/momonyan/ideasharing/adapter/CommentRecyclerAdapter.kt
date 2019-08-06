@@ -46,7 +46,7 @@ class CommentRecyclerAdapter(
             }
             it.card.setOnClickListener {
                 if (uid == (itemList[position])["UserId"].toString() ) {
-                    activity.onCreateEditDialog(
+                    activity.onCreateCommentEditDialog(
                         (itemList[position])["Comment"].toString(),
                         postData,
                         (itemList[position])["DocumentId"].toString()
