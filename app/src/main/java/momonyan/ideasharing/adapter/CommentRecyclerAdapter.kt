@@ -6,12 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import momonyan.ideasharing.R
+import momonyan.ideasharing.activity.DetailActivity
 import momonyan.ideasharing.activity.ProfileDetailActivity
 import momonyan.ideasharing.holder.CommentRecyclerHolder
 
-class CommentRecyclerAdapter(private val context: Context, private val itemList: ArrayList<HashMap<String, Any>>) :
+class CommentRecyclerAdapter(
+    private val context: Context,
+    private val itemList: ArrayList<HashMap<String, Any>>,
+    private val postData: String,
+    private val activity: DetailActivity
+) :
     RecyclerView.Adapter<CommentRecyclerHolder>() {
     override fun onBindViewHolder(holder: CommentRecyclerHolder, position: Int) {
         holder.let {
@@ -25,10 +32,26 @@ class CommentRecyclerAdapter(private val context: Context, private val itemList:
                 .addOnSuccessListener { profileResult ->
                     it.postText.text = profileResult["UserName"].toString()
                 }
-            it.card.setOnClickListener {
+            it.card.setOnLongClickListener {
                 val intent = Intent(context, ProfileDetailActivity::class.java)
                 intent.putExtra("UserId", (itemList[position])["UserId"].toString())
                 context.startActivity(intent)
+                true
+            }
+            val auth = FirebaseAuth.getInstance()
+            val user = auth.currentUser
+            var uid = "???"
+            if (user != null) {
+                uid = user.uid
+            }
+            it.card.setOnClickListener {
+                if (uid == (itemList[position])["UserId"].toString() ) {
+                    activity.onCreateEditDialog(
+                        (itemList[position])["Comment"].toString(),
+                        postData,
+                        (itemList[position])["DocumentId"].toString()
+                    )
+                }
             }
         }
     }

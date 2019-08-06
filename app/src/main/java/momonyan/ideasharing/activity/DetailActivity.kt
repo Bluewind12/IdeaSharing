@@ -2,7 +2,7 @@ package momonyan.ideasharing.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.comment_edit_layout.view.*
 import kotlinx.android.synthetic.main.detail_layout.*
 import momonyan.ideasharing.GlideApp
 import momonyan.ideasharing.R
@@ -34,7 +35,8 @@ class DetailActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
         var uid = "???"
-        var likeCount: Int
+        var likeCount = 0
+        var commentCount = 0
         if (user != null) {
             uid = user.uid
         }
@@ -47,6 +49,7 @@ class DetailActivity : AppCompatActivity() {
                 detailTitleTextView.text = dataMap["Title"].toString()
                 detailContentTextView.text = dataMap["Content"].toString()
                 likeCount = dataMap["Like"].toString().toInt() + 1
+                commentCount = dataMap["CommentCount"].toString().toInt() + 1
                 detailLikeCountTextView.text = dataMap["Like"].toString()
 
                 //Tag
@@ -110,7 +113,15 @@ class DetailActivity : AppCompatActivity() {
                         db.collection("PostData/$documentId/Comment")
                             .add(map)
                             .addOnCompleteListener {
-                                Toast.makeText(this, "コメント投稿しました", Toast.LENGTH_LONG).show()
+                                db.collection("PostData").document(documentId)
+                                    .update(
+                                        mapOf(
+                                            "CommentCount" to commentCount
+                                        )
+                                    )
+                                    .addOnCompleteListener {
+                                        Toast.makeText(this, "コメント投稿しました", Toast.LENGTH_LONG).show()
+                                    }
                             }
                     }
                     .setNegativeButton("キャンセル", null)
@@ -173,12 +184,35 @@ class DetailActivity : AppCompatActivity() {
                 val item = ArrayList<java.util.HashMap<String, Any>>()
                 for (document in result) {
                     val documentMap = document.data as java.util.HashMap<String, Any>
-                    Log.d("TestTags", documentMap["Comment"].toString())
+                    documentMap["DocumentId"] = document.id
                     item.add(documentMap)
                 }
                 detailCommentRecyclerView.adapter =
-                    CommentRecyclerAdapter(this, item)
+                    CommentRecyclerAdapter(this, item, documentId, this@DetailActivity)
                 detailCommentRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             }
+    }
+
+
+    fun onCreateEditDialog(comment: String, path: String, documentId: String) {
+        //DB
+        val db = FirebaseFirestore.getInstance()
+        val view = layoutInflater.inflate(R.layout.comment_edit_layout, null)
+        view.commentReEditText.setText(comment, TextView.BufferType.NORMAL)
+        AlertDialog.Builder(this)
+            .setView(view)
+            .setTitle("コメント編集")
+            .setPositiveButton("更新") { _, _ ->
+                val putComment = view.commentReEditText.text.toString()
+                db.collection("PostData/$path/Comment")
+                    .document(documentId)
+                    .update("Comment", putComment)
+                    .addOnCompleteListener {
+                        setCommentList()
+                    }
+            }
+            .setNegativeButton("キャンセル", null)
+            .create()
+            .show()
     }
 }

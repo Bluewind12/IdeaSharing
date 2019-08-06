@@ -33,9 +33,6 @@ class ProfileDetailActivity : AppCompatActivity() {
                     profileNameTextView.text = profileMap["UserName"].toString()
                     profileCommentTextView.text = profileMap["Comment"].toString()
                     prodileUrlTextView
-
-                    profileCommentCountTextView.text = profileMap["Comment"].toString()
-
                     //アイコンの表示
                     val storageRef = FirebaseStorage.getInstance().reference
                     storageRef.child(profileMap["UserId"].toString() + "ProfileImage")
@@ -51,18 +48,17 @@ class ProfileDetailActivity : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { result ->
                     var scoreSum = 0
-                    var commentsum = 0
+                    var commentSum = 0
                     for (document in result) {
                         val documentMap = document.data as HashMap<String, Any>
                         documentMap["DocumentId"] = document.id
                         scoreSum += documentMap["Like"].toString().toInt()
-                        commentsum += documentMap["CommentCount"].toString().toInt()
+                        commentSum += documentMap["CommentCount"].toString().toInt()
                         item.add(documentMap)
                     }
                     profilePostCountTextView.text = item.count().toString()
                     profileScoreCountTextView.text = "$scoreSum"
-                    profileCommentCountTextView.text = "$scoreSum"
-
+                    profileCommentCountTextView.text = "$commentSum"
                 }
                 .addOnCompleteListener {
                     val adapter = RecyclerAdapter(this, item)
