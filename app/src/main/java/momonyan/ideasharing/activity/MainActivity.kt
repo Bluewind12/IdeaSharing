@@ -26,7 +26,7 @@ import momonyan.ideasharing.GlideApp
 import momonyan.ideasharing.R
 import momonyan.ideasharing.adapter.InputTagListRecyclerAdapter
 import momonyan.ideasharing.adapter.RecyclerAdapter
-import java.text.SimpleDateFormat
+import momonyan.ideasharing.getToday
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -285,12 +285,6 @@ class MainActivity : AppCompatActivity() {
         mDialog.show()
     }
 
-
-    private fun getToday(): String {
-        val date = Date()
-        val sdf = SimpleDateFormat("yyyy/MM/dd-HH:mm:ss", Locale.getDefault())
-        return sdf.format(date)
-    }
 
     fun setList(data: ArrayList<String>) {
         recyclerList = data

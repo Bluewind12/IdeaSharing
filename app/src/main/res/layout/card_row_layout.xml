@@ -25,7 +25,7 @@
                 android:layout_height="12dp"/>
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/postNameTextView"
+                android:layout_height="wrap_content" android:id="@+id/postNameText"
                 tools:text="投稿者名" android:gravity="end"/>
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
