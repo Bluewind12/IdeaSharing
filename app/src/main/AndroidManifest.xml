@@ -29,6 +29,7 @@
         <activity
                 android:name=".CommentEditDialogCreate"
                 android:launchMode="singleInstance"/>
+        <activity android:name=".activity.DetailSearchActivity"/>
     </application>
 
 </manifest>

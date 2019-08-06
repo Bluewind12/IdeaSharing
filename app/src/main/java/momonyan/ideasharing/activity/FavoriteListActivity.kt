@@ -23,7 +23,6 @@ class FavoriteListActivity : AppCompatActivity() {
         //DB
         val db = FirebaseFirestore.getInstance()
         val item = ArrayList<HashMap<String, Any>>()
-
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
         if (user != null) {

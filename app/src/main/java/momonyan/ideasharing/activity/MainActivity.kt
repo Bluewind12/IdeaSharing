@@ -1,5 +1,6 @@
 package momonyan.ideasharing.activity
 
+import android.app.DatePickerDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.detail_search_layout.view.*
 import kotlinx.android.synthetic.main.input_layout.view.*
 import momonyan.ideasharing.GlideApp
 import momonyan.ideasharing.R
@@ -194,6 +196,9 @@ class MainActivity : AppCompatActivity() {
                 sort = "Like"
                 loadDatabase()
             }
+            R.id.app_ber_details ->{
+                detailedSearchDialog()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -295,7 +300,63 @@ class MainActivity : AppCompatActivity() {
         loadDatabase()
     }
 
-    fun detailedSearchDialog(){
+    private fun detailedSearchDialog(){
+        val view = layoutInflater.inflate(R.layout.detail_search_layout, null)
+
+        val titleView = view.detailSearchTitle
+        val contentView = view.detailSearchContent
+        val tagView = view.detailSearchTag
+        val fromView = view.detailSearchFrom
+        val fromDate = Calendar.getInstance()
+        fromView.setOnClickListener {
+            //Calendarインスタンスを取得
+            //DatePickerDialogインスタンスを取得
+            val datePickerDialog = DatePickerDialog(
+                this,
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    //setした日付を取得して表示
+                    fromView.setText(String.format("%d/%02d/%02d", year, month + 1, dayOfMonth));
+                },
+                fromDate.get(Calendar.YEAR),
+                fromDate.get(Calendar.MONTH),
+                fromDate.get(Calendar.DATE)
+            )
+            //dialogを表示
+            datePickerDialog.show()
+        }
+        val sinceView = view.detailSearchSince
+        val sinceDate = Calendar.getInstance();
+        sinceView.setOnClickListener {
+            //Calendarインスタンスを取得
+            //DatePickerDialogインスタンスを取得
+            val datePickerDialog = DatePickerDialog(
+                this,
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    //setした日付を取得して表示
+                    sinceView.setText(String.format("%d/%02d/%02d", year, month + 1, dayOfMonth));
+                },
+                sinceDate.get(Calendar.YEAR),
+                sinceDate.get(Calendar.MONTH),
+                sinceDate.get(Calendar.DATE)
+            )
+            //dialogを表示
+            datePickerDialog.show()
+        }
+        AlertDialog.Builder(this)
+            .setView(view)
+            .setPositiveButton("検索") { _, _ ->
+                val i = Intent(this, DetailSearchActivity::class.java)
+                i.putExtra("Title", titleView.text.toString())
+                i.putExtra("Content", contentView.text.toString())
+                i.putExtra("Tag", tagView.text.toString())
+                i.putExtra("From", fromView.text.toString() + "-00:00:00")
+                i.putExtra("Since", sinceView.text.toString() + "-23:59:59")
+                startActivity(i)
+            }
+            .setNegativeButton("キャンセル", null)
+            .create()
+            .show()
+
 
     }
 }
