@@ -36,6 +36,7 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
     private lateinit var sortCheckNew: MenuItem
     private lateinit var sortCheckPop: MenuItem
+    private lateinit var sortCheckComment: MenuItem
 
     private var sort = "Date"
 
@@ -142,6 +143,7 @@ class MainActivity : AppCompatActivity() {
         sortCheckNew = menu.findItem(R.id.sortCheckNew)
         sortCheckNew.isChecked = true
         sortCheckPop = menu.findItem(R.id.sortCheckPop)
+        sortCheckComment = menu.findItem(R.id.sortCheckComment)
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchMenuItem = menu.findItem(R.id.app_bar_search)
@@ -194,6 +196,11 @@ class MainActivity : AppCompatActivity() {
             R.id.sortCheckPop -> {
                 sortCheckPop.isChecked = true
                 sort = "Like"
+                loadDatabase()
+            }
+            R.id.sortCheckComment -> {
+                sortCheckComment.isChecked = true
+                sort = "CommentCount"
                 loadDatabase()
             }
             R.id.app_ber_details ->{

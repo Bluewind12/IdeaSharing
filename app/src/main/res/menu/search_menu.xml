@@ -13,6 +13,9 @@
         <item android:title="@string/sort_pop"
               android:id="@+id/sortCheckPop"
               app:showAsAction="never"/>
+        <item android:title="コメント数順"
+              android:id="@+id/sortCheckComment"
+              app:showAsAction="never"/>
     </group>
     <item android:title="@string/detail_search"
           android:id="@+id/app_ber_details"
