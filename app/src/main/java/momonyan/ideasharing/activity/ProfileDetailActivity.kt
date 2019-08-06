@@ -64,7 +64,9 @@ class ProfileDetailActivity : AppCompatActivity() {
                     val adapter = RecyclerAdapter(this, item)
                     profileRecyclerView.adapter = adapter
                     profileRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+                    profileProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
                 }
+            profileProgressBar.bringToFront()
 
         }
     }

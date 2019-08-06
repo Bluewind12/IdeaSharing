@@ -220,7 +220,9 @@ class MainActivity : AppCompatActivity() {
                 val adapter = RecyclerAdapter(this, item)
                 mainRecyclerView.adapter = adapter
                 mainRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+                mainProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
             }
+        mainProgressBar.bringToFront()
     }
 
     //Inputダイアログの出力

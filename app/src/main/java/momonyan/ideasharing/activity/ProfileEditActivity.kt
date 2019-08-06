@@ -31,6 +31,7 @@ class ProfileEditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit_layout)
+        profileEditProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
 
         val dbMap = HashMap<String, Any>()
         val db = FirebaseFirestore.getInstance()
@@ -71,6 +72,8 @@ class ProfileEditActivity : AppCompatActivity() {
             if (profileNameEditText.text.toString() == "") {
                 Toast.makeText(this, "ニックネームを入力してください", Toast.LENGTH_LONG).show()
             } else {
+                profileEditProgressBar.visibility = android.widget.ProgressBar.VISIBLE
+                profileAddButton.isEnabled = false
                 dbMap["UserName"] = profileNameEditText.text.toString()
                 dbMap["Comment"] = profileCommentEditText.text.toString()
                 dbMap["HP"] = profileHpEditText.text.toString()
@@ -95,6 +98,7 @@ class ProfileEditActivity : AppCompatActivity() {
                             .document(uid)
                             .set(dbMap)
                             .addOnCompleteListener {
+                                Toast.makeText(this,"プロフィール更新しました",Toast.LENGTH_LONG).show()
                                 val i = Intent(this, MainActivity::class.java)
                                 startActivity(i)
                             }

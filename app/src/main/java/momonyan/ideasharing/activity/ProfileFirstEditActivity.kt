@@ -30,6 +30,7 @@ class ProfileFirstEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit_layout)
 
+        profileEditProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
         val dbMap = HashMap<String, Any>()
 
         val auth = FirebaseAuth.getInstance()
@@ -52,6 +53,8 @@ class ProfileFirstEditActivity : AppCompatActivity() {
             if (profileNameEditText.text.toString() == "") {
                 Toast.makeText(this, "ニックネームを入力してください", Toast.LENGTH_LONG).show()
             } else {
+                profileEditProgressBar.visibility = android.widget.ProgressBar.VISIBLE
+                profileAddButton.isEnabled = false
                 dbMap["UserName"] = profileNameEditText.text.toString()
                 dbMap["Comment"] = profileCommentEditText.text.toString()
                 dbMap["HpData"] = profileHpEditText.text.toString()
@@ -75,7 +78,7 @@ class ProfileFirstEditActivity : AppCompatActivity() {
                             .document(uid)
                             .set(dbMap)
                             .addOnCompleteListener {
-                                //TODO Mainへの遷移
+                                Toast.makeText(this,"プロフィール登録しました",Toast.LENGTH_LONG).show()
                                 val i = Intent(this, MainActivity::class.java)
                                 startActivity(i)
                             }

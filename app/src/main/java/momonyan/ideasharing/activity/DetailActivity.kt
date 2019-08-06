@@ -75,6 +75,8 @@ class DetailActivity : AppCompatActivity() {
                                     )
                                     .addOnCompleteListener {
                                         Toast.makeText(this, "コメント投稿しました", Toast.LENGTH_LONG).show()
+                                        detailCommentEditText.setText("", TextView.BufferType.NORMAL)
+                                        setCommentList()
                                     }
                             }
                     }
@@ -179,7 +181,6 @@ class DetailActivity : AppCompatActivity() {
                     }
                 }
 
-
                 db.collection("ProfileData")
                     .document(dataMap["Contributor"].toString())
                     .get()
@@ -195,6 +196,10 @@ class DetailActivity : AppCompatActivity() {
                                 .into(detailPostImageView)
                         }
                     }
+                    .addOnCompleteListener {
+                        detailProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
+                    }
+                detailProgressBar.bringToFront()
             }
     }
 

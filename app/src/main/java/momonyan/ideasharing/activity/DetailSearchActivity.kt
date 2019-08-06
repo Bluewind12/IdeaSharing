@@ -1,7 +1,6 @@
 package momonyan.ideasharing.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,7 +78,9 @@ class DetailSearchActivity : AppCompatActivity() {
                     detailSearchRecyclerView.adapter = adapter
                     detailSearchRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                     detailSearchCountText.text = "$count 個のアイデアがヒットしました"
+                    detailSearchOutProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
                 }
+            detailSearchOutProgressBar.bringToFront()
 
         }
     }
