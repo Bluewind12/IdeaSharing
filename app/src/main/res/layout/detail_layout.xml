@@ -29,7 +29,7 @@
                           android:layout_marginTop="16dp"
                           app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="16dp"
                           tools:text="投稿者名" android:id="@+id/detailPostNameTextView"/>
-                <ImageView
+                <momonyan.ideasharing.RoundRectCornerImageView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp" tools:srcCompat="@tools:sample/avatars"
                         android:id="@+id/detailPostImageView" app:layout_constraintStart_toStartOf="parent"

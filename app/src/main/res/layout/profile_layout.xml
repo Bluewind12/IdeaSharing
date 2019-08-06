@@ -25,7 +25,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
                                                            android:layout_height="wrap_content">
 
-            <ImageView
+            <momonyan.ideasharing.RoundRectCornerImageView
                     android:layout_width="0dp"
                     android:layout_height="0dp" tools:srcCompat="@tools:sample/avatars"
                     android:id="@+id/profileImageView" android:layout_marginTop="8dp"
