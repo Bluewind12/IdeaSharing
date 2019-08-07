@@ -63,9 +63,6 @@ class CommentRecyclerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentRecyclerHolder {
         val layoutInflater = LayoutInflater.from(context)
         val mView = layoutInflater.inflate(R.layout.comment_card_row_layout, parent, false)
-
-        Log.d("DEBUGTAGA", "NYAN")
-
         return CommentRecyclerHolder(mView)
     }
 }

@@ -193,12 +193,10 @@ class MainActivity : AppCompatActivity() {
         val mSearchView = menu.findItem(R.id.app_bar_search).actionView as SearchView
         mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String): Boolean {
-                Log.d("StringTag",s)
                 return false
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                Log.e("StringTag-:",s)
                 val db = FirebaseFirestore.getInstance()
                 val item = ArrayList<HashMap<String, Any>>()
                 db.collection("PostData")

@@ -33,9 +33,6 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
                 .addOnSuccessListener { profileResult ->
                     it.postText.text = profileResult["UserName"].toString()
                 }
-                .addOnFailureListener {
-                    Log.e("Error", "ERRORRRRRRRRRRR")
-                }
 
             it.recycler.adapter = TagListRecyclerAdapter(
                 context,
@@ -45,7 +42,6 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
             it.cardView.setOnClickListener {
                 val intent = Intent(context, DetailActivity::class.java)
                 intent.putExtra("DocumentId", (itemList[position])["DocumentId"].toString())
-                Log.d("TAGTAG", (itemList[position])["DocumentId"].toString())
                 context.startActivity(intent)
             }
         }
@@ -58,9 +54,6 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerHolder {
         val layoutInflater = LayoutInflater.from(context)
         val mView = layoutInflater.inflate(R.layout.card_row_layout, parent, false)
-
-        Log.d("DEBUGTAGA","NYAN")
-
         return RecyclerHolder(mView)
     }
 }

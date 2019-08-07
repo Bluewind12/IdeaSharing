@@ -43,7 +43,6 @@ class DebugActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d(tag, "${document.id} => ${document.data}")
                     item.add(document.data as HashMap<String, Any>)
                 }
             }
