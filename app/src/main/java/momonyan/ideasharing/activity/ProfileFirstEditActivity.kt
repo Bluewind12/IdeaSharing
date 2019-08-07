@@ -8,11 +8,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
+import kotlinx.android.synthetic.main.image_trimming_layout.view.*
 import kotlinx.android.synthetic.main.profile_edit_layout.*
 import momonyan.ideasharing.R
 import java.io.ByteArrayOutputStream
@@ -101,9 +103,17 @@ class ProfileFirstEditActivity : AppCompatActivity() {
             if (resultData != null) {
                 uri = resultData.data
                 try {
-                    bmp = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                    profileEditImageButton.setImageBitmap(bmp)
-
+                    val view = layoutInflater.inflate(R.layout.detail_search_layout, null)
+                    view.cropImageView.imageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                    AlertDialog.Builder(this)
+                        .setView(view)
+                        .setPositiveButton("決定") { _, _ ->
+                            bmp = view.cropImageView.croppedBitmap
+                            profileEditImageButton.setImageBitmap(bmp)
+                        }
+                        .setNegativeButton("キャンセル", null)
+                        .create()
+                        .show()
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

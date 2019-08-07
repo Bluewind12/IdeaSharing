@@ -14,7 +14,7 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintTop_toBottomOf="@+id/textView10" app:layout_constraintStart_toEndOf="@+id/textView11"
             android:layout_marginStart="8dp" android:scaleType="fitCenter"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"/>
+            tools:srcCompat="@tools:sample/backgrounds/scenic" android:background="@color/nonFill"/>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -105,4 +105,14 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"/>
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp" app:srcCompat="@drawable/icon_plus"
+            android:id="@+id/profileEditPlusMarkImage"
+            app:layout_constraintStart_toStartOf="@+id/profileEditImageButton"
+            app:layout_constraintBottom_toBottomOf="@+id/profileEditImageButton"
+            app:layout_constraintTop_toTopOf="@+id/profileEditImageButton"
+            app:layout_constraintEnd_toEndOf="@+id/profileEditImageButton" android:layout_marginStart="32dp"
+            android:layout_marginBottom="32dp" android:layout_marginTop="32dp" android:layout_marginEnd="32dp"
+            android:alpha="0.75"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

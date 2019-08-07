@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="sakuraColor">#F58F98</color>
+
+    <color name="colorPrimaryAlpha">#AA008577</color>
+    <color name="nonFill">#00000000</color>
+
 </resources>

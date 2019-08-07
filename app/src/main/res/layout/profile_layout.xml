@@ -32,16 +32,14 @@
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent" android:scaleType="fitCenter"
-                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline2"/>
+            />
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/profileNameTextView"
                     app:layout_constraintTop_toTopOf="@+id/profileImageView"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-                    app:layout_constraintHorizontal_bias="0.1" android:textSize="24sp" tools:text="名前"
-                    app:layout_constraintStart_toStartOf="@+id/guideline2"/>
+                    android:textSize="24sp" tools:text="名前"
+                    app:layout_constraintStart_toEndOf="@+id/profileImageView" android:layout_marginStart="24dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,11 +62,6 @@
                     app:layout_constraintStart_toStartOf="@+id/profileNameTextView"
                     android:layout_marginStart="8dp" android:layout_marginTop="8dp"
                     app:layout_constraintTop_toBottomOf="@+id/profileNameTextView" tools:text="コメント文"/>
-            <androidx.constraintlayout.widget.Guideline
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/guideline2" app:layout_constraintGuide_percent="0.3"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

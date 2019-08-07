@@ -49,5 +49,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
 
+    //Image
+    implementation 'com.isseiaoki:simplecropview:1.0.10'
+
 }
 apply plugin: 'com.google.gms.google-services'
