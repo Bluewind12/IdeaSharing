@@ -2,6 +2,8 @@ package momonyan.ideasharing.activity
 
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -78,5 +80,20 @@ class ProfileDetailActivity : AppCompatActivity() {
             profileProgressBar.bringToFront()
 
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.basic_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.basicBack -> {
+                finish()
+            }
+        }
+        return true
     }
 }

@@ -17,8 +17,8 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
     override fun onBindViewHolder(holder: RecyclerHolder, position: Int) {
         holder.let {
             it.titleText.text = (itemList[position])["Title"].toString()
-            if ((itemList[position])["Content"].toString().length >= 29) {
-                it.contentText.text = (itemList[position])["Content"].toString().substring(0, 30) + "…"
+            if ((itemList[position])["Content"].toString().length >= 14) {
+                it.contentText.text = (itemList[position])["Content"].toString().substring(0, 15) + "…"
             } else {
                 it.contentText.text = (itemList[position])["Content"].toString()
             }

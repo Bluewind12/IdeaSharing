@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         //Toolバーへの設定
         setSupportActionBar(toolbar)
         val actionBarDrawerToggle =

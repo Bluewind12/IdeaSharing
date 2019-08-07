@@ -10,26 +10,31 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity"
+                  android:label="アイデアシェアリング！"
                   android:theme="@style/AppThemeNoAction">
         </activity>
         <activity android:name=".activity.DebugActivity">
         </activity>
 
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.LoginActivity"
+                  android:label="アイデアシェアリング！">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ProfileFirstEditActivity"/>
-        <activity android:name=".activity.DetailActivity"/>
-        <activity android:name=".activity.ProfileDetailActivity"/>
-        <activity android:name=".activity.ProfileEditActivity"/>
-        <activity android:name=".activity.FavoriteListActivity"/>
-        <activity
-                android:name=".CommentEditDialogCreate"
-                android:launchMode="singleInstance"/>
-        <activity android:name=".activity.DetailSearchActivity"/>
+        <activity android:name=".activity.ProfileFirstEditActivity"
+                  android:label="プロフィール編集"/>
+        <activity android:name=".activity.ProfileEditActivity"
+                  android:label="プロフィール編集"/>
+        <activity android:name=".activity.DetailActivity"
+                  android:label="詳細画面"/>
+        <activity android:name=".activity.ProfileDetailActivity"
+                  android:label="プロフィール画面"/>
+        <activity android:name=".activity.FavoriteListActivity"
+                  android:label="お気に入り"/>
+        <activity android:name=".activity.DetailSearchActivity"
+                  android:label="検索画面"/>
     </application>
 
 </manifest>

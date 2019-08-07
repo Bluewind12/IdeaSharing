@@ -68,6 +68,7 @@ class DetailActivity : AppCompatActivity() {
                         map["Date"] = getToday()
                         db.collection("PostData/$documentId/Comment")
                             .add(map)
+                            .addOnSuccessListener { commentCount++ }
                             .addOnCompleteListener {
                                 db.collection("PostData").document(documentId)
                                     .update("CommentCount" , commentCount)
@@ -142,7 +143,7 @@ class DetailActivity : AppCompatActivity() {
                 detailTitleTextView.text = dataMap["Title"].toString()
                 detailContentTextView.text = dataMap["Content"].toString()
                 likeCount = dataMap["Like"].toString().toInt()
-                commentCount = dataMap["CommentCount"].toString().toInt() + 1
+                commentCount = dataMap["CommentCount"].toString().toInt()
                 detailLikeCountTextView.text = dataMap["Like"].toString()
 
                 //Tag

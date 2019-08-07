@@ -15,14 +15,11 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/titleRowTextView" tools:text="タイトル"
-                android:textSize="36sp"/>
+                android:textSize="24sp"/>
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/contentRowTextView" tools:text="内容"
                 android:textSize="18sp"/>
-        <Space
-                android:layout_width="match_parent"
-                android:layout_height="12dp"/>
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/postNameText"
