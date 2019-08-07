@@ -1,21 +1,25 @@
 <resources>
     <string name="app_name">IdeaSharing</string>
+
     <string name="open">開く</string>
     <string name="close">閉じる</string>
+
     <string name="function">機能</string>
     <string name="mypage">マイページ</string>
     <string name="out_site">外部サイト</string>
     <string name="review">レビュー</string>
     <string name="sakura_hp">幻想乃桜工房のHP</string>
+
+    <!--メニュー-->
     <string name="search_string">検索</string>
     <string name="sort_new">新着順</string>
     <string name="sort_pop">人気順</string>
     <string name="detail_search">詳細検索</string>
+
+
     <string name="post_count">投稿数</string>
     <string name="overall_rating">総合評価</string>
     <string name="comment_count">コメント数</string>
-    <string name="title_string">タイトル</string>
-    <string name="content_string">内容</string>
     <string name="tag">TAG</string>
     <string name="ok_string">決定</string>
     <string name="cancel_string">キャンセル</string>
@@ -24,4 +28,15 @@
     <string name="comment_view_list">コメント一覧</string>
     <string name="comment">コメント</string>
     <string name="comment_add">コメント投稿</string>
+    <string name="input_name">ニックネーム(必須)</string>
+    <string name="input_web">Webページ</string>
+    <string name="input_profile">プロフィール</string>
+    <string name="input_profile_image">プロフィール画像</string>
+    <string name="input_hp">HP</string>
+    <string name="input_other">その他</string>
+    <string name="login">LOGIN</string>
+    <string name="title_string">タイトル</string>
+    <string name="content_string">内容</string>
+    <string name="date_clock">日時</string>
+    <string name="kara">から</string>
 </resources>

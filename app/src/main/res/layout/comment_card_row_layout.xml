@@ -19,9 +19,8 @@
                 android:layout_height="wrap_content" android:id="@+id/commentPostNameText" android:layout_weight="1"
                 tools:text="投稿者名" android:gravity="end"/>
         <TextView
-                android:text="登校日"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/commentPostDateText" android:layout_weight="1"
-                android:gravity="end"/>
+                android:gravity="end" tools:text="登校日"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

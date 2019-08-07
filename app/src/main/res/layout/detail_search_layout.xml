@@ -11,7 +11,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="タイトル" android:id="@+id/detailSearchTitle"/>
+                android:hint="@string/title_string" android:id="@+id/detailSearchTitle"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="内容" android:id="@+id/detailSearchContent"/>
+                android:hint="@string/content_string" android:id="@+id/detailSearchContent"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -42,10 +42,10 @@
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="日時" android:id="@+id/detailSearchFrom" android:focusable="false"/>
+                    android:hint="@string/date_clock" android:id="@+id/detailSearchFrom" android:focusable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
-                android:text="から"
+                android:text="@string/kara"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content" android:id="@+id/textView" android:layout_weight="1"
                 android:gravity="center" android:layout_gravity="center"/>
@@ -56,7 +56,7 @@
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="日時" android:id="@+id/detailSearchSince" android:focusable="false"/>
+                    android:hint="@string/date_clock" android:id="@+id/detailSearchSince" android:focusable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </LinearLayout>
