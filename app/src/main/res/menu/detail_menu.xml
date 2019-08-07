@@ -6,4 +6,13 @@
           android:icon="@drawable/icon_pen_w"
           app:showAsAction="always"
     />
+    <item android:id="@+id/detailMenuTrash"
+          android:title="削除"
+          android:icon="@drawable/icon_trash"
+          app:showAsAction="always"
+    />
+    <item android:id="@+id/detailMenuBack"
+          android:title="戻る"
+          android:icon="@drawable/icon_back"
+          app:showAsAction="always"/>
 </menu>

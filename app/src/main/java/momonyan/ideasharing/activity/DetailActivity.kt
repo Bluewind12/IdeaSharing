@@ -33,6 +33,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var documentId: String
     private lateinit var editMenu: MenuItem
+    private lateinit var trashMenu: MenuItem
 
     private var uid = "???"
     private var likeCount = 0
@@ -69,11 +70,7 @@ class DetailActivity : AppCompatActivity() {
                             .add(map)
                             .addOnCompleteListener {
                                 db.collection("PostData").document(documentId)
-                                    .update(
-                                        mapOf(
-                                            "CommentCount" to commentCount
-                                        )
-                                    )
+                                    .update("CommentCount" , commentCount)
                                     .addOnCompleteListener {
                                         Toast.makeText(this, "コメント投稿しました", Toast.LENGTH_LONG).show()
                                         detailCommentEditText.setText("", TextView.BufferType.NORMAL)
@@ -109,22 +106,14 @@ class DetailActivity : AppCompatActivity() {
             if (favStar) {
                 favList.remove(documentId)
                 db.collection("ProfileData").document(uid)
-                    .update(
-                        mapOf(
-                            "Favorite" to favList
-                        )
-                    )
+                    .update("Favorite", favList)
                     .addOnSuccessListener { Toast.makeText(this, "お気に入り解除しました", Toast.LENGTH_LONG).show() }
                 detailFavView.setImageResource(R.drawable.icon_mono_star)
                 favStar = false
             } else {
                 favList.add(documentId)
                 db.collection("ProfileData").document(uid)
-                    .update(
-                        mapOf(
-                            "Favorite" to favList
-                        )
-                    )
+                    .update("Favorite", favList)
                     .addOnSuccessListener { Toast.makeText(this, "お気に入り登録しました", Toast.LENGTH_LONG).show() }
                 detailFavView.setImageResource(R.drawable.icon_color_star)
                 favStar = true
@@ -171,6 +160,7 @@ class DetailActivity : AppCompatActivity() {
                 }
                 if (uid != dataMap["Contributor"].toString()) {
                     editMenu.isVisible = false
+                    trashMenu.isVisible = false
                     detailLikeCard.setOnClickListener {
                         setLikeButtonListener(true)
                     }
@@ -232,6 +222,33 @@ class DetailActivity : AppCompatActivity() {
                         setCommentList()
                     }
             }
+            .setNeutralButton("削除") { _, _ ->
+                AlertDialog.Builder(this)
+                    .setTitle("削除確認")
+                    .setMessage("削除してもよろしいでしょうか")
+                    .setPositiveButton("削除") { _, _ ->
+                        commentCount--
+                        detailProgressBar.visibility = android.widget.ProgressBar.VISIBLE
+                        db.collection("PostData/$path/Comment").document(documentId)
+                            .delete()
+                            .addOnCompleteListener {
+                                db.collection("PostData").document(this.documentId)
+                                    .update("CommentCount", commentCount)
+                                    .addOnCompleteListener {
+                                        Toast.makeText(this, "削除しました", Toast.LENGTH_LONG).show()
+                                        setCommentList()
+                                        detailProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
+                                    }
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "エラー", Toast.LENGTH_LONG).show()
+                                Log.e("Error", "Document", e)
+                            }
+                    }
+                    .setNegativeButton("キャンセル", null)
+                    .show()
+
+            }
             .setNegativeButton("キャンセル", null)
             .create()
             .show()
@@ -241,6 +258,7 @@ class DetailActivity : AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.detail_menu, menu)
         editMenu = menu.findItem(R.id.detailMenuEdit)
+        trashMenu = menu.findItem(R.id.detailMenuTrash)
         return true
     }
 
@@ -249,8 +267,34 @@ class DetailActivity : AppCompatActivity() {
             R.id.detailMenuEdit -> {
                 createInputEditDialog()
             }
+            R.id.detailMenuTrash -> {
+                createTrashMenu()
+            }
+            R.id.detailMenuBack -> {
+                finish()
+            }
         }
         return true
+    }
+
+    //削除
+    private fun createTrashMenu() {
+        AlertDialog.Builder(this)
+            .setTitle("削除確認")
+            .setMessage("削除してもよろしいでしょうか")
+            .setPositiveButton("削除") { _, _ ->
+                detailProgressBar.visibility = android.widget.ProgressBar.VISIBLE
+                db.collection("PostData").document(documentId)
+                    .delete()
+                    .addOnSuccessListener { Toast.makeText(this, "削除しました", Toast.LENGTH_LONG).show() }
+                    .addOnCompleteListener { finish() }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "エラー", Toast.LENGTH_LONG).show()
+                        Log.e("Error", "Document", e)
+                    }
+            }
+            .setNegativeButton("キャンセル", null)
+            .show()
     }
 
     //編集ダイアログの出力
