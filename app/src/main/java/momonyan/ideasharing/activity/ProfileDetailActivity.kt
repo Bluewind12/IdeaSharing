@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.profile_layout.*
@@ -21,6 +22,11 @@ class ProfileDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_layout)
+
+        //AD
+        val adRequest = AdRequest.Builder().build()
+            profileAdView.loadAd(adRequest)
+
 
         //ImageView
         val imageColor = resources.getColor(R.color.colorPrimary)
