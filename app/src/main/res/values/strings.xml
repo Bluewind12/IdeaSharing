@@ -39,4 +39,8 @@
     <string name="content_string">内容</string>
     <string name="date_clock">日時</string>
     <string name="kara">から</string>
+
+    <string name="review_url">market://details?id=momonyan.ideasharing</string>
+    <string name="privacy_url">https://ja.wikipedia.org/wiki/%E4%BD%9C%E6%88%90%E4%B8%AD</string>
+    <string name="sakura_hp_url">https://www.gensounosakura.work/</string>
 </resources>

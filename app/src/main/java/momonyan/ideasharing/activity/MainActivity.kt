@@ -5,6 +5,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -107,10 +108,19 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.menuPrivacy -> {
+                    val uri = Uri.parse(getString(R.string.privacy_url))
+                    val i = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(i)
                 }
                 R.id.menuReview -> {
+                    val uri = Uri.parse(getString(R.string.review_url))
+                    val i = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(i)
                 }
                 R.id.menuSakuraHp -> {
+                    val uri = Uri.parse(getString(R.string.sakura_hp_url))
+                    val i = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(i)
                 }
 
             }
