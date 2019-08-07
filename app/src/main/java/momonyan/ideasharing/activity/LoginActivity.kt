@@ -3,7 +3,6 @@ package momonyan.ideasharing.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
@@ -37,9 +36,10 @@ class LoginActivity : AppCompatActivity() {
                     .createSignInIntentBuilder()
                     .setAvailableProviders(providers)
                     .setTosAndPrivacyPolicyUrls(
-                        "https://",
-                        "https://")
-                    .setLogo(R.drawable.icon_book)
+                        getString(R.string.privacy_url),
+                        getString(R.string.privacy_url)
+                    )
+                    .setLogo(R.drawable.app_icon)
                     .setIsSmartLockEnabled(true)
                     .build(),
                 RC_SIGN_IN
@@ -61,7 +61,6 @@ class LoginActivity : AppCompatActivity() {
                     .whereEqualTo("UserId", user!!.uid)
                     .get()
                     .addOnSuccessListener { result ->
-                        Toast.makeText(this, "サインイン成功", Toast.LENGTH_LONG).show()
                         if (result.documents.size != 0) {
                             val i = Intent(this, MainActivity::class.java)
                                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -76,17 +75,14 @@ class LoginActivity : AppCompatActivity() {
                 // Sign in failed
                 if (response == null) {
                     // User pressed back button
-                    Toast.makeText(this, "何もせず帰ってきた", Toast.LENGTH_LONG).show()
                     return
                 }
 
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                    Toast.makeText(this, "ネットに繋がっていない", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "ネットワークに接続してください", Toast.LENGTH_LONG).show()
                     return
                 }
-
                 Toast.makeText(this, "サインイン失敗", Toast.LENGTH_LONG).show()
-                Log.e("firebase", "Sign-in error: ", response.error)
             }
         }
     }

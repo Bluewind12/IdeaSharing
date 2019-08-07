@@ -3,7 +3,7 @@
 
     <item android:title="@string/search_string"
           android:id="@+id/app_bar_search"
-          android:icon="@drawable/ic_search_black_24dp"
+          android:icon="@drawable/icon_lens"
           app:actionViewClass="android.widget.SearchView"
           app:showAsAction="ifRoom"/>
     <group android:checkableBehavior="single">
@@ -19,7 +19,6 @@
     </group>
     <item android:title="@string/detail_search"
           android:id="@+id/app_ber_details"
-          android:icon="@drawable/ic_search_black_24dp"
-          app:showAsAction="never"/>
+    />
 
 </menu>

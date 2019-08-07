@@ -22,11 +22,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
-                android:theme="?attr/actionBarTheme"
+                android:theme="@style/NoActionBarTheme"
                 android:minHeight="?attr/actionBarSize"
                 android:id="@+id/toolbar" app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:popupTheme="@style/Theme.AppCompat.Light" />
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
