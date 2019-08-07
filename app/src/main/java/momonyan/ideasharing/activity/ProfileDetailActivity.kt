@@ -40,7 +40,8 @@ class ProfileDetailActivity : AppCompatActivity() {
                     profileImageView
                     profileNameTextView.text = profileMap["UserName"].toString()
                     profileCommentTextView.text = profileMap["Comment"].toString()
-                    prodileUrlTextView
+                    prodileUrlTextView.text = profileMap["HP"].toString()
+                    profileOtherTextView.text = profileMap["Other"].toString()
                     //アイコンの表示
                     val storageRef = FirebaseStorage.getInstance().reference
                     storageRef.child(profileMap["UserId"].toString() + "ProfileImage")
