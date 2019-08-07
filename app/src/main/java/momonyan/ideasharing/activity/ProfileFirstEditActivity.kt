@@ -17,6 +17,7 @@ import com.google.firebase.storage.StorageMetadata
 import kotlinx.android.synthetic.main.image_trimming_layout.view.*
 import kotlinx.android.synthetic.main.profile_edit_layout.*
 import momonyan.ideasharing.R
+import net.taptappun.taku.kobayashi.runtimepermissionchecker.RuntimePermissionChecker
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.*
@@ -45,12 +46,21 @@ class ProfileFirstEditActivity : AppCompatActivity() {
         bmp = BitmapFactory.decodeResource(resources, R.drawable.icon_defalt)
         profileEditImageButton.setImageBitmap(bmp)
 
-        profileEditImageButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.type = "image/*"
-            startActivityForResult(intent, READ_REQUEST_CODE)
-
+        if (RuntimePermissionChecker.hasSelfPermission(this, "android.permission.READ_EXTERNAL_STORAGE")
+        ) {
+            // パーミッションの許可をリクエスト
+            RuntimePermissionChecker.requestAllPermissions(this, 1234)
         }
+        // パーミッションが許可されている
+        else {
+            profileEditImageButton.setOnClickListener {
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                intent.type = "image/*"
+                startActivityForResult(intent, READ_REQUEST_CODE)
+            }
+        }
+
+
         profileAddButton.setOnClickListener {
             if (profileNameEditText.text.toString() == "") {
                 Toast.makeText(this, "ニックネームを入力してください", Toast.LENGTH_LONG).show()

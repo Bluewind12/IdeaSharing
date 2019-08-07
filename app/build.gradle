@@ -55,5 +55,7 @@ dependencies {
     implementation 'com.isseiaoki:simplecropview:1.0.10'
     implementation 'com.google.android.gms:play-services-ads:18.1.1'
 
+    //permission
+    implementation 'net.taptappun.taku.kobayashi:runtimepermissionchecker:1.1.1'
 }
 apply plugin: 'com.google.gms.google-services'
