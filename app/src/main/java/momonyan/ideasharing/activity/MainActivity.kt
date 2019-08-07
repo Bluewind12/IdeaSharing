@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,6 +36,7 @@ import momonyan.ideasharing.adapter.RecyclerAdapter
 import momonyan.ideasharing.getToday
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tagList: RecyclerView
 
+    private lateinit var mInterstitialAd: InterstitialAd //AD
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,6 +61,11 @@ class MainActivity : AppCompatActivity() {
         //AD
         val adRequest = AdRequest.Builder().build()
         mainAdView.loadAd(adRequest)
+
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = getString(R.string.ad_in_comment)
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+
 
         //Toolバーへの設定
         setSupportActionBar(toolbar)
@@ -312,11 +321,16 @@ class MainActivity : AppCompatActivity() {
             db.collection("PostData")
                 .add(dbMap)
                 .addOnCompleteListener {
+                    //広告表示
+                    if (mInterstitialAd.isLoaded && Random.nextInt(100) >= 0) {
+                        mInterstitialAd.show()
+                    } else {
+                        Log.d("TAG", "The interstitial wasn't loaded yet.")
+                    }
                     loadDatabase()
                     mDialog.dismiss()
                 }
                 .addOnFailureListener {
-                    Log.e("Error", "ERRORRRRRRRRRRR")
                 }
         }
         cancelButton.setOnClickListener {

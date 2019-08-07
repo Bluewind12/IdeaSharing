@@ -13,14 +13,14 @@
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-6499097800180510~7424909357"/>
         <activity android:name=".activity.MainActivity"
-                  android:label="アイデアシェアリング！"
+                  android:label="アイシェア！"
                   android:theme="@style/AppThemeNoAction">
         </activity>
         <activity android:name=".activity.DebugActivity">
         </activity>
 
         <activity android:name=".activity.LoginActivity"
-                  android:label="アイデアシェアリング！">
+                  android:label="アイシェア！">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

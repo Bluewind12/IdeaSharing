@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -26,6 +27,7 @@ import momonyan.ideasharing.adapter.CommentRecyclerAdapter
 import momonyan.ideasharing.adapter.InputTagListRecyclerAdapter
 import momonyan.ideasharing.adapter.TagListRecyclerAdapter
 import momonyan.ideasharing.getToday
+import kotlin.random.Random
 
 
 class DetailActivity : AppCompatActivity() {
@@ -53,6 +55,9 @@ class DetailActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         detailAdView.loadAd(adRequest)
 
+        val mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = getString(R.string.ad_in_comment)
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
 
         documentId = intent.getStringExtra("DocumentId")
         db = FirebaseFirestore.getInstance()
@@ -81,6 +86,12 @@ class DetailActivity : AppCompatActivity() {
                                     .addOnCompleteListener {
                                         Toast.makeText(this, "コメント投稿しました", Toast.LENGTH_LONG).show()
                                         detailCommentEditText.setText("", TextView.BufferType.NORMAL)
+                                        //広告表示
+                                        if (mInterstitialAd.isLoaded && Random.nextInt(100) >= 0) {
+                                            mInterstitialAd.show()
+                                        } else {
+                                            Log.d("TAG", "The interstitial wasn't loaded yet.")
+                                        }
                                         setCommentList()
                                     }
                             }
