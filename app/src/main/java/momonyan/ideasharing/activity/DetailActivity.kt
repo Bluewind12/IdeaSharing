@@ -1,6 +1,7 @@
 package momonyan.ideasharing.activity
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -151,7 +152,7 @@ class DetailActivity : AppCompatActivity() {
 
                 detailTitleTextView.text = dataMap["Title"].toString()
                 detailContentTextView.text = dataMap["Content"].toString()
-                likeCount = dataMap["Like"].toString().toInt() + 1
+                likeCount = dataMap["Like"].toString().toInt()
                 commentCount = dataMap["CommentCount"].toString().toInt() + 1
                 detailLikeCountTextView.text = dataMap["Like"].toString()
 
@@ -171,13 +172,7 @@ class DetailActivity : AppCompatActivity() {
                 if (uid != dataMap["Contributor"].toString()) {
                     editMenu.isVisible = false
                     detailLikeCard.setOnClickListener {
-                        db.collection("PostData").document(documentId)
-                            .update("Like", likeCount)
-                            .addOnSuccessListener {
-                                detailLikeCard.setOnClickListener { }
-                                detailLikeCountTextView.text = likeCount.toString()
-                                Toast.makeText(this, "いいねしました", Toast.LENGTH_LONG).show()
-                            }
+                        setLikeButtonListener(true)
                     }
                 }
 
@@ -220,7 +215,6 @@ class DetailActivity : AppCompatActivity() {
             }
     }
 
-
     fun onCreateCommentEditDialog(comment: String, path: String, documentId: String) {
         //DB
         val db = FirebaseFirestore.getInstance()
@@ -251,8 +245,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
+        when (item.itemId) {
             R.id.detailMenuEdit -> {
                 createInputEditDialog()
             }
@@ -260,7 +253,7 @@ class DetailActivity : AppCompatActivity() {
         return true
     }
 
-    //Inputダイアログの出力
+    //編集ダイアログの出力
     private fun createInputEditDialog() {
         val view = layoutInflater.inflate(R.layout.input_layout, null)
 
@@ -328,5 +321,29 @@ class DetailActivity : AppCompatActivity() {
         //Tagのリサイクラー
         tagRecycler.adapter = InputTagListRecyclerAdapter(this, recyclerList, this)
         tagRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+    }
+
+    private fun setLikeButtonListener(flag: Boolean) {
+        if (flag) {
+            likeCount++
+            db.collection("PostData").document(documentId)
+                .update("Like", likeCount)
+                .addOnSuccessListener {
+                    detailLikeCard.setOnClickListener { setLikeButtonListener(false) }
+                    detailLikeImageView.setColorFilter(0xf39800, PorterDuff.Mode.SRC_IN)
+                    detailLikeCountTextView.text = likeCount.toString()
+                    Toast.makeText(this, "いいねしました", Toast.LENGTH_LONG).show()
+                }
+        } else {
+            likeCount--
+            db.collection("PostData").document(documentId)
+                .update("Like", likeCount)
+                .addOnSuccessListener {
+                    detailLikeCard.setOnClickListener { setLikeButtonListener(true) }
+                    detailLikeImageView.setColorFilter(0x000000, PorterDuff.Mode.SRC_IN)
+                    detailLikeCountTextView.text = likeCount.toString()
+                    Toast.makeText(this, "いいね解除しました", Toast.LENGTH_LONG).show()
+                }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package momonyan.ideasharing.activity
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +20,15 @@ class ProfileDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_layout)
 
-        val userId = intent.getStringExtra("UserId")
+        //ImageView
+        val imageColor = resources.getColor(R.color.colorPrimary)
+        profileWebImageView.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
+        profileOtherImageView.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
+        profilePostCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
+        profileScoreCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
+        profileCommentCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
 
+        val userId = intent.getStringExtra("UserId")
         if (userId != null) {
             val db = FirebaseFirestore.getInstance()
             db.collection("ProfileData")

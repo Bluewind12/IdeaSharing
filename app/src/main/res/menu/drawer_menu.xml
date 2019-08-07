@@ -4,23 +4,30 @@
     <item android:title="@string/function">
         <menu>
             <item android:title="@string/mypage"
-                  android:id="@+id/menuMyPage"/>
+                  android:id="@+id/menuMyPage"
+                  android:icon="@drawable/icon_mypage"/>
             <item android:title="お気に入り"
-                  android:id="@+id/menuFav"/>
+                  android:id="@+id/menuFav"
+                  android:icon="@drawable/icon_fav_list"/>
             <item android:title="プロフィール編集"
-                  android:id="@+id/menuProfileEdit"/>
+                  android:id="@+id/menuProfileEdit"
+                  android:icon="@drawable/icon_profile_edit"/>
             <item android:title="ログアウト"
-                  android:id="@+id/menuLogOut"/>
+                  android:id="@+id/menuLogOut"
+                  android:icon="@drawable/icon_exit"/>
         </menu>
     </item>
     <item android:title="@string/out_site">
         <menu>
             <item android:title="@string/review"
-                  android:id="@+id/menuReviewHp"/>
+                  android:id="@+id/menuReview"
+                  android:icon="@drawable/icon_edit"/>
             <item android:title="プライバシーポリシー"
-                  android:id="@+id/menuPrivacy"/>
+                  android:id="@+id/menuPrivacy"
+                  android:icon="@drawable/icon_privacy"/>
             <item android:title="@string/sakura_hp"
-                  android:id="@+id/menuSakuraHp"/>
+                  android:id="@+id/menuSakuraHp"
+                  android:icon="@drawable/icon_sakura"/>
         </menu>
     </item>
 </menu>

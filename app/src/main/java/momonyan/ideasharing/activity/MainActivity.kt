@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -64,6 +66,19 @@ class MainActivity : AppCompatActivity() {
             }
         mainDrawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+
+        //色変え
+        val navigationDrawer = findViewById<NavigationView>(R.id.navigationView)
+        val color = resources.getColor(R.color.colorPrimaryDark)
+        val sakuraColor = resources.getColor(R.color.sakuraColor)
+        navigationDrawer.menu.findItem(R.id.menuMyPage).icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        navigationDrawer.menu.findItem(R.id.menuFav).icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        navigationDrawer.menu.findItem(R.id.menuProfileEdit).icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        navigationDrawer.menu.findItem(R.id.menuLogOut).icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        navigationDrawer.menu.findItem(R.id.menuReview).icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        navigationDrawer.menu.findItem(R.id.menuPrivacy).icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        navigationDrawer.menu.findItem(R.id.menuSakuraHp).icon.setColorFilter(sakuraColor, PorterDuff.Mode.SRC_IN)
+
         //ドロワーメニュー のクリック動作
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -92,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.menuPrivacy -> {
                 }
-                R.id.menuReviewHp -> {
+                R.id.menuReview -> {
                 }
                 R.id.menuSakuraHp -> {
                 }
