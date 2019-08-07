@@ -14,7 +14,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:adjustViewBounds="true"/>
     <TextView
-            android:text="NAME!!!!"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/navNameTextView"
@@ -22,5 +21,6 @@
             app:layout_constraintBottom_toBottomOf="parent" android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/navImageView" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintVertical_bias="0.0" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+            app:layout_constraintVertical_bias="0.0" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+            tools:text="名前表示場所"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

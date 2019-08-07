@@ -109,18 +109,19 @@
                     android:layout_height="32dp">
                 <ImageView
                         android:layout_width="0dip"
-                        android:layout_height="24dp" tools:srcCompat="@tools:sample/avatars"
-                        android:id="@+id/imageView3" android:layout_weight="2" android:layout_gravity="center"/>
+                        android:layout_height="match_parent"
+                        android:id="@+id/detailLikeImageView" android:layout_weight="2" android:layout_gravity="center"
+                        app:srcCompat="@drawable/icon_like"/>
                 <TextView
                         android:text="@string/nice_string"
                         android:layout_width="0dip"
-                        android:layout_height="wrap_content" android:id="@+id/likeTextView"
-                        android:layout_weight="5" android:layout_gravity="center"/>
+                        android:layout_height="match_parent" android:id="@+id/likeTextView"
+                        android:layout_weight="5" android:layout_gravity="center" android:gravity="center"/>
                 <TextView
                         android:layout_width="0dip"
-                        android:layout_height="wrap_content" android:id="@+id/detailLikeCountTextView"
+                        android:layout_height="match_parent" android:id="@+id/detailLikeCountTextView"
                         android:layout_weight="2"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center" android:gravity="center"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.constraintlayout.widget.Guideline
