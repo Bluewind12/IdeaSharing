@@ -53,7 +53,7 @@ class ProfileDetailActivity : AppCompatActivity() {
                     //アイコンの表示
                     val storageRef = FirebaseStorage.getInstance().reference
                     storageRef.child(profileMap["UserId"].toString() + "ProfileImage")
-                        .downloadUrl.addOnSuccessListener {
+                        .downloadUrl.addOnCompleteListener {
                         GlideApp.with(this)
                             .load(it)
                             .into(profileImageView)

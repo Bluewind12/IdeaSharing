@@ -50,7 +50,7 @@ class ProfileEditActivity : AppCompatActivity() {
 
         //プロフ編集のイメージの変更
         val storageRef = FirebaseStorage.getInstance().reference
-        storageRef.child(user!!.uid + "ProfileImage").downloadUrl.addOnSuccessListener {
+        storageRef.child(user!!.uid + "ProfileImage").downloadUrl.addOnCompleteListener {
             GlideApp.with(this /* context */)
                 .load(it)
                 .into(profileEditImageButton)
