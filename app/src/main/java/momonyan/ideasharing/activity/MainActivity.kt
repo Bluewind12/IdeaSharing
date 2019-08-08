@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.detail_search_layout.view.*
 import kotlinx.android.synthetic.main.input_layout.view.*
 import momonyan.ideasharing.GlideApp
+import momonyan.ideasharing.InfiniteScrollListener
 import momonyan.ideasharing.R
 import momonyan.ideasharing.adapter.InputTagListRecyclerAdapter
 import momonyan.ideasharing.adapter.RecyclerAdapter
@@ -262,8 +263,12 @@ class MainActivity : AppCompatActivity() {
             }
             .addOnCompleteListener {
                 val adapter = RecyclerAdapter(this, item)
+                val manage = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 mainRecyclerView.adapter = adapter
-                mainRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+                mainRecyclerView.layoutManager = manage
+                mainRecyclerView.addOnScrollListener(InfiniteScrollListener(manage) {
+                    //TODO Load
+                })
                 mainProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
             }
         mainProgressBar.bringToFront()
