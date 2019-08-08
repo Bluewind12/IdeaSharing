@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -303,38 +304,43 @@ class MainActivity : AppCompatActivity() {
         }
 
         addButton.setOnClickListener {
-            val dbMap = HashMap<String, Any>()
-            dbMap["Title"] = titleEdit.text.toString()
-            dbMap["Content"] = contentEdit.text.toString()
-            dbMap["Tag"] = recyclerList
-
-            val auth = FirebaseAuth.getInstance()
-            val user = auth.currentUser
-            if (user != null) {
-                val uid = user.uid
-                dbMap["Contributor"] = uid
+            val titleText = titleEdit.text.toString().trim()
+            val contentText = contentEdit.text.toString().trim()
+            if (titleText == "" || contentText == "") {
+                Toast.makeText(this, "タイトルか内容が書かれていません", Toast.LENGTH_LONG).show()
             } else {
-                dbMap["Contributor"] = "???"
-            }
-            dbMap["Like"] = 0
-            dbMap["CommentCount"] = 0
-            dbMap["Date"] = getToday()
+                val dbMap = HashMap<String, Any>()
+                dbMap["Title"] = titleEdit.text.toString()
+                dbMap["Content"] = contentEdit.text.toString()
+                dbMap["Tag"] = recyclerList
 
-            val db = FirebaseFirestore.getInstance()
-            db.collection("PostData")
-                .add(dbMap)
-                .addOnCompleteListener {
-                    //広告表示
-                    if (mInterstitialAd.isLoaded && Random.nextInt(100) >= 0) {
-                        mInterstitialAd.show()
-                    } else {
-                        Log.d("TAG", "The interstitial wasn't loaded yet.")
+                val auth = FirebaseAuth.getInstance()
+                val user = auth.currentUser
+                if (user != null) {
+                    val uid = user.uid
+                    dbMap["Contributor"] = uid
+                } else {
+                    dbMap["Contributor"] = "???"
+                }
+                dbMap["Like"] = 0
+                dbMap["Date"] = getToday()
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("PostData")
+                    .add(dbMap)
+                    .addOnCompleteListener {
+                        //広告表示
+                        if (mInterstitialAd.isLoaded && Random.nextInt(100) >= 0) {
+                            mInterstitialAd.show()
+                        } else {
+                            Log.d("TAG", "The interstitial wasn't loaded yet.")
+                        }
+                        loadDatabase()
+                        mDialog.dismiss()
                     }
-                    loadDatabase()
-                    mDialog.dismiss()
-                }
-                .addOnFailureListener {
-                }
+                    .addOnFailureListener {
+                    }
+            }
         }
         cancelButton.setOnClickListener {
             loadDatabase()
