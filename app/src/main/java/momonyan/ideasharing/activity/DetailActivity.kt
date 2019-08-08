@@ -413,4 +413,10 @@ class DetailActivity : AppCompatActivity() {
                 }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        GlideApp.with(this)
+            .clear(detailPostImageView)
+    }
 }

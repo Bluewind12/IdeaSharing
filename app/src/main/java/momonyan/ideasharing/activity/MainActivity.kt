@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     private var recyclerList = arrayListOf<String>()
 
     private lateinit var tagList: RecyclerView
-
+    private lateinit var headerImage: ImageView
     private lateinit var mInterstitialAd: InterstitialAd //AD
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity() {
                 .addOnSuccessListener { profileResult ->
                     val profileMap = profileResult.data
                     if (profileMap != null) {
-                        val headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
+                        headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
                         val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
                         userName = profileMap["UserName"].toString()
                         headerText.text = profileMap["UserName"].toString()
@@ -418,7 +418,11 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton("キャンセル", null)
             .create()
             .show()
+    }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        GlideApp.with(this)
+            .clear(headerImage)
     }
 }

@@ -102,4 +102,10 @@ class ProfileDetailActivity : AppCompatActivity() {
         }
         return true
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        GlideApp.with(this)
+            .clear(profileImageView)
+    }
 }
