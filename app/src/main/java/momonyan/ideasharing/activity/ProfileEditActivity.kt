@@ -91,7 +91,6 @@ class ProfileEditActivity : AppCompatActivity() {
                 dbMap["Comment"] = profileCommentEditText.text.toString()
                 dbMap["HP"] = profileHpEditText.text.toString()
                 dbMap["Other"] = profileOtherEditText.text.toString()
-                dbMap["CommentCount"] = 0
 
                 val storage = FirebaseStorage.getInstance()
                 val storageRef = storage.getReferenceFromUrl("gs://ideasharing-8a024.appspot.com/")

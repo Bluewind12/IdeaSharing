@@ -1,6 +1,7 @@
 package momonyan.ideasharing.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
@@ -40,6 +41,7 @@ class DetailActivity : AppCompatActivity() {
 
     private var uid = "???"
     private var likeCount = 0
+    private var likeCountPlus = 0
     private var commentCount = 0
     private var content = ""
     private var title = ""
@@ -68,7 +70,7 @@ class DetailActivity : AppCompatActivity() {
         //コメント投稿
         detailCommentAddButton.setOnClickListener {
             val comment = detailCommentEditText.text.toString()
-            if (comment != "") {
+            if (comment.trim() != "") {
                 AlertDialog.Builder(this)
                     .setTitle("投稿確認")
                     .setMessage("[$comment]で投稿してよろしいでしょうか")
@@ -160,6 +162,7 @@ class DetailActivity : AppCompatActivity() {
                 detailTitleTextView.text = dataMap["Title"].toString()
                 detailContentTextView.text = dataMap["Content"].toString()
                 likeCount = dataMap["Like"].toString().toInt()
+                likeCountPlus = dataMap["Like"].toString().toInt() + 1
                 commentCount = dataMap["CommentCount"].toString().toInt()
                 detailLikeCountTextView.text = dataMap["Like"].toString()
 
@@ -176,9 +179,10 @@ class DetailActivity : AppCompatActivity() {
                     i.putExtra("UserId", dataMap["Contributor"].toString())
                     startActivity(i)
                 }
-                if (uid != dataMap["Contributor"].toString()) {
-                    editMenu.isVisible = false
-                    trashMenu.isVisible = false
+                if (uid == dataMap["Contributor"].toString()) {
+                    editMenu.isVisible = true
+                    trashMenu.isVisible = true
+                } else {
                     detailLikeCard.setOnClickListener {
                         setLikeButtonListener(true)
                     }
@@ -387,22 +391,23 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setLikeButtonListener(flag: Boolean) {
         if (flag) {
-            likeCount++
             db.collection("PostData").document(documentId)
-                .update("Like", likeCount)
+                .update("Like", likeCountPlus)
                 .addOnSuccessListener {
+
+                }
+                .addOnCompleteListener {
                     detailLikeCard.setOnClickListener { setLikeButtonListener(false) }
-                    detailLikeImageView.setColorFilter(0xf39800, PorterDuff.Mode.SRC_IN)
-                    detailLikeCountTextView.text = likeCount.toString()
+                    detailLikeImageView.setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_IN)
+                    detailLikeCountTextView.text = likeCountPlus.toString()
                     Toast.makeText(this, "いいねしました", Toast.LENGTH_LONG).show()
                 }
         } else {
-            likeCount--
             db.collection("PostData").document(documentId)
                 .update("Like", likeCount)
-                .addOnSuccessListener {
+                .addOnCompleteListener {
                     detailLikeCard.setOnClickListener { setLikeButtonListener(true) }
-                    detailLikeImageView.setColorFilter(0x000000, PorterDuff.Mode.SRC_IN)
+                    detailLikeImageView.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN)
                     detailLikeCountTextView.text = likeCount.toString()
                     Toast.makeText(this, "いいね解除しました", Toast.LENGTH_LONG).show()
                 }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -70,7 +71,7 @@ class ProfileFirstEditActivity : AppCompatActivity() {
                 dbMap["UserName"] = profileNameEditText.text.toString()
                 dbMap["Comment"] = profileCommentEditText.text.toString()
                 dbMap["HpData"] = profileHpEditText.text.toString()
-                dbMap["CommentCount"] = 0
+                dbMap["Other"] = profileOtherEditText.text.toString()
 
                 val storage = FirebaseStorage.getInstance()
                 val storageRef = storage.getReferenceFromUrl("gs://ideasharing-8a024.appspot.com/")
@@ -80,6 +81,7 @@ class ProfileFirstEditActivity : AppCompatActivity() {
                     .build()
 
                 val baos = ByteArrayOutputStream()
+                bmp = (profileEditImageButton.drawable as BitmapDrawable).bitmap
                 bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()
                 storageRef.child(uid + "ProfileImage").putBytes(data, metadata)
@@ -113,7 +115,7 @@ class ProfileFirstEditActivity : AppCompatActivity() {
             if (resultData != null) {
                 uri = resultData.data
                 try {
-                    val view = layoutInflater.inflate(R.layout.detail_search_layout, null)
+                    val view = layoutInflater.inflate(R.layout.image_trimming_layout, null)
                     view.cropImageView.imageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
                     AlertDialog.Builder(this)
                         .setView(view)
