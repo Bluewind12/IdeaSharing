@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--<string name="ad_main">ca-app-pub-6499097800180510/2667514495</string>-->
-    <!--<string name="ad_fav_list">ca-app-pub-6499097800180510/7700349320</string>-->
-    <!--<string name="ad_detail">ca-app-pub-6499097800180510/8466636085</string>-->
-    <!--<string name="ad_detail_search">ca-app-pub-6499097800180510/3761104319</string>-->
-    <!--<string name="ad_profile">ca-app-pub-6499097800180510/7891921019</string>-->
-    <!--<string name="ad_in_idea">ca-app-pub-6499097800180510/8630287617</string>-->
-    <!--<string name="ad_in_comment">ca-app-pub-6499097800180510/1981010983</string>-->
+    <string name="ad_main">ca-app-pub-6499097800180510/2667514495</string>
+    <string name="ad_fav_list">ca-app-pub-6499097800180510/7700349320</string>
+    <string name="ad_detail">ca-app-pub-6499097800180510/8466636085</string>
+    <string name="ad_detail_search">ca-app-pub-6499097800180510/3761104319</string>
+    <string name="ad_profile">ca-app-pub-6499097800180510/7891921019</string>
+    <string name="ad_in_idea">ca-app-pub-6499097800180510/8630287617</string>
+    <string name="ad_in_comment">ca-app-pub-6499097800180510/1981010983</string>
 
     <!--テスト用-->
-    <string name="ad_main">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_fav_list">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_detail">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_detail_search">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_profile">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_in_idea">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ad_in_comment">ca-app-pub-3940256099942544/6300978111</string>
+    <!--<string name="ad_main">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--<string name="ad_fav_list">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--<string name="ad_detail">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--<string name="ad_detail_search">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--<string name="ad_profile">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--<string name="ad_in_idea">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--<string name="ad_in_comment">ca-app-pub-3940256099942544/6300978111</string>-->
 </resources>
