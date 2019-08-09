@@ -36,6 +36,7 @@ class ProfileEditActivity : AppCompatActivity() {
 
     private lateinit var bmp :Bitmap
 
+    private lateinit var menuBack: MenuItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit_layout)
@@ -92,6 +93,7 @@ class ProfileEditActivity : AppCompatActivity() {
             if (profileNameEditText.text.toString() == "") {
                 Toast.makeText(this, "ニックネームを入力してください", Toast.LENGTH_LONG).show()
             } else {
+                menuBack.isVisible = false
                 profileEditProgressBar.visibility = android.widget.ProgressBar.VISIBLE
                 profileAddButton.isEnabled = false
                 dbMap["UserName"] = profileNameEditText.text.toString()
@@ -161,6 +163,7 @@ class ProfileEditActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.basic_menu, menu)
+        menuBack = menu.findItem(R.id.basicBack)
         return true
     }
 
