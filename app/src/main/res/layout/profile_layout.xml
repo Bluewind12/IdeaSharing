@@ -39,14 +39,17 @@
                     android:id="@+id/profileNameTextView"
                     app:layout_constraintTop_toTopOf="@+id/profileImageView"
                     android:textSize="24sp" tools:text="名前"
-                    app:layout_constraintStart_toEndOf="@+id/profileImageView" android:layout_marginStart="24dp"/>
+                    app:layout_constraintStart_toEndOf="@+id/profileImageView" android:layout_marginStart="16dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintHorizontal_bias="0.0"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/prodileUrlTextView" android:layout_marginTop="8dp"
                     app:layout_constraintTop_toBottomOf="@+id/profileCommentTextView"
                     app:layout_constraintStart_toEndOf="@+id/profileWebImageView" android:layout_marginStart="8dp"
-                    tools:text="URL"/>
+                    tools:text="URL" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintHorizontal_bias="0.0"/>
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -61,7 +64,9 @@
                     android:id="@+id/profileCommentTextView"
                     app:layout_constraintStart_toStartOf="@+id/profileNameTextView"
                     android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/profileNameTextView" tools:text="コメント文"/>
+                    app:layout_constraintTop_toBottomOf="@+id/profileNameTextView" tools:text="コメント文"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintHorizontal_bias="0.0"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,7 +74,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/prodileUrlTextView" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/profileOtherImageView"
-                    android:layout_marginStart="8dp" tools:text="その他"/>
+                    android:layout_marginStart="8dp" tools:text="その他" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintHorizontal_bias="0.0"/>
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"

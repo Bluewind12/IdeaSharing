@@ -1,5 +1,6 @@
 package momonyan.ideasharing.activity
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.SearchManager
 import android.content.Context
@@ -67,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = getString(R.string.ad_in_comment)
         mInterstitialAd.loadAd(AdRequest.Builder().build())
-
 
         //Toolバーへの設定
         setSupportActionBar(toolbar)
@@ -149,7 +149,6 @@ class MainActivity : AppCompatActivity() {
         }
         loadDatabase()
 
-
         //ヘッダーの内容変更
         val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
@@ -167,8 +166,9 @@ class MainActivity : AppCompatActivity() {
                         headerText.text = profileMap["UserName"].toString()
                         //ヘッダーのイメージの変更
                         val storageRef = FirebaseStorage.getInstance().reference
-                        storageRef.child(user.uid + "ProfileImage").downloadUrl.addOnCompleteListener {
-                            GlideApp.with(this /* context */)
+                        storageRef.child(user.uid + "ProfileImage")
+                            .downloadUrl.addOnSuccessListener {
+                            GlideApp.with(applicationContext)
                                 .load(it)
                                 .into(headerImage)
                         }
@@ -323,6 +323,7 @@ class MainActivity : AppCompatActivity() {
                     dbMap["Contributor"] = "???"
                 }
                 dbMap["Like"] = 0
+                dbMap["CommentCount"] = 0
                 dbMap["Date"] = getToday()
 
                 val db = FirebaseFirestore.getInstance()
@@ -336,16 +337,14 @@ class MainActivity : AppCompatActivity() {
                             Log.d("TAG", "The interstitial wasn't loaded yet.")
                         }
                         loadDatabase()
-                        mDialog.dismiss()
-                    }
-                    .addOnFailureListener {
                     }
             }
-        }
+            }
+
         cancelButton.setOnClickListener {
-            loadDatabase()
             mDialog.dismiss()
         }
+
         mDialog.show()
     }
 
@@ -377,7 +376,7 @@ class MainActivity : AppCompatActivity() {
                 this,
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     //setした日付を取得して表示
-                    fromView.setText(String.format("%d/%02d/%02d", year, month + 1, dayOfMonth));
+                    fromView.setText(String.format("%d/%02d/%02d", year, month + 1, dayOfMonth))
                 },
                 fromDate.get(Calendar.YEAR),
                 fromDate.get(Calendar.MONTH),
@@ -387,7 +386,7 @@ class MainActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
         val sinceView = view.detailSearchSince
-        val sinceDate = Calendar.getInstance();
+        val sinceDate = Calendar.getInstance()
         sinceView.setOnClickListener {
             //Calendarインスタンスを取得
             //DatePickerDialogインスタンスを取得
@@ -395,7 +394,7 @@ class MainActivity : AppCompatActivity() {
                 this,
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     //setした日付を取得して表示
-                    sinceView.setText(String.format("%d/%02d/%02d", year, month + 1, dayOfMonth));
+                    sinceView.setText(String.format("%d/%02d/%02d", year, month + 1, dayOfMonth))
                 },
                 sinceDate.get(Calendar.YEAR),
                 sinceDate.get(Calendar.MONTH),
@@ -420,9 +419,9 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        GlideApp.with(this)
+    override fun onStop() {
+        super.onStop()
+        GlideApp.with(applicationContext)
             .clear(headerImage)
     }
 }

@@ -1,6 +1,7 @@
 package momonyan.ideasharing.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -17,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
-import kotlinx.android.synthetic.main.detail_layout.*
 import kotlinx.android.synthetic.main.image_trimming_layout.view.*
 import kotlinx.android.synthetic.main.profile_edit_layout.*
 import momonyan.ideasharing.GlideApp
@@ -34,6 +35,7 @@ class ProfileEditActivity : AppCompatActivity() {
     private var uid: String = ""
 
     private lateinit var bmp :Bitmap
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit_layout)
@@ -48,11 +50,11 @@ class ProfileEditActivity : AppCompatActivity() {
             uid = user.uid
         }
         dbMap["UserId"] = uid
-
         //プロフ編集のイメージの変更
         val storageRef = FirebaseStorage.getInstance().reference
-        storageRef.child(user!!.uid + "ProfileImage").downloadUrl.addOnCompleteListener {
-            GlideApp.with(this /* context */)
+        storageRef.child(user!!.uid + "ProfileImage")
+            .downloadUrl.addOnSuccessListener {
+            GlideApp.with(applicationContext)
                 .load(it)
                 .into(profileEditImageButton)
         }
@@ -168,9 +170,9 @@ class ProfileEditActivity : AppCompatActivity() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        GlideApp.with(this)
+    override fun onStop() {
+        super.onStop()
+        GlideApp.with(applicationContext)
             .clear(profileEditImageButton)
     }
 }

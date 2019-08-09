@@ -1,5 +1,6 @@
 package momonyan.ideasharing.activity
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -7,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -56,11 +59,9 @@ class DetailActivity : AppCompatActivity() {
         //AD
         val adRequest = AdRequest.Builder().build()
         detailAdView.loadAd(adRequest)
-
         val mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = getString(R.string.ad_in_comment)
         mInterstitialAd.loadAd(AdRequest.Builder().build())
-
         documentId = intent.getStringExtra("DocumentId")
         db = FirebaseFirestore.getInstance()
 
@@ -187,7 +188,6 @@ class DetailActivity : AppCompatActivity() {
                         setLikeButtonListener(true)
                     }
                 }
-
                 db.collection("ProfileData")
                     .document(dataMap["Contributor"].toString())
                     .get()
@@ -197,8 +197,8 @@ class DetailActivity : AppCompatActivity() {
                         //プロフィールイメージ画像の追加
                         val storageRef = FirebaseStorage.getInstance().reference
                         storageRef.child(dataMap["Contributor"].toString() + "ProfileImage")
-                            .downloadUrl.addOnCompleteListener {
-                            GlideApp.with(this)
+                            .downloadUrl.addOnSuccessListener {
+                            GlideApp.with(applicationContext)
                                 .load(it)
                                 .into(detailPostImageView)
                         }
@@ -370,11 +370,11 @@ class DetailActivity : AppCompatActivity() {
                 )
                 .addOnCompleteListener {
                     mDialog.dismiss()
+                    loadData()
                 }
                 .addOnFailureListener {
                     Log.e("Error", "ERRORRRRRRRRRRR")
                 }
-            loadData()
         }
         cancelButton.setOnClickListener {
             mDialog.dismiss()
@@ -414,9 +414,9 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        GlideApp.with(this)
+    override fun onStop() {
+        super.onStop()
+        GlideApp.with(applicationContext)
             .clear(detailPostImageView)
     }
 }

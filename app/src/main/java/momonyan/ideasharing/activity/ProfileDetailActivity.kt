@@ -1,5 +1,6 @@
 package momonyan.ideasharing.activity
 
+import android.app.Activity
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
@@ -35,7 +36,6 @@ class ProfileDetailActivity : AppCompatActivity() {
         profilePostCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
         profileScoreCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
         profileCommentCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
-
         val userId = intent.getStringExtra("UserId")
         if (userId != null) {
             val db = FirebaseFirestore.getInstance()
@@ -53,8 +53,8 @@ class ProfileDetailActivity : AppCompatActivity() {
                     //アイコンの表示
                     val storageRef = FirebaseStorage.getInstance().reference
                     storageRef.child(profileMap["UserId"].toString() + "ProfileImage")
-                        .downloadUrl.addOnCompleteListener {
-                        GlideApp.with(this)
+                        .downloadUrl.addOnSuccessListener {
+                        GlideApp.with(applicationContext)
                             .load(it)
                             .into(profileImageView)
                     }
@@ -103,9 +103,9 @@ class ProfileDetailActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        GlideApp.with(this)
+    override fun onStop() {
+        super.onStop()
+        GlideApp.with(applicationContext)
             .clear(profileImageView)
     }
 }
