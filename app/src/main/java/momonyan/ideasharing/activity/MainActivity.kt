@@ -147,33 +147,6 @@ class MainActivity : AppCompatActivity() {
             createInputDialog()
         }
         loadDatabase()
-
-        //ヘッダーの内容変更
-        val db = FirebaseFirestore.getInstance()
-        val auth = FirebaseAuth.getInstance()
-        val user = auth.currentUser
-        if (user != null) {
-            db.collection("ProfileData")
-                .document(user.uid)
-                .get()
-                .addOnSuccessListener { profileResult ->
-                    val profileMap = profileResult.data
-                    if (profileMap != null) {
-                        headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
-                        val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
-                        userName = profileMap["UserName"].toString()
-                        headerText.text = profileMap["UserName"].toString()
-                        //ヘッダーのイメージの変更
-                        val storageRef = FirebaseStorage.getInstance().reference
-                        storageRef.child(user.uid + "ProfileImage")
-                            .downloadUrl.addOnSuccessListener {
-                            GlideApp.with(applicationContext)
-                                .load(it)
-                                .into(headerImage)
-                        }
-                    }
-                }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -272,6 +245,32 @@ class MainActivity : AppCompatActivity() {
                 mainProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
             }
         mainProgressBar.bringToFront()
+
+        //ヘッダーの内容変更
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        if (user != null) {
+            db.collection("ProfileData")
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener { profileResult ->
+                    val profileMap = profileResult.data
+                    if (profileMap != null) {
+                        headerImage = navigationView.getHeaderView(0).findViewById<ImageView>(R.id.navImageView)
+                        val headerText = navigationView.getHeaderView(0).findViewById<TextView>(R.id.navNameTextView)
+                        userName = profileMap["UserName"].toString()
+                        headerText.text = profileMap["UserName"].toString()
+                        //ヘッダーのイメージの変更
+                        val storageRef = FirebaseStorage.getInstance().reference
+                        storageRef.child(user.uid + "ProfileImage")
+                            .downloadUrl.addOnSuccessListener {
+                            GlideApp.with(applicationContext)
+                                .load(it)
+                                .into(headerImage)
+                        }
+                    }
+                }
+        }
     }
 
     //Inputダイアログの出力
