@@ -66,8 +66,8 @@ class DetailActivity : AppCompatActivity() {
         setCommentList()
         //コメント投稿
         detailCommentAddButton.setOnClickListener {
-            val comment = detailCommentEditText.text.toString()
-            if (comment.trim() != "") {
+            val comment = detailCommentEditText.text.toString().trim()
+            if (comment != "") {
                 AlertDialog.Builder(this)
                     .setTitle("投稿確認")
                     .setMessage("[$comment]で投稿してよろしいでしょうか")
@@ -97,6 +97,8 @@ class DetailActivity : AppCompatActivity() {
                     }
                     .setNegativeButton("キャンセル", null)
                     .show()
+            } else {
+                Toast.makeText(this, "コメントが書かれていません", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -153,7 +155,8 @@ class DetailActivity : AppCompatActivity() {
                 val dataMap = result.data!!
                 title = dataMap["Title"].toString()
                 content = dataMap["Content"].toString()
-                tagArrayList = dataMap["Tag"] as ArrayList<String>
+                tagArrayList = ArrayList(dataMap["Tag"] as ArrayList<String>)
+                recyclerList = ArrayList(dataMap["Tag"] as ArrayList<String>)
 
 
                 detailTitleTextView.text = dataMap["Title"].toString()
@@ -164,11 +167,7 @@ class DetailActivity : AppCompatActivity() {
                 detailLikeCountTextView.text = dataMap["Like"].toString()
 
                 //Tag
-                detailTagRecyclerView.adapter =
-                    TagListRecyclerAdapter(
-                        this,
-                        dataMap["Tag"] as ArrayList<String>
-                    )
+                detailTagRecyclerView.adapter = TagListRecyclerAdapter(this, tagArrayList)
                 detailTagRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
                 detailPostCardView.setOnClickListener {
                     //プロフィール詳細画面への遷移
@@ -232,13 +231,17 @@ class DetailActivity : AppCompatActivity() {
             .setView(view)
             .setTitle("コメント編集")
             .setPositiveButton("更新") { _, _ ->
-                val putComment = view.commentReEditText.text.toString()
-                db.collection("PostData/$path/Comment")
-                    .document(documentId)
-                    .update("Comment", putComment)
-                    .addOnCompleteListener {
-                        setCommentList()
-                    }
+                val putComment = view.commentReEditText.text.toString().trim()
+                if (putComment == "") {
+                    Toast.makeText(this, "コメントが入力されていません", Toast.LENGTH_LONG).show()
+                } else {
+                    db.collection("PostData/$path/Comment")
+                        .document(documentId)
+                        .update("Comment", putComment)
+                        .addOnCompleteListener {
+                            setCommentList()
+                        }
+                }
             }
             .setNeutralButton("削除") { _, _ ->
                 AlertDialog.Builder(this)
@@ -333,10 +336,43 @@ class DetailActivity : AppCompatActivity() {
         //入れ
         titleEdit.setText(title, TextView.BufferType.NORMAL)
         contentEdit.setText(content, TextView.BufferType.NORMAL)
-        recyclerList = tagArrayList
+        addButton.setOnClickListener {
+            val titleText = titleEdit.text.toString().trim()
+            val contentText = contentEdit.text.toString().trim()
+            if (titleText == "" || contentText == "") {
+                Toast.makeText(this, "タイトルか内容が書かれていません", Toast.LENGTH_LONG).show()
+            } else {
+                val db = FirebaseFirestore.getInstance()
+                db.collection("PostData")
+                    .document(documentId)
+                    .update(
+                        mapOf(
+                            "Title" to titleText,
+                            "Content" to contentText,
+                            "Tag" to recyclerList
+                        )
+                    )
+                    .addOnCompleteListener {
+                        mDialog.dismiss()
+                        mDialog.cancel()
+                        loadData()
+                    }
+                    .addOnFailureListener {
+                        Log.e("Error", "ERRORRRRRRRRRRR")
+                    }
+            }
+        }
+        cancelButton.setOnClickListener {
+            loadData()
+            mDialog.dismiss()
+            mDialog.cancel()
+        }
+        mDialog.show()
 
         //Tagのリサイクラー
         tagRecycler = view.inputTagRecyclerView
+        tagRecycler.adapter = InputTagListRecyclerAdapter(this, recyclerList, this)
+        tagRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         tagEditAdd.setOnClickListener {
             if (recyclerList.indexOf(tagEdit.text.toString()) == -1) {
                 recyclerList.add(tagEdit.text.toString())
@@ -346,37 +382,6 @@ class DetailActivity : AppCompatActivity() {
             tagRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         }
 
-        addButton.setOnClickListener {
-            val dbMap = java.util.HashMap<String, Any>()
-            dbMap["Title"] = titleEdit.text.toString()
-            dbMap["Content"] = contentEdit.text.toString()
-            dbMap["Tag"] = recyclerList
-
-
-            val db = FirebaseFirestore.getInstance()
-            db.collection("PostData")
-                .document(documentId)
-                .update(
-                    mapOf(
-                        "Title" to titleEdit.text.toString(),
-                        "Content" to contentEdit.text.toString(),
-                        "Tag" to recyclerList
-                    )
-                )
-                .addOnCompleteListener {
-                    mDialog.dismiss()
-                    mDialog.cancel()
-                    loadData()
-                }
-                .addOnFailureListener {
-                    Log.e("Error", "ERRORRRRRRRRRRR")
-                }
-        }
-        cancelButton.setOnClickListener {
-            mDialog.dismiss()
-            mDialog.cancel()
-        }
-        mDialog.show()
     }
 
     fun setList(data: ArrayList<String>) {

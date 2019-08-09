@@ -1,16 +1,15 @@
 package momonyan.ideasharing.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -146,7 +145,10 @@ class ProfileEditActivity : AppCompatActivity() {
                             bmp = view.cropImageView.croppedBitmap
                             profileEditImageButton.setImageBitmap(bmp)
                         }
-                        .setNegativeButton("キャンセル", null)
+                        .setNegativeButton("キャンセル") { _, _ ->
+                            bmp = BitmapFactory.decodeResource(resources, R.drawable.icon_defalt)
+                            profileEditImageButton.setImageBitmap(bmp)
+                        }
                         .create()
                         .show()
                 } catch (e: IOException) {

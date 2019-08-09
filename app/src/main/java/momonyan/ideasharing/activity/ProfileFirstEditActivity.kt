@@ -125,7 +125,10 @@ class ProfileFirstEditActivity : AppCompatActivity() {
                             bmp = view.cropImageView.croppedBitmap
                             profileEditImageButton.setImageBitmap(bmp)
                         }
-                        .setNegativeButton("キャンセル", null)
+                        .setNegativeButton("キャンセル"){ _, _ ->
+                            bmp = BitmapFactory.decodeResource(resources, R.drawable.icon_defalt)
+                            profileEditImageButton.setImageBitmap(bmp)
+                        }
                         .create()
                         .show()
                 } catch (e: IOException) {

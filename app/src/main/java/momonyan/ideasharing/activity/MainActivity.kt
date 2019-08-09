@@ -8,7 +8,6 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
@@ -306,8 +305,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "タイトルか内容が書かれていません", Toast.LENGTH_LONG).show()
             } else {
                 val dbMap = HashMap<String, Any>()
-                dbMap["Title"] = titleEdit.text.toString()
-                dbMap["Content"] = contentEdit.text.toString()
+                dbMap["Title"] = titleText
+                dbMap["Content"] = contentText
                 dbMap["Tag"] = recyclerList
 
                 val auth = FirebaseAuth.getInstance()
