@@ -41,10 +41,6 @@ class ProfileEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit_layout)
         profileEditProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
-        profileScrollView.setOnTouchListener { _, _ ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        }
 
         val dbMap = HashMap<String, Any>()
         val db = FirebaseFirestore.getInstance()

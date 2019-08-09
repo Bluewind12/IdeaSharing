@@ -8,6 +8,7 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
@@ -197,8 +198,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
+        when (item.itemId) {
             R.id.sortCheckNew -> {
                 sortCheckNew.isChecked = true
                 sort = "Date"
@@ -287,13 +287,7 @@ class MainActivity : AppCompatActivity() {
         val tagEditAdd = view.inputTagAddButton
         val addButton = view.inputAddButton
         val cancelButton = view.inputCancelButton
-        view.inputScrollView.setOnTouchListener { _, _ ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        }
         recyclerList = arrayListOf()
-
-
         //Tagのリサイクラー
         tagList = view.inputTagRecyclerView
         tagEditAdd.setOnClickListener {
@@ -345,6 +339,7 @@ class MainActivity : AppCompatActivity() {
 
         cancelButton.setOnClickListener {
             mDialog.dismiss()
+            mDialog.cancel()
         }
 
         mDialog.show()

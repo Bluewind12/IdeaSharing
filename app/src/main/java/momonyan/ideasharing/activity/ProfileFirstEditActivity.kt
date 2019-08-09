@@ -35,10 +35,6 @@ class ProfileFirstEditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit_layout)
-        profileScrollView.setOnTouchListener { _, _ ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        }
 
         profileEditProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
         val dbMap = HashMap<String, Any>()

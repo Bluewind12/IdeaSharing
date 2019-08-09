@@ -1,6 +1,5 @@
 package momonyan.ideasharing.activity
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -8,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -66,11 +64,6 @@ class DetailActivity : AppCompatActivity() {
 
         loadData()
         setCommentList()
-
-        detailScrollView.setOnTouchListener { _, _ ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        }
         //コメント投稿
         detailCommentAddButton.setOnClickListener {
             val comment = detailCommentEditText.text.toString()
@@ -337,10 +330,6 @@ class DetailActivity : AppCompatActivity() {
         val tagEditAdd = view.inputTagAddButton
         val addButton = view.inputAddButton
         val cancelButton = view.inputCancelButton
-        view.inputScrollView.setOnTouchListener { _, _ ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        }
         //入れ
         titleEdit.setText(title, TextView.BufferType.NORMAL)
         contentEdit.setText(content, TextView.BufferType.NORMAL)
@@ -376,6 +365,7 @@ class DetailActivity : AppCompatActivity() {
                 )
                 .addOnCompleteListener {
                     mDialog.dismiss()
+                    mDialog.cancel()
                     loadData()
                 }
                 .addOnFailureListener {
@@ -384,6 +374,7 @@ class DetailActivity : AppCompatActivity() {
         }
         cancelButton.setOnClickListener {
             mDialog.dismiss()
+            mDialog.cancel()
         }
         mDialog.show()
     }
