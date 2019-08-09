@@ -1,6 +1,5 @@
 package momonyan.ideasharing.activity
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.SearchManager
 import android.content.Context
@@ -289,6 +288,10 @@ class MainActivity : AppCompatActivity() {
         val tagEditAdd = view.inputTagAddButton
         val addButton = view.inputAddButton
         val cancelButton = view.inputCancelButton
+        view.inputScrollView.setOnTouchListener { _, _ ->
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
         recyclerList = arrayListOf()
 
 
