@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.SearchView
@@ -55,6 +56,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tagList: RecyclerView
     private lateinit var headerImage: ImageView
     private lateinit var mInterstitialAd: InterstitialAd //AD
+
+    private var limitNum: Long = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,10 +145,15 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        mainSwipeRefresh.setOnRefreshListener {
+            limitNum = 5
+            loadDatabase()
+        }
         //FAB
         floatingActionButton.setOnClickListener {
             createInputDialog()
         }
+        loadHeader()
         loadDatabase()
     }
 
@@ -225,6 +233,7 @@ class MainActivity : AppCompatActivity() {
         val item = ArrayList<HashMap<String, Any>>()
         db.collection("PostData")
             .orderBy(sort, Query.Direction.DESCENDING)
+            .limit(limitNum)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -235,17 +244,28 @@ class MainActivity : AppCompatActivity() {
             }
             .addOnCompleteListener {
                 val adapter = RecyclerAdapter(this, item)
+                adapter.notifyItemRangeChanged(limitNum.toInt(), adapter.itemCount)
                 val manage = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 mainRecyclerView.adapter = adapter
                 mainRecyclerView.layoutManager = manage
-                mainRecyclerView.addOnScrollListener(InfiniteScrollListener(manage) {
-                    //TODO Load
-                })
+                if (limitNum == item.size.toLong()) {
+                    mainRecyclerView.addOnScrollListener(InfiniteScrollListener(manage) {
+                        mainProgressBar.visibility = android.widget.ProgressBar.VISIBLE
+                        limitNum += 5
+                        loadDatabase()
+                    })
+                }
+                if (mainSwipeRefresh.isRefreshing) {
+                    mainSwipeRefresh.isRefreshing = false
+                }
                 mainProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
             }
-        mainProgressBar.bringToFront()
 
+    }
+
+    private fun loadHeader() {
         //ヘッダーの内容変更
+        val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
         if (user != null) {
@@ -299,6 +319,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         addButton.setOnClickListener {
+            addButton.isEnabled = false
+            cancelButton.isEnabled = false
+            view.inputProgressBar.visibility = View.VISIBLE
             val titleText = titleEdit.text.toString().trim()
             val contentText = contentEdit.text.toString().trim()
             if (titleText == "" || contentText == "") {
@@ -321,6 +344,7 @@ class MainActivity : AppCompatActivity() {
                 dbMap["CommentCount"] = 0
                 dbMap["Date"] = getToday()
 
+
                 val db = FirebaseFirestore.getInstance()
                 db.collection("PostData")
                     .add(dbMap)
@@ -331,7 +355,12 @@ class MainActivity : AppCompatActivity() {
                         } else {
                             Log.d("TAG", "The interstitial wasn't loaded yet.")
                         }
+                        mDialog.dismiss()
                         loadDatabase()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
+                        mDialog.dismiss()
                     }
             }
             }
@@ -354,6 +383,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        limitNum = 5
+        loadHeader()
         loadDatabase()
     }
 

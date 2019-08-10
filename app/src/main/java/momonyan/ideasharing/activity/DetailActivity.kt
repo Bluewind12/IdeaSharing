@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -337,6 +338,9 @@ class DetailActivity : AppCompatActivity() {
         titleEdit.setText(title, TextView.BufferType.NORMAL)
         contentEdit.setText(content, TextView.BufferType.NORMAL)
         addButton.setOnClickListener {
+            addButton.isEnabled = false
+            cancelButton.isEnabled = false
+            view.inputProgressBar.visibility = View.VISIBLE
             val titleText = titleEdit.text.toString().trim()
             val contentText = contentEdit.text.toString().trim()
             if (titleText == "" || contentText == "") {
@@ -354,11 +358,11 @@ class DetailActivity : AppCompatActivity() {
                     )
                     .addOnCompleteListener {
                         mDialog.dismiss()
-                        mDialog.cancel()
                         loadData()
                     }
                     .addOnFailureListener {
-                        Log.e("Error", "ERRORRRRRRRRRRR")
+                        Toast.makeText(this,"エラーが発生しました",Toast.LENGTH_LONG).show()
+                        mDialog.dismiss()
                     }
             }
         }

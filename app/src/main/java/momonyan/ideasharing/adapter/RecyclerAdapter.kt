@@ -25,7 +25,7 @@ class RecyclerAdapter(private val context: Context, private val itemList:ArrayLi
             it.dateText.text = (itemList[position])["Date"].toString()
             it.likeText.text = "いいね：" + (itemList[position])["Like"].toString()
             it.commentText.text = "コメント数：" + (itemList[position])["CommentCount"].toString()
-
+            it.postText.text = ""
             val db = FirebaseFirestore.getInstance()
             db.collection("ProfileData")
                 .document((itemList[position])["Contributor"].toString())
