@@ -25,6 +25,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
@@ -57,7 +58,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var headerImage: ImageView
     private lateinit var mInterstitialAd: InterstitialAd //AD
 
-    private var limitNum: Long = 5
+    private val limitNum: Long = 10
+
+    private var lastVisible: DocumentSnapshot? = null
+
+    private var item = ArrayList<HashMap<String, Any>>()
+
+    private var loadFrag = true
+
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,15 +155,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainSwipeRefresh.setOnRefreshListener {
-            limitNum = 5
+            loadFrag = true
             loadDatabase()
         }
         //FAB
         floatingActionButton.setOnClickListener {
             createInputDialog()
+            Log.e("TESTTAGS", item.toString())
         }
-        loadHeader()
-        loadDatabase()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -179,7 +187,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                val db = FirebaseFirestore.getInstance()
                 val item = ArrayList<HashMap<String, Any>>()
                 db.collection("PostData")
                     .orderBy(sort, Query.Direction.DESCENDING)
@@ -229,29 +236,53 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadDatabase() {
-        val db = FirebaseFirestore.getInstance()
-        val item = ArrayList<HashMap<String, Any>>()
+        item = ArrayList()
+        var next: Query = db.collection("PostData")
         db.collection("PostData")
             .orderBy(sort, Query.Direction.DESCENDING)
             .limit(limitNum)
             .get()
             .addOnSuccessListener { result ->
+
                 for (document in result) {
                     val documentMap = document.data as HashMap<String, Any>
                     documentMap["DocumentId"] = document.id
                     item.add(documentMap)
                 }
+
+                next = db.collection("PostData")
+                    .orderBy(sort, Query.Direction.DESCENDING)
+                    .startAfter(result.documents[result.size() - 1])
+                    .limit(limitNum)
             }
             .addOnCompleteListener {
                 val adapter = RecyclerAdapter(this, item)
                 val manage = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 mainRecyclerView.adapter = adapter
                 mainRecyclerView.layoutManager = manage
-                if (limitNum == item.size.toLong()) {
+                if (limitNum <= item.size.toLong()) {
                     mainRecyclerView.addOnScrollListener(InfiniteScrollListener(manage) {
                         mainProgressBar.visibility = android.widget.ProgressBar.VISIBLE
-                        limitNum += 5
-                        loadDatabase()
+                        if (loadFrag) {
+                            next.get()
+                                .addOnSuccessListener { result ->
+                                    for (document in result) {
+                                        val documentMap = document.data as HashMap<String, Any>
+                                        documentMap["DocumentId"] = document.id
+                                        if (item.indexOf(documentMap) == -1) {
+                                            Log.d("TAGTAG", "ITEMADD${document.data as HashMap<String, Any>}")
+                                            item.add(documentMap)
+                                        } else {
+                                            Log.e("TAGTAG", "ITEM_FALSE${document.data as HashMap<String, Any>}")
+                                            loadFrag = false
+                                        }
+                                    }
+                                    lastVisible = result.documents[result.size() - 1]
+                                }
+                                .addOnCompleteListener {
+                                    mainRecyclerView.adapter?.notifyDataSetChanged()
+                                }
+                        }
                     })
                 }
                 if (mainSwipeRefresh.isRefreshing) {
@@ -259,12 +290,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 mainProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
             }
-
     }
+
 
     private fun loadHeader() {
         //ヘッダーの内容変更
-        val db = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
         if (user != null) {
@@ -343,8 +373,6 @@ class MainActivity : AppCompatActivity() {
                 dbMap["CommentCount"] = 0
                 dbMap["Date"] = getToday()
 
-
-                val db = FirebaseFirestore.getInstance()
                 db.collection("PostData")
                     .add(dbMap)
                     .addOnCompleteListener {
@@ -382,7 +410,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        limitNum = 5
         loadHeader()
         loadDatabase()
     }
@@ -450,4 +477,5 @@ class MainActivity : AppCompatActivity() {
         GlideApp.with(applicationContext)
             .clear(headerImage)
     }
+
 }
