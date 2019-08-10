@@ -244,7 +244,6 @@ class MainActivity : AppCompatActivity() {
             }
             .addOnCompleteListener {
                 val adapter = RecyclerAdapter(this, item)
-                adapter.notifyItemRangeChanged(limitNum.toInt(), adapter.itemCount)
                 val manage = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 mainRecyclerView.adapter = adapter
                 mainRecyclerView.layoutManager = manage
