@@ -45,6 +45,22 @@ class LoginActivity : AppCompatActivity() {
                 RC_SIGN_IN
             )
         }
+        loginButton.setOnLongClickListener {
+            startActivityForResult(
+                AuthUI.getInstance()
+                    .createSignInIntentBuilder()
+                    .setAvailableProviders(providers)
+                    .setTosAndPrivacyPolicyUrls(
+                        getString(R.string.privacy_url),
+                        getString(R.string.privacy_url)
+                    )
+                    .setLogo(R.drawable.app_icon)
+                    .setIsSmartLockEnabled(false)
+                    .build(),
+                RC_SIGN_IN
+            )
+            true
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {//Intentの?ないとクラッシュするので注意

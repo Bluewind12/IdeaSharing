@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "801403842754-qq27hkneesd7c64hnjm3fs5mt561b5tm.apps.googleusercontent.com",
+          "client_id": "801403842754-18barkk8skjkajfgvg6cidt8e3v2i4jl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "momonyan.ideasharing",
@@ -41,7 +41,8 @@
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-6499097800180510~7424909357"
     }
   ],
   "configuration_version": "1"
