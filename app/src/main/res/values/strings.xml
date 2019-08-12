@@ -43,4 +43,7 @@
     <string name="review_url">market://details?id=momonyan.ideasharing</string>
     <string name="privacy_url">https://ja.wikipedia.org/wiki/%E4%BD%9C%E6%88%90%E4%B8%AD</string>
     <string name="sakura_hp_url">https://www.gensounosakura.work/</string>
+    <string name="edit_string">編集</string>
+    <string name="delete_string">削除</string>
+    <string name="back_string">戻る</string>
 </resources>

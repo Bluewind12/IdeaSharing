@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdRequest
@@ -291,6 +292,26 @@ class DetailActivity : AppCompatActivity() {
             }
             R.id.detailMenuTrash -> {
                 createTrashMenu()
+            }
+            R.id.detailShare -> {
+                val articleURL = getString(R.string.review_url)
+                val articleTitle = ""
+                val sharedText = "$$title\n$content\n$articleURL"
+
+                // builderの生成　ShareCompat.IntentBuilder.from(Context context);
+                val builder = ShareCompat.IntentBuilder.from(this@DetailActivity)
+
+                // シェアするタイトル
+                builder.setSubject(articleTitle)
+
+                // シェアするテキスト
+                builder.setText(sharedText)
+
+                // シェアするタイプ（他にもいっぱいあるよ）
+                builder.setType("text/plain")
+
+                // Shareアプリ一覧のDialogの表示
+                builder.startChooser()
             }
             R.id.detailMenuBack -> {
                 finish()
