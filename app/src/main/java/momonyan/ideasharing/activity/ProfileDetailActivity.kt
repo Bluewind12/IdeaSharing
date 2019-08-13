@@ -53,7 +53,7 @@ class ProfileDetailActivity : AppCompatActivity() {
                     } else {
                         profileMap["Comment"].toString()
                     }
-                    setContentStringAndImage(profileMap, "Twitter", profileTwitterTextView, profileImageView)
+                    setContentStringAndImage(profileMap, "Twitter", profileTwitterTextView, profileTwitterImage)
                     setContentStringAndImage(profileMap, "Facebook", profileFacebookTextView, profileFacebookImage)
                     setContentStringAndImage(profileMap, "HP", profileUrlTextView, profileUrlImageView)
                     setContentStringAndImage(profileMap, "Other", profileOtherTextView, profileOtherImageView)
@@ -123,8 +123,8 @@ class ProfileDetailActivity : AppCompatActivity() {
         imageView: ImageView
     ) {
         if (map[data] == null) {
-            textView.visibility = View.INVISIBLE
-            imageView.visibility = View.INVISIBLE
+            textView.visibility = View.GONE
+            imageView.visibility = View.GONE
         } else {
             textView.visibility = View.VISIBLE
             imageView.visibility = View.VISIBLE

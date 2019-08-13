@@ -27,21 +27,22 @@
 
             <momonyan.ideasharing.RoundRectCornerImageView
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/profileImageView" android:layout_marginTop="8dp"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent" android:scaleType="fitCenter"
-                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline2"/>
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    android:adjustViewBounds="true"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/profileNameTextView"
-                    app:layout_constraintTop_toTopOf="@+id/profileImageView"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:textSize="24sp" tools:text="名前"
-                    app:layout_constraintStart_toEndOf="@+id/profileImageView" android:layout_marginStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-                    app:layout_constraintHorizontal_bias="0.0"/>
+                    app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/guideline2"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
