@@ -1,10 +1,12 @@
 package momonyan.ideasharing.activity
 
-import android.app.Activity
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +33,7 @@ class ProfileDetailActivity : AppCompatActivity() {
 
         //ImageView
         val imageColor = resources.getColor(R.color.colorPrimary)
-        profileWebImageView.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
+        profileUrlImageView.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
         profileOtherImageView.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
         profilePostCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
         profileScoreCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
@@ -45,11 +47,16 @@ class ProfileDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener { profileResult ->
                     val profileMap = profileResult.data!!
                     //イメージ
-                    profileImageView
                     profileNameTextView.text = profileMap["UserName"].toString()
-                    profileCommentTextView.text = profileMap["Comment"].toString()
-                    prodileUrlTextView.text = profileMap["HP"].toString()
-                    profileOtherTextView.text = profileMap["Other"].toString()
+                    profileCommentTextView.text = if (profileMap["Comment"] == null) {
+                        ""
+                    } else {
+                        profileMap["Comment"].toString()
+                    }
+                    setContentStringAndImage(profileMap, "Twitter", profileTwitterTextView, profileImageView)
+                    setContentStringAndImage(profileMap, "Facebook", profileFacebookTextView, profileFacebookImage)
+                    setContentStringAndImage(profileMap, "HP", profileUrlTextView, profileUrlImageView)
+                    setContentStringAndImage(profileMap, "Other", profileOtherTextView, profileOtherImageView)
                     //アイコンの表示
                     val storageRef = FirebaseStorage.getInstance().reference
                     storageRef.child(profileMap["UserId"].toString() + "ProfileImage")
@@ -107,5 +114,21 @@ class ProfileDetailActivity : AppCompatActivity() {
         super.onStop()
         GlideApp.with(applicationContext)
             .clear(profileImageView)
+    }
+
+    private fun setContentStringAndImage(
+        map: Map<String, Any>,
+        data: String,
+        textView: TextView,
+        imageView: ImageView
+    ) {
+        if (map[data] == null) {
+            textView.visibility = View.INVISIBLE
+            imageView.visibility = View.INVISIBLE
+        } else {
+            textView.visibility = View.VISIBLE
+            imageView.visibility = View.VISIBLE
+            textView.text = map[data].toString()
+        }
     }
 }
