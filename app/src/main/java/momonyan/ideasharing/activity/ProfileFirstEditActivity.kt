@@ -1,7 +1,6 @@
 package momonyan.ideasharing.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -72,6 +70,8 @@ class ProfileFirstEditActivity : AppCompatActivity() {
                 profileAddButton.isEnabled = false
                 dbMap["UserName"] = profileNameEditText.text.toString()
                 dbMap["Comment"] = profileCommentEditText.text.toString()
+                dbMap["Twitter"] = profileTwitterEditText.text.toString()
+                dbMap["Facebook"] = profileFaceBookEditText.text.toString()
                 dbMap["HP"] = profileHpEditText.text.toString()
                 dbMap["Other"] = profileOtherEditText.text.toString()
 

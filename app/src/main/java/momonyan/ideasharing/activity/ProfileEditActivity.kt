@@ -25,7 +25,6 @@ import momonyan.ideasharing.R
 import net.taptappun.taku.kobayashi.runtimepermissionchecker.RuntimePermissionChecker
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.util.*
 
 
 class ProfileEditActivity : AppCompatActivity() {
@@ -63,10 +62,13 @@ class ProfileEditActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 val userMap = result.data!!
-                profileNameEditText.setText(userMap["UserName"].toString(), TextView.BufferType.NORMAL)
-                profileCommentEditText.setText(userMap["Comment"].toString(), TextView.BufferType.NORMAL)
-                profileHpEditText.setText(userMap["HP"].toString(), TextView.BufferType.NORMAL)
-                profileOtherEditText.setText(userMap["Other"].toString(), TextView.BufferType.NORMAL)
+
+                profileNameEditText.setText(getMapStringData(userMap, "UserName"), TextView.BufferType.NORMAL)
+                profileCommentEditText.setText(getMapStringData(userMap, "Comment"), TextView.BufferType.NORMAL)
+                profileTwitterEditText.setText(getMapStringData(userMap, "Twitter"), TextView.BufferType.NORMAL)
+                profileFaceBookEditText.setText(getMapStringData(userMap, "Facebook"), TextView.BufferType.NORMAL)
+                profileHpEditText.setText(getMapStringData(userMap, "HP"), TextView.BufferType.NORMAL)
+                profileOtherEditText.setText(getMapStringData(userMap, "Other"), TextView.BufferType.NORMAL)
 
             }
         if (RuntimePermissionChecker.hasSelfPermission(this, "android.permission.READ_EXTERNAL_STORAGE")
@@ -179,5 +181,14 @@ class ProfileEditActivity : AppCompatActivity() {
         super.onStop()
         GlideApp.with(applicationContext)
             .clear(profileEditImageButton)
+    }
+
+    private fun getMapStringData(map: Map<String, Any>, data: String): String {
+        return if (map[data] == null) {
+            ""
+        } else {
+            map[data].toString()
+        }
+
     }
 }
