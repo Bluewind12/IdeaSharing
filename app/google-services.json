@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "801403842754-bhq6s9dlantb257dl80hvujn0ieqb75d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "momonyan.ideasharing",
+            "certificate_hash": "4f6d30c793088e9f70a90647cb54af45e16fd8ff"
+          }
+        },
+        {
           "client_id": "801403842754-k8gjkr526ouhp4btooro3ndi0e3rkup2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
