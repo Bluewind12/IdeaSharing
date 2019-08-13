@@ -72,6 +72,7 @@
                 android:requiresFadingEdge="horizontal|vertical"
         />
         <Button
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="@string/ok_string"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,6 +82,7 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         <Button
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="@string/cancel_string"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,6 +90,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
         <Button
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="ADD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
