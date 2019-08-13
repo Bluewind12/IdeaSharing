@@ -50,7 +50,7 @@
                 android:clickable="true" app:srcCompat="@drawable/icon_pen_w"
                 android:id="@+id/floatingActionButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="24dp" android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/mainAdView"/>
         <com.google.android.gms.ads.AdView
                 android:layout_width="wrap_content"
