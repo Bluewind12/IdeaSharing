@@ -34,6 +34,8 @@ class ProfileDetailActivity : AppCompatActivity() {
         //ImageView
         val imageColor = resources.getColor(R.color.colorPrimary)
         profileUrlImageView.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
+        profileTwitterImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
+        profileFacebookImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
         profileOtherImageView.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
         profilePostCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
         profileScoreCountImage.setColorFilter(imageColor, PorterDuff.Mode.SRC_IN)
@@ -122,7 +124,7 @@ class ProfileDetailActivity : AppCompatActivity() {
         textView: TextView,
         imageView: ImageView
     ) {
-        if (map[data] == null) {
+        if (map[data] == null || map[data] == "") {
             textView.visibility = View.GONE
             imageView.visibility = View.GONE
         } else {

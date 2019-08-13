@@ -108,7 +108,8 @@
                     app:layout_constraintStart_toStartOf="@+id/profileNameTextView"
                     android:layout_marginStart="8dp"
                     android:adjustViewBounds="true"
-                    app:layout_constraintBottom_toBottomOf="@+id/profileTwitterTextView" app:srcCompat="@drawable/icon_pen"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/profileTwitterTextView"
+                    app:srcCompat="@drawable/icon_twitter"/>
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -116,7 +117,7 @@
                     app:layout_constraintTop_toTopOf="@+id/profileFacebookTextView"
                     app:layout_constraintBottom_toBottomOf="@+id/profileFacebookTextView"
                     app:layout_constraintStart_toStartOf="@+id/profileNameTextView" android:adjustViewBounds="true"
-                    android:layout_marginStart="8dp" app:srcCompat="@drawable/icon_home"/>
+                    android:layout_marginStart="8dp" app:srcCompat="@drawable/icon_facebook"/>
             <androidx.constraintlayout.widget.Guideline
                     android:orientation="vertical"
                     android:layout_width="wrap_content"

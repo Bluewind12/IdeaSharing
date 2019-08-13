@@ -95,6 +95,8 @@ class ProfileEditActivity : AppCompatActivity() {
                 profileAddButton.isEnabled = false
                 dbMap["UserName"] = profileNameEditText.text.toString()
                 dbMap["Comment"] = profileCommentEditText.text.toString()
+                dbMap["Twitter"] = profileTwitterEditText.text.toString()
+                dbMap["Facebook"] = profileFaceBookEditText.text.toString()
                 dbMap["HP"] = profileHpEditText.text.toString()
                 dbMap["Other"] = profileOtherEditText.text.toString()
 
