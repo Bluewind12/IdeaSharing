@@ -66,7 +66,11 @@
                 android:layout_marginStart="8dp"
                 android:id="@+id/inputTagRecyclerView" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-                app:layout_constraintBottom_toTopOf="@+id/inputAddButton" android:layout_marginBottom="8dp"/>
+                app:layout_constraintBottom_toTopOf="@+id/inputAddButton" android:layout_marginBottom="8dp"
+                android:cacheColorHint="?attr/backgroundTint"
+                android:fadingEdgeLength="10dp"
+                android:requiresFadingEdge="horizontal|vertical"
+        />
         <Button
                 android:text="@string/ok_string"
                 android:layout_width="wrap_content"

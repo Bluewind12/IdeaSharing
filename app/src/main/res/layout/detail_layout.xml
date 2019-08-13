@@ -78,7 +78,11 @@
                         android:id="@+id/detailTagRecyclerView"
                         app:layout_constraintTop_toBottomOf="@+id/detailContentTextView"
                         app:layout_constraintStart_toEndOf="@+id/tagTitleText" android:layout_marginStart="8dp"
-                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+
+                        android:cacheColorHint="?attr/backgroundTint"
+                        android:fadingEdgeLength="10dp"
+                        android:requiresFadingEdge="horizontal|vertical"/>
                 <TextView
                         android:text="@string/tag"
                         android:layout_width="wrap_content"
@@ -146,7 +150,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                android:id="@+id/detailCommentRecyclerView"/>
+                android:id="@+id/detailCommentRecyclerView"
+                android:cacheColorHint="?attr/backgroundTint"
+                android:fadingEdgeLength="10dp"
+                android:requiresFadingEdge="horizontal|vertical"/>
         <Button
                 android:text="@string/comment"
                 android:layout_width="wrap_content"

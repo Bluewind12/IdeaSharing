@@ -6,6 +6,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
+
+        android:cacheColorHint="?attr/backgroundTint"
+        android:fadingEdgeLength="10dp"
+        android:requiresFadingEdge="horizontal|vertical"
         android:id="@+id/cardRowCardView">
 
     <LinearLayout

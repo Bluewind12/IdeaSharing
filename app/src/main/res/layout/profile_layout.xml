@@ -209,7 +209,11 @@
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
             android:layout_width="0dp"
-            android:id="@+id/profileRecyclerView" app:layout_constraintBottom_toTopOf="@+id/profileAdView"/>
+            android:id="@+id/profileRecyclerView" app:layout_constraintBottom_toTopOf="@+id/profileAdView"
+            android:cacheColorHint="?attr/backgroundTint"
+            android:fadingEdgeLength="10dp"
+            android:requiresFadingEdge="horizontal|vertical"
+    />
     <com.google.android.gms.ads.AdView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
