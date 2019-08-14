@@ -2,6 +2,7 @@ package momonyan.ideasharing.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
 
+        //Title
+        val font = Typeface.createFromAsset(assets, "fonts/ranobe.ttf")
+        loginTitleText.typeface = font
         //AdInit
         MobileAds.initialize(this, "ca-app-pub-6499097800180510~7424909357")
 
