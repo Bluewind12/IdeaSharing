@@ -34,13 +34,13 @@ class ProfileEditActivity : AppCompatActivity() {
 
     private lateinit var bmp :Bitmap
 
+    private val dbMap = HashMap<String, Any>()
     private lateinit var menuBack: MenuItem
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_edit_layout)
         profileEditProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
 
-        val dbMap = HashMap<String, Any>()
         val db = FirebaseFirestore.getInstance()
 
         val auth = FirebaseAuth.getInstance()
@@ -87,56 +87,99 @@ class ProfileEditActivity : AppCompatActivity() {
 
 
         profileAddButton.setOnClickListener {
-            if (profileNameEditText.text.toString() == "") {
-                Toast.makeText(this, "ニックネームを入力してください", Toast.LENGTH_LONG).show()
-            } else {
-                menuBack.isVisible = false
-                profileEditProgressBar.visibility = android.widget.ProgressBar.VISIBLE
-                profileAddButton.isEnabled = false
-                dbMap["UserName"] = profileNameEditText.text.toString()
-                dbMap["Comment"] = profileCommentEditText.text.toString()
-                dbMap["Twitter"] = profileTwitterEditText.text.toString()
-                dbMap["Facebook"] = profileFaceBookEditText.text.toString()
-                dbMap["HP"] = profileHpEditText.text.toString()
-                dbMap["Other"] = profileOtherEditText.text.toString()
+            addData()
+        }
+    }
 
-                val storage = FirebaseStorage.getInstance()
-                val storageRef = storage.getReferenceFromUrl("gs://ideasharing-8a024.appspot.com/")
+    private fun addData() {
+        val db = FirebaseFirestore.getInstance()
+        if (profileNameEditText.text.toString() == "") {
+            Toast.makeText(this, "ニックネームを入力してください", Toast.LENGTH_LONG).show()
+        } else {
+            menuBack.isVisible = false
+            profileEditProgressBar.visibility = android.widget.ProgressBar.VISIBLE
+            profileAddButton.isEnabled = false
+            dbMap["UserName"] = profileNameEditText.text.toString()
+            dbMap["Comment"] = profileCommentEditText.text.toString()
+            dbMap["Twitter"] = profileTwitterEditText.text.toString()
+            dbMap["Facebook"] = profileFaceBookEditText.text.toString()
+            dbMap["HP"] = profileHpEditText.text.toString()
+            dbMap["Other"] = profileOtherEditText.text.toString()
 
-                val metadata = StorageMetadata.Builder()
-                    .setContentType("image/jpg")
-                    .build()
+            val storage = FirebaseStorage.getInstance()
+            val storageRef = storage.getReferenceFromUrl("gs://ideasharing-8a024.appspot.com/")
 
-                val baos = ByteArrayOutputStream()
-                bmp = (profileEditImageButton.drawable as BitmapDrawable).bitmap
-                bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                val data = baos.toByteArray()
-                storageRef.child(uid + "ProfileImage").putBytes(data, metadata)
-                    .addOnSuccessListener {
-                        dbMap["ImageURL"] = uid + "ProfileImage"
-                        db.collection("ProfileData")
-                            .document(uid)
-                            .set(dbMap)
-                            .addOnCompleteListener {
-                                Toast.makeText(this,"プロフィール更新しました",Toast.LENGTH_LONG).show()
-                                val i = Intent(this, MainActivity::class.java)
-                                startActivity(i)
-                            }
-                            .addOnFailureListener {
+            val metadata = StorageMetadata.Builder()
+                .setContentType("image/jpg")
+                .build()
 
-                            }
-                    }
-                    .addOnFailureListener {
+            val baos = ByteArrayOutputStream()
+            bmp = (profileEditImageButton.drawable as BitmapDrawable).bitmap
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+            storageRef.child(uid + "ProfileImage").putBytes(data, metadata)
+                .addOnSuccessListener {
+                    dbMap["ImageURL"] = uid + "ProfileImage"
+                    db.collection("ProfileData")
+                        .document(uid)
+                        .set(dbMap)
+                        .addOnCompleteListener {
+                            Toast.makeText(this, "プロフィール更新しました", Toast.LENGTH_LONG).show()
+                            val i = Intent(this, MainActivity::class.java)
+                            startActivity(i)
+                        }
+                        .addOnFailureListener {
+
+                        }
+                }
+                .addOnFailureListener {
                     // 失敗したとき
                     Toast.makeText(this, "NG", Toast.LENGTH_LONG).show()
 
                 }
-            }
         }
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
 
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.profile_edit_menu, menu)
+        menuBack = menu.findItem(R.id.profileEditBack)
+        menuBack.isVisible = true
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.profileEditBack -> {
+                finish()
+            }
+            R.id.profileEditAdd -> {
+                addData()
+            }
+        }
+        return true
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        GlideApp.with(applicationContext)
+            .clear(profileEditImageButton)
+    }
+
+    private fun getMapStringData(map: Map<String, Any>, data: String): String {
+        return if (map[data] == null) {
+            ""
+        } else {
+            map[data].toString()
+        }
+
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (resultData != null) {
                 uri = resultData.data
@@ -160,37 +203,5 @@ class ProfileEditActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.basic_menu, menu)
-        menuBack = menu.findItem(R.id.basicBack)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.basicBack -> {
-                finish()
-            }
-        }
-        return true
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-        GlideApp.with(applicationContext)
-            .clear(profileEditImageButton)
-    }
-
-    private fun getMapStringData(map: Map<String, Any>, data: String): String {
-        return if (map[data] == null) {
-            ""
-        } else {
-            map[data].toString()
-        }
-
     }
 }

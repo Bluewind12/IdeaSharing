@@ -8,6 +8,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +30,7 @@ class ProfileFirstEditActivity : AppCompatActivity() {
     private val READ_REQUEST_CODE = 1202
     private var uri: Uri? = null
     private var uid: String = ""
+    private val dbMap = HashMap<String, Any>()
 
     private lateinit var bmp :Bitmap
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +38,6 @@ class ProfileFirstEditActivity : AppCompatActivity() {
         setContentView(R.layout.profile_edit_layout)
 
         profileEditProgressBar.visibility = android.widget.ProgressBar.INVISIBLE
-        val dbMap = HashMap<String, Any>()
 
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
@@ -60,54 +62,56 @@ class ProfileFirstEditActivity : AppCompatActivity() {
                 startActivityForResult(intent, READ_REQUEST_CODE)
             }
         }
-
-
         profileAddButton.setOnClickListener {
-            if (profileNameEditText.text.toString() == "") {
-                Toast.makeText(this, "ニックネームを入力してください", Toast.LENGTH_LONG).show()
-            } else {
-                profileEditProgressBar.visibility = android.widget.ProgressBar.VISIBLE
-                profileAddButton.isEnabled = false
-                dbMap["UserName"] = profileNameEditText.text.toString()
-                dbMap["Comment"] = profileCommentEditText.text.toString()
-                dbMap["Twitter"] = profileTwitterEditText.text.toString()
-                dbMap["Facebook"] = profileFaceBookEditText.text.toString()
-                dbMap["HP"] = profileHpEditText.text.toString()
-                dbMap["Other"] = profileOtherEditText.text.toString()
+            addData()
+        }
+    }
 
-                val storage = FirebaseStorage.getInstance()
-                val storageRef = storage.getReferenceFromUrl("gs://ideasharing-8a024.appspot.com/")
+    private fun addData() {
+        if (profileNameEditText.text.toString() == "") {
+            Toast.makeText(this, "ニックネームを入力してください", Toast.LENGTH_LONG).show()
+        } else {
+            profileEditProgressBar.visibility = android.widget.ProgressBar.VISIBLE
+            profileAddButton.isEnabled = false
+            dbMap["UserName"] = profileNameEditText.text.toString()
+            dbMap["Comment"] = profileCommentEditText.text.toString()
+            dbMap["Twitter"] = profileTwitterEditText.text.toString()
+            dbMap["Facebook"] = profileFaceBookEditText.text.toString()
+            dbMap["HP"] = profileHpEditText.text.toString()
+            dbMap["Other"] = profileOtherEditText.text.toString()
 
-                val metadata = StorageMetadata.Builder()
-                    .setContentType("image/jpg")
-                    .build()
+            val storage = FirebaseStorage.getInstance()
+            val storageRef = storage.getReferenceFromUrl("gs://ideasharing-8a024.appspot.com/")
 
-                val baos = ByteArrayOutputStream()
-                bmp = (profileEditImageButton.drawable as BitmapDrawable).bitmap
-                bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                val data = baos.toByteArray()
-                storageRef.child(uid + "ProfileImage").putBytes(data, metadata)
-                    .addOnSuccessListener {
-                        dbMap["ImageURL"] = uid + "ProfileImage"
-                        val db = FirebaseFirestore.getInstance()
-                        db.collection("ProfileData")
-                            .document(uid)
-                            .set(dbMap)
-                            .addOnCompleteListener {
-                                Toast.makeText(this,"プロフィール登録しました",Toast.LENGTH_LONG).show()
-                                val i = Intent(this, MainActivity::class.java)
-                                startActivity(i)
-                            }
-                            .addOnFailureListener {
+            val metadata = StorageMetadata.Builder()
+                .setContentType("image/jpg")
+                .build()
 
-                            }
-                    }
-                    .addOnFailureListener {
+            val baos = ByteArrayOutputStream()
+            bmp = (profileEditImageButton.drawable as BitmapDrawable).bitmap
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+            storageRef.child(uid + "ProfileImage").putBytes(data, metadata)
+                .addOnSuccessListener {
+                    dbMap["ImageURL"] = uid + "ProfileImage"
+                    val db = FirebaseFirestore.getInstance()
+                    db.collection("ProfileData")
+                        .document(uid)
+                        .set(dbMap)
+                        .addOnCompleteListener {
+                            Toast.makeText(this, "プロフィール登録しました", Toast.LENGTH_LONG).show()
+                            val i = Intent(this, MainActivity::class.java)
+                            startActivity(i)
+                        }
+                        .addOnFailureListener {
+
+                        }
+                }
+                .addOnFailureListener {
                     // 失敗したとき
                     Toast.makeText(this, "NG", Toast.LENGTH_LONG).show()
 
                 }
-            }
         }
     }
 
@@ -136,5 +140,25 @@ class ProfileFirstEditActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.profile_edit_menu, menu)
+        menu.findItem(R.id.profileEditBack).isVisible = false
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.profileEditBack -> {
+                finish()
+            }
+            R.id.profileEditAdd -> {
+                addData()
+            }
+        }
+        return true
     }
 }
