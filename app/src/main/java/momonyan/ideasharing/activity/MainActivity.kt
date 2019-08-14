@@ -377,7 +377,7 @@ class MainActivity : AppCompatActivity() {
                     .add(dbMap)
                     .addOnCompleteListener {
                         //広告表示
-                        if (mInterstitialAd.isLoaded && Random.nextInt(100) >= 0) {
+                        if (mInterstitialAd.isLoaded && Random.nextInt(100) >= 70) {
                             mInterstitialAd.show()
                         } else {
                             Log.d("TAG", "The interstitial wasn't loaded yet.")

@@ -88,7 +88,7 @@ class DetailActivity : AppCompatActivity() {
                                         Toast.makeText(this, "コメント投稿しました", Toast.LENGTH_LONG).show()
                                         detailCommentEditText.setText("", TextView.BufferType.NORMAL)
                                         //広告表示
-                                        if (mInterstitialAd.isLoaded && Random.nextInt(100) >= 0) {
+                                        if (mInterstitialAd.isLoaded && Random.nextInt(100) >= 70) {
                                             mInterstitialAd.show()
                                         } else {
                                             Log.d("TAG", "The interstitial wasn't loaded yet.")
