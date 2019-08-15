@@ -40,6 +40,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var documentId: String
     private lateinit var editMenu: MenuItem
     private lateinit var trashMenu: MenuItem
+    private lateinit var shareMenu: MenuItem
 
     private var uid = "???"
     private var likeCount = 0
@@ -282,6 +283,7 @@ class DetailActivity : AppCompatActivity() {
         inflater.inflate(R.menu.detail_menu, menu)
         editMenu = menu.findItem(R.id.detailMenuEdit)
         trashMenu = menu.findItem(R.id.detailMenuTrash)
+        shareMenu = menu.findItem(R.id.detailShare)
         return true
     }
 
@@ -294,9 +296,9 @@ class DetailActivity : AppCompatActivity() {
                 createTrashMenu()
             }
             R.id.detailShare -> {
-                val articleURL = getString(R.string.review_url)
+                val articleURL = "https://play.google.com/store/apps/details?id=momonyan.ideasharing"
                 val articleTitle = ""
-                val sharedText = "$$title\n$content\n$articleURL"
+                val sharedText = "[$title]\n$content\n$articleURL"
 
                 // builderの生成　ShareCompat.IntentBuilder.from(Context context);
                 val builder = ShareCompat.IntentBuilder.from(this@DetailActivity)

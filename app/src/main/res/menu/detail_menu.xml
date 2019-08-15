@@ -15,7 +15,7 @@
           android:title="シェア"
           android:icon="@drawable/icon_share"
           app:showAsAction="ifRoom"
-          android:visible="false"/>
+          android:visible="true"/>
     <item android:id="@+id/detailMenuBack"
           android:title="@string/back_string"
           android:icon="@drawable/icon_back"
