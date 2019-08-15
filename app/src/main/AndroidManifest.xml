@@ -10,7 +10,7 @@
             android:label="@string/app_name"
             android:roundIcon="@drawable/app_icon"
             android:supportsRtl="true"
-            android:theme="@style/AppThemeNoAction">
+            android:theme="@style/AppTheme">
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-6499097800180510~7424909357"/>
@@ -18,11 +18,10 @@
                   android:label="アイシェア！"
                   android:theme="@style/AppThemeNoAction">
         </activity>
-        <activity android:name=".activity.DebugActivity">
-        </activity>
-
         <activity android:name=".activity.LoginActivity"
-                  android:label="アイシェア！">
+                  android:label="アイシェア！"
+                  android:theme="@style/AppThemeNoAction"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

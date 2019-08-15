@@ -12,7 +12,7 @@
           app:showAsAction="always"
           android:visible="false"/>
     <item android:id="@+id/detailShare"
-          android:title="@string/delete_string"
+          android:title="シェア"
           android:icon="@drawable/icon_share"
           app:showAsAction="ifRoom"
           android:visible="false"/>
