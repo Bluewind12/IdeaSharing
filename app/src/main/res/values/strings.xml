@@ -46,4 +46,5 @@
     <string name="edit_string">編集</string>
     <string name="delete_string">削除</string>
     <string name="back_string">戻る</string>
+    <string name="share_string">シェア</string>
 </resources>
