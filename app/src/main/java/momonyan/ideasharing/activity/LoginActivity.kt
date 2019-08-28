@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.login_layout.*
 import momonyan.ideasharing.R
+import momonyan.ideasharing.startImageAnimation
+import momonyan.ideasharing.startTextAnimation
 
 
 class LoginActivity : AppCompatActivity() {
@@ -25,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         //Title
         val font = Typeface.createFromAsset(assets, "fonts/ranobe.ttf")
         loginTitleText.typeface = font
+        loginTapTextView.typeface = font
         //AdInit
         MobileAds.initialize(this, "ca-app-pub-6499097800180510~7424909357")
 
@@ -34,7 +37,10 @@ class LoginActivity : AppCompatActivity() {
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
 
-        loginButton.setOnClickListener {
+        startTextAnimation(loginTapTextView)
+        startImageAnimation(loginTapImage)
+
+        loginConstraintLayOut.setOnClickListener {
             startActivityForResult(
                 AuthUI.getInstance()
                     .createSignInIntentBuilder()
@@ -49,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
                 RC_SIGN_IN
             )
         }
-        loginButton.setOnLongClickListener {
+        loginConstraintLayOut.setOnLongClickListener {
             startActivityForResult(
                 AuthUI.getInstance()
                     .createSignInIntentBuilder()

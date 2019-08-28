@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" android:id="@+id/loginConstraintLayOut">
 
     <ImageView
             android:layout_width="0dp"
@@ -19,17 +19,10 @@
             android:layout_height="0dp" app:srcCompat="@drawable/icon_f"
             android:id="@+id/imageView"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:adjustViewBounds="true" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/loginButton" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/loginTitleText"/>
-    <Button
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:text="@string/login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/loginButton" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:textSize="36sp"/>
+            android:adjustViewBounds="true"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/loginTitleText" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/loginTapTextView"/>
     <TextView
             android:text="@string/app_name"
             android:layout_width="wrap_content"
@@ -38,4 +31,20 @@
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/imageView2"
             android:textAllCaps="false" android:textAlignment="center" android:textColor="@android:color/white"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" app:srcCompat="@drawable/icon_yubi"
+            android:id="@+id/loginTapImage"
+            app:layout_constraintBottom_toBottomOf="@+id/loginTapTextView" app:layout_constraintTop_toTopOf="@+id/loginTapTextView"
+            app:layout_constraintVertical_bias="0.0"
+            android:adjustViewBounds="true" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+    <TextView
+            android:text="Tap Screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginTapTextView" android:textSize="48sp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/loginTapImage"
+            android:layout_marginStart="8dp" android:textColor="@android:color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
